@@ -24,7 +24,7 @@ trait GeneratedRowDecoders {
     * {{{
     * scala> case class Ints([#i1: Int#])
     *
-    * scala> RowDecoder.decoder([#0#])(Ints.apply _).decode(Seq([#"1"#]))
+    * scala> RowDecoder.decoder([#0#])(Ints.apply).decode(Seq([#"1"#]))
     * res0: DecodeResult[Ints] = Right(Ints([#1#,]))
     * }}}
     * @param f encoding function.
@@ -47,7 +47,7 @@ trait GeneratedRowDecoders {
     * {{{
     * scala> case class Ints([#i1: Int#])
     *
-    * scala> RowDecoder.ordered(Ints.apply _).decode(Seq([#"1"#]))
+    * scala> RowDecoder.ordered(Ints.apply).decode(Seq([#"1"#]))
     * res0: DecodeResult[Ints] = Right(Ints([#1#,]))
     * }}}
     *

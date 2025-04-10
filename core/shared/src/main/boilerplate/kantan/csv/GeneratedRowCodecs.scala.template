@@ -27,7 +27,7 @@ trait GeneratedRowCodecs {
    * {{{
    * scala> case class Ints(i1: Int)
    *
-   * scala> val codec = RowCodec.codec(Ints.apply _)((is: Ints) => (is.i1))
+   * scala> val codec = RowCodec.codec(Ints.apply)((is: Ints) => (is.i1))
    *
    * scala> codec.encode(Ints(1))
    * res0: Seq[String] = List(1)
@@ -45,7 +45,7 @@ trait GeneratedRowCodecs {
     * {{{
     * scala> case class Ints([#i1: Int#])
     *
-    * scala> val codec = RowCodec.codec([#0#])(Ints.apply _)((is: Ints) => ([#is.i1#]))
+    * scala> val codec = RowCodec.codec([#0#])(Ints.apply)((is: Ints) => ([#is.i1#]))
     *
     * scala> codec.encode(Ints([#1#]))
     * res0: Seq[String] = Vector([#1#])
@@ -70,7 +70,7 @@ trait GeneratedRowCodecs {
     * {{{
     * scala> case class Ints(i1: Int)
     *
-    * scala> val codec = RowCodec.ordered(Ints.apply _)((is: Ints) => (is.i1))
+    * scala> val codec = RowCodec.ordered(Ints.apply)((is: Ints) => (is.i1))
     *
     * scala> codec.encode(Ints(1))
     * res0: Seq[String] = List(1)
@@ -91,7 +91,7 @@ trait GeneratedRowCodecs {
     * {{{
     * scala> case class Ints([#i1: Int#])
     *
-    * scala> val codec = RowCodec.ordered(Ints.apply _)((is: Ints) => ([#is.i1#]))
+    * scala> val codec = RowCodec.ordered(Ints.apply)((is: Ints) => ([#is.i1#]))
     *
     * scala> codec.encode(Ints([#1#]))
     * res0: Seq[String] = Vector([#1#])
@@ -117,7 +117,7 @@ trait GeneratedRowCodecs {
     * {{{
     * scala> case class Ints(i1: Int)
     *
-    * scala> val codec = RowCodec.caseCodec(Ints.apply _)(Ints.unapply _)
+    * scala> val codec = RowCodec.caseCodec(Ints.apply)(x => Some(x.i1))
     *
     * scala> codec.encode(Ints(1))
     * res0: Seq[String] = List(1)
@@ -138,7 +138,7 @@ trait GeneratedRowCodecs {
     * {{{
     * scala> case class Ints([#i1: Int#])
     *
-    * scala> val codec = RowCodec.caseCodec([#0#])(Ints.apply _)(Ints.unapply _)
+    * scala> val codec = RowCodec.caseCodec([#0#])(Ints.apply)(x => Some(Tuple.fromProductTyped(x)))
     *
     * scala> codec.encode(Ints([#1#]))
     * res0: Seq[String] = Vector([#1#])
@@ -160,7 +160,7 @@ trait GeneratedRowCodecs {
     * {{{
     * scala> case class Ints(i1: Int)
     *
-    * scala> val codec = RowCodec.caseOrdered(Ints.apply _)(Ints.unapply _)
+    * scala> val codec = RowCodec.caseOrdered(Ints.apply)(x => Some(x.i1))
     *
     * scala> codec.encode(Ints(1))
     * res0: Seq[String] = List(1)
@@ -181,7 +181,7 @@ trait GeneratedRowCodecs {
     * {{{
     * scala> case class Ints([#i1: Int#])
     *
-    * scala> val codec = RowCodec.caseOrdered(Ints.apply _)(Ints.unapply _)
+    * scala> val codec = RowCodec.caseOrdered(Ints.apply)(x => Some(Tuple.fromProductTyped(x)))
     *
     * scala> codec.encode(Ints([#1#]))
     * res0: Seq[String] = Vector([#1#])
