@@ -24,7 +24,7 @@ trait GeneratedHeaderDecoders {
    * scala> import kantan.csv.ops._
    *
    * scala> case class Foo([#i1: Int#])
-   * scala> implicit val decoder: HeaderDecoder[Foo] = HeaderDecoder.decoder([#"f1"#])(Foo.apply _)
+   * scala> implicit val decoder: HeaderDecoder[Foo] = HeaderDecoder.decoder([#"f1"#])(Foo.apply)
    *
    * scala> "[#f1#]\n[#1#]".asCsvReader[Foo](rfc.withHeader).next()
    * res0: ReadResult[Foo] = Right(Foo([#1#,]))

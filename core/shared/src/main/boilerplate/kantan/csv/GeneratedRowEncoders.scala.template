@@ -102,7 +102,7 @@ trait GeneratedRowEncoders {
     * {{{
     * scala> case class Ints(i1: Int)
     *
-    * scala> RowEncoder.caseEncoder(Ints.unapply _).encode(Ints(1))
+    * scala> RowEncoder.caseEncoder((x: Ints) => Some(x.i1)).encode(Ints(1))
     * res0: Seq[String] = List(1)
     * }}}
     *
@@ -121,7 +121,7 @@ trait GeneratedRowEncoders {
     * {{{
     * scala> case class Ints([#i1: Int#])
     *
-    * scala> RowEncoder.caseEncoder([#0#])(Ints.unapply _).encode(Ints([#1#]))
+    * scala> RowEncoder.caseEncoder([#0#])((x: Ints) => Some(Tuple.fromProductTyped(x))).encode(Ints([#1#]))
     * res0: Seq[String] = Vector([#1#])
     * }}}
     *
@@ -142,7 +142,7 @@ trait GeneratedRowEncoders {
     * {{{
     * scala> case class Ints(i1: Int)
     *
-    * scala> RowEncoder.caseOrdered(Ints.unapply _).encode(Ints(1))
+    * scala> RowEncoder.caseOrdered((x: Ints) => Some(x.i1)).encode(Ints(1))
     * res0: Seq[String] = List(1)
     * }}}
     *
@@ -160,7 +160,7 @@ trait GeneratedRowEncoders {
     * {{{
     * scala> case class Ints([#i1: Int#])
     *
-    * scala> RowEncoder.caseOrdered(Ints.unapply _).encode(Ints([#1#]))
+    * scala> RowEncoder.caseOrdered((x: Ints) => Some(Tuple.fromProductTyped(x))).encode(Ints([#1#]))
     * res0: Seq[String] = Vector([#1#])
     * }}}
     *

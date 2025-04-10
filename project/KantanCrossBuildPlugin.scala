@@ -136,10 +136,9 @@ object KantanCrossBuildPlugin extends AutoPlugin {
             doctestGenTests := {
               scalaBinaryVersion.value match {
                 case "3" =>
-                  Seq.empty
-                case _ =>
-                  // TODO enable with Scala 3 and disable Scala 2
                   doctestGenTests.value
+                case _ =>
+                  Seq.empty
               }
             }
           )
