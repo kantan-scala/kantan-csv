@@ -10,6 +10,4 @@ target/
 
 # Project
 ## generated files
-.scalafix.conf
-.scalafmt.conf
 *.log
