@@ -30,7 +30,7 @@ object KantanRelease {
   /** Runs checkStyle. */
   lazy val runCheckStyle: ReleaseStep =
     ReleaseStep(
-      action = { st: State =>
+      action = { (st: State) =>
         val extracted = Project.extract(st)
         val ref = extracted.get(thisProjectRef)
 
@@ -40,7 +40,7 @@ object KantanRelease {
     )
 
   /** Runs `pushSite`. */
-  lazy val runPushSite: ReleaseStep = { st: State =>
+  lazy val runPushSite: ReleaseStep = { (st: State) =>
     val extracted = Project.extract(st)
     val ref = extracted.get(thisProjectRef)
 
