@@ -22,7 +22,7 @@ import kantan.codecs.Encoder
 import kantan.codecs.laws.CodecValue.LegalValue
 
 trait CodecLaws[E, D, F, T] extends DecoderLaws[E, D, F, T] with EncoderLaws[E, D, T] {
-  implicit lazy val codec: Codec[E, D, F, T] = Codec.from(decoder.decode _)(encoder.encode _)
+  implicit lazy val codec: Codec[E, D, F, T] = Codec.from(decoder.decode)(encoder.encode)
 
   // - Misc. laws ------------------------------------------------------------------------------------------------------
   // -------------------------------------------------------------------------------------------------------------------

@@ -27,16 +27,16 @@ trait RfcReaderTests extends Laws {
     new DefaultRuleSet(
       name = "rfc4180",
       parent = None,
-      "crlf row separator" -> forAll(laws.crlfRowSeparator _),
-      "lf row separator" -> forAll(laws.lfRowSeparator _),
-      "crlf ending" -> forAll(laws.crlfEnding _),
-      "lf ending" -> forAll(laws.lfEnding _),
-      "empty ending" -> forAll(laws.emptyEnding _),
-      "leading whitespace" -> forAll(laws.leadingWhitespace _),
-      "trailing whitespace" -> forAll(laws.trailingWhitespace _),
-      "trailing comma" -> forAll(laws.trailingWhitespace _),
-      "unnecessary double quotes" -> forAll(laws.unnecessaryDoubleQuotes _),
-      "unescaped double quotes" -> forAll(laws.unescapedDoubleQuotes _),
-      "escaped content" -> forAll(laws.escapedCells _)
+      "crlf row separator" -> forAll(laws.crlfRowSeparator),
+      "lf row separator" -> forAll(laws.lfRowSeparator),
+      "crlf ending" -> forAll(laws.crlfEnding),
+      "lf ending" -> forAll(laws.lfEnding),
+      "empty ending" -> forAll(laws.emptyEnding),
+      "leading whitespace" -> forAll(laws.leadingWhitespace),
+      "trailing whitespace" -> forAll(laws.trailingWhitespace),
+      "trailing comma" -> forAll(laws.trailingWhitespace),
+      "unnecessary double quotes" -> forAll(laws.unnecessaryDoubleQuotes),
+      "unescaped double quotes" -> forAll(laws.unescapedDoubleQuotes),
+      "escaped content" -> forAll(laws.escapedCells)
     )
 }

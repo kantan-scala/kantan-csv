@@ -22,8 +22,8 @@ import org.scalacheck.Prop.forAll
 trait VersionSpecificReaderEngineTests { self: ReaderEngineTests =>
   def versionSpecificProps: Seq[(String, Prop)] =
     Seq(
-      "toLazyList" -> forAll(laws.toLazyList _),
-      "iterator" -> forAll(laws.iterator _)
+      "toLazyList" -> forAll(laws.toLazyList),
+      "iterator" -> forAll(laws.iterator)
     )
 
 }

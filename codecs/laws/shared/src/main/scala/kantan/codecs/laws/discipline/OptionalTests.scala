@@ -27,7 +27,7 @@ trait OptionalTests[A] extends Laws {
   implicit def arbA: Arbitrary[A]
 
   def optional: RuleSet =
-    new SimpleRuleSet("optional", "empty uniqueness" -> forAll(laws.emptyUniqueness _))
+    new SimpleRuleSet("optional", "empty uniqueness" -> forAll(laws.emptyUniqueness))
 }
 
 object OptionalTests {

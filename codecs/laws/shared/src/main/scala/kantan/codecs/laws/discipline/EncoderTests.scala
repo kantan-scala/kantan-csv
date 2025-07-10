@@ -33,11 +33,11 @@ trait EncoderTests[E, D, T] extends Laws {
   def encoder[A: Arbitrary: Cogen, B: Arbitrary: Cogen]: RuleSet =
     new SimpleRuleSet(
       "core",
-      "encode" -> forAll(laws.encode _),
-      "contramap identity" -> forAll(laws.contramapIdentity _),
-      "contramap composition" -> forAll(laws.contramapComposition[A, B] _),
-      "mapEncoded identity" -> forAll(laws.mapEncodedIdentity _),
-      "mapEncoded composition" -> forAll(laws.mapEncodedComposition[A, B] _)
+      "encode" -> forAll(laws.encode),
+      "contramap identity" -> forAll(laws.contramapIdentity),
+      "contramap composition" -> forAll(laws.contramapComposition[A, B]),
+      "mapEncoded identity" -> forAll(laws.mapEncodedIdentity),
+      "mapEncoded composition" -> forAll(laws.mapEncodedComposition[A, B])
     )
 }
 

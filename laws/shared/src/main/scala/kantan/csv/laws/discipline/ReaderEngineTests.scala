@@ -35,20 +35,20 @@ trait ReaderEngineTests
         Seq(rfc4180, csvSpectrum, knownFormats)
       def props: Seq[(String, Prop)] =
         Seq(
-          "drop" -> forAll(laws.drop _),
-          "dropWhile" -> forAll(laws.dropWhile _),
-          "take" -> forAll(laws.take _),
-          "forall" -> forAll(laws.forall _),
-          "map" -> forAll(laws.map _),
-          "flatMap" -> forAll(laws.flatMap _),
-          "find" -> forAll(laws.find _),
-          "exists" -> forAll(laws.exists _),
-          "filter" -> forAll(laws.filter _),
-          "next on empty" -> forAll(laws.nextOnEmpty _),
-          "next on empty (take)" -> forAll(laws.nextOnEmptyTake _),
-          "hasDefiniteSize" -> forAll(laws.hasDefiniteSize _),
-          "isEmpty" -> forAll(laws.isEmpty _),
-          "isTraversableAgain" -> forAll(laws.isTraversableAgain _)
+          "drop" -> forAll(laws.drop),
+          "dropWhile" -> forAll(laws.dropWhile),
+          "take" -> forAll(laws.take),
+          "forall" -> forAll(laws.forall),
+          "map" -> forAll(laws.map),
+          "flatMap" -> forAll(laws.flatMap),
+          "find" -> forAll(laws.find),
+          "exists" -> forAll(laws.exists),
+          "filter" -> forAll(laws.filter),
+          "next on empty" -> forAll(laws.nextOnEmpty),
+          "next on empty (take)" -> forAll(laws.nextOnEmptyTake),
+          "hasDefiniteSize" -> forAll(laws.hasDefiniteSize),
+          "isEmpty" -> forAll(laws.isEmpty),
+          "isTraversableAgain" -> forAll(laws.isTraversableAgain)
         )
     }
 }
