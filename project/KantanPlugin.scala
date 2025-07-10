@@ -103,9 +103,7 @@ object KantanPlugin extends AutoPlugin {
       autoAPIMappings         := true,
       doctestMarkdownEnabled  := true,
       doctestTestFramework    := DoctestTestFramework.ScalaTest,
-      doctestScalaTestVersion := Some("3.2.2"),
-      resolvers              ++= Resolver.sonatypeOssRepos("releases"),
-      resolvers              ++= Resolver.sonatypeOssRepos("snapshots")
+      doctestScalaTestVersion := Some("3.2.2")
     )
 
   def javacSettings: Seq[Setting[_]] = {
