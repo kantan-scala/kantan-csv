@@ -300,6 +300,15 @@ lazy val codecsEnumeratum = kantanCrossProject("codecs-enumeratum", "codecs/enum
   .enablePlugins(PublishedPlugin)
   .dependsOn(codecsCore)
   .settings(
+    Compile / compile / scalacOptions ++= {
+      scalaBinaryVersion.value match {
+        case "3" =>
+          // https://github.com/lloydmeta/enumeratum/blob/c76f9487bc86b5fc7/README.md?plain=1#L28
+          Seq("-Yretain-trees")
+        case _ =>
+          Nil
+      }
+    },
     libraryDependencies ++= Seq(
       "com.beachape"  %%% "enumeratum" % "1.7.6",
       "org.scalatest" %%% "scalatest"  % "3.2.19" % Test
