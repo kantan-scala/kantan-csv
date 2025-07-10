@@ -17,7 +17,6 @@
 package kantan.codecs
 
 import kantan.codecs.error.IsError
-
 import scala.util.Failure
 import scala.util.Success
 import scala.util.Try

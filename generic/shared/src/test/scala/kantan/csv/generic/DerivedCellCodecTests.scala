@@ -17,7 +17,7 @@
 package kantan.csv.generic
 
 import kantan.codecs.shapeless.laws.Or
-import kantan.csv.generic.arbitrary._
+import kantan.csv.generic.arbitrary.*
 import kantan.csv.laws.discipline.CellCodecTests
 import kantan.csv.laws.discipline.DisciplineSuite
 

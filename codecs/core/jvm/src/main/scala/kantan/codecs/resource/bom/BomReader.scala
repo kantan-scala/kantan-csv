@@ -34,7 +34,7 @@ object BomReader {
     */
   def apply(input: InputStream, codec: Codec): Reader = {
     def readBom: Option[Array[Byte]] = {
-      val buf  = new Array[Byte](maxBytes)
+      val buf = new Array[Byte](maxBytes)
       val read = input.read(buf)
 
       // Empty stream.

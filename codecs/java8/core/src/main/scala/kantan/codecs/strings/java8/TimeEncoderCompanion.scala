@@ -16,9 +16,6 @@
 
 package kantan.codecs.strings.java8
 
-import kantan.codecs.Encoder
-import kantan.codecs.strings.StringEncoder
-
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -26,6 +23,8 @@ import java.time.LocalTime
 import java.time.OffsetDateTime
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+import kantan.codecs.Encoder
+import kantan.codecs.strings.StringEncoder
 
 /** Provides useful methods for a java8 time encoder companions.
   *

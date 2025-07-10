@@ -28,7 +28,7 @@ trait VersionSpecificCsvSinkOps[A] { self: CsvSinkOps[A] =>
     e: WriterEngine,
     sa: CsvSink[A]
   ): Unit =
-    writeCsv(rows, rfc.withCellSeparator(sep).withHeader(header: _*))
+    writeCsv(rows, rfc.withCellSeparator(sep).withHeader(header*))
 
   def writeCsv[B: HeaderEncoder](
     rows: IterableOnce[B],

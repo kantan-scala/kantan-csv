@@ -16,14 +16,13 @@
 
 package kantan.codecs.resource.bom
 
+import java.io.ByteArrayInputStream
+import java.nio.charset.Charset
+import org.apache.commons.io.ByteOrderMark as BOM
 import org.apache.commons.io.input.BOMInputStream
-import org.apache.commons.io.{ByteOrderMark => BOM}
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
-
-import java.io.ByteArrayInputStream
-import java.nio.charset.Charset
 import scala.io.Codec
 
 /** Makes sure `BomWriter` writes BOMs as expected. */

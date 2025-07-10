@@ -16,8 +16,8 @@
 
 package kantan.sbt
 
-import sbt.Keys._
-import sbt._
+import sbt.*
+import sbt.Keys.*
 import wartremover.Wart
 import wartremover.WartRemover
 import wartremover.Warts
@@ -34,17 +34,17 @@ object StrictPlugin extends AutoPlugin {
   override def requires: Plugins =
     KantanPlugin && WartRemover
 
-  override lazy val projectSettings: Seq[Setting[_]] = wartRemoverSettings ++ scalacSettings
+  override lazy val projectSettings: Seq[Setting[?]] = wartRemoverSettings ++ scalacSettings
 
   /** All warnings are fatal in `Compile`.
     *
     * I'd love to make warnings fatal in `Test` as well, but the problem is that some tests actually need to do some
     * dodgy things to see what happens.
     */
-  def scalacSettings: Seq[Setting[_]] =
+  def scalacSettings: Seq[Setting[?]] =
     Seq(Compile / compile / scalacOptions += "-Xfatal-warnings")
 
-  def wartRemoverSettings: Seq[Setting[_]] =
+  def wartRemoverSettings: Seq[Setting[?]] =
     List(Compile, Test).flatMap { c =>
       inConfig(c)(
         Compile / compile / WartRemover.autoImport.wartremoverErrors ++=

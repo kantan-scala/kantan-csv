@@ -20,7 +20,7 @@ import kantan.csv.CellDecoder
 import kantan.csv.CellEncoder
 import kantan.csv.CsvConfiguration
 import kantan.csv.engine.WriterEngine
-import kantan.csv.ops._
+import kantan.csv.ops.*
 import kantan.csv.rfc
 
 trait RfcWriterLaws {

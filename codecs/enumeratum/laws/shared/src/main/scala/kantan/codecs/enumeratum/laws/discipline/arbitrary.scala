@@ -16,7 +16,7 @@
 
 package kantan.codecs.enumeratum.laws.discipline
 
-import enumeratum.values._
+import enumeratum.values.*
 import kantan.codecs.laws.CodecValue.IllegalValue
 import kantan.codecs.laws.CodecValue.LegalValue
 import kantan.codecs.laws.IllegalString
@@ -24,7 +24,7 @@ import kantan.codecs.laws.LegalString
 import kantan.codecs.strings.StringEncoder
 import kantan.codecs.strings.codecs
 import org.scalacheck.Arbitrary
-import org.scalacheck.Arbitrary.{arbitrary => arb}
+import org.scalacheck.Arbitrary.arbitrary as arb
 import org.scalacheck.Gen
 
 object arbitrary extends ArbitraryInstances with kantan.codecs.laws.discipline.ArbitraryInstances

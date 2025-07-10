@@ -16,6 +16,11 @@
 
 package kantan.codecs.laws.discipline
 
+import java.io.IOException
+import java.io.UnsupportedEncodingException
+import java.util.Date
+import java.util.UUID
+import java.util.regex.Pattern
 import kantan.codecs.Decoder
 import kantan.codecs.Encoder
 import kantan.codecs.laws.CodecValue
@@ -23,15 +28,9 @@ import kantan.codecs.laws.CodecValue.IllegalValue
 import kantan.codecs.laws.CodecValue.LegalValue
 import kantan.codecs.strings.DecodeError
 import org.scalacheck.Arbitrary
-import org.scalacheck.Arbitrary.{arbitrary => arb}
+import org.scalacheck.Arbitrary.arbitrary as arb
 import org.scalacheck.Cogen
 import org.scalacheck.Gen
-
-import java.io.IOException
-import java.io.UnsupportedEncodingException
-import java.util.Date
-import java.util.UUID
-import java.util.regex.Pattern
 import scala.util.Try
 import scala.util.matching.Regex
 
@@ -70,7 +69,7 @@ trait CommonArbitraryInstances extends ArbitraryArities {
   implicit val cogenPattern: Cogen[Pattern] = implicitly[Cogen[(String, Int)]].contramap(p => (p.pattern(), p.flags()))
 
   implicit val arbRegex: Arbitrary[Regex] = Arbitrary(genRegularExpression.map(_.r))
-  implicit val cogenRegex: Cogen[Regex]   = implicitly[Cogen[String]].contramap(_.pattern.pattern())
+  implicit val cogenRegex: Cogen[Regex] = implicitly[Cogen[String]].contramap(_.pattern.pattern())
 
   // - CodecValue ------------------------------------------------------------------------------------------------------
   // -------------------------------------------------------------------------------------------------------------------
@@ -84,7 +83,7 @@ trait CommonArbitraryInstances extends ArbitraryArities {
     arbLegalValue(ea.encode)
 
   implicit def arbIllegalValueFromDec[E: Arbitrary, A, T](implicit
-    da: Decoder[E, A, _, T]
+    da: Decoder[E, A, ?, T]
   ): Arbitrary[IllegalValue[E, A, T]] =
     arbIllegalValue(e => da.decode(e).isLeft)
 
@@ -111,7 +110,7 @@ trait CommonArbitraryInstances extends ArbitraryArities {
   implicit val arbStringDecodeError: Arbitrary[DecodeError] = Arbitrary(
     Gen.oneOf(
       for {
-        id    <- Gen.identifier
+        id <- Gen.identifier
         value <- implicitly[Arbitrary[String]].arbitrary
       } yield DecodeError(s"'$value' is not a valid $id"),
       arbException.arbitrary.map(DecodeError.apply)
@@ -123,11 +122,11 @@ trait CommonArbitraryInstances extends ArbitraryArities {
   // Note that this isn't actually an issue with ScalaCheck but with Scala itself, and is(?) fixed in Scala 2.12:
   // https://github.com/scala/scala/pull/4320
   implicit lazy val arbBigDecimal: Arbitrary[BigDecimal] = {
-    import java.math.MathContext._
+    import java.math.MathContext.*
     val mcGen = Gen.oneOf(DECIMAL32, DECIMAL64, DECIMAL128)
     val bdGen = for {
-      x     <- Arbitrary.arbitrary[BigInt]
-      mc    <- mcGen
+      x <- Arbitrary.arbitrary[BigInt]
+      mc <- mcGen
       limit <- Gen.const(math.max(x.abs.toString.length - mc.getPrecision, 0))
       scale <- Gen.choose(Int.MinValue + limit, Int.MaxValue)
     } yield try

@@ -16,12 +16,6 @@
 
 package kantan.codecs.strings.java8.laws.discipline
 
-import kantan.codecs.laws.IllegalString
-import kantan.codecs.laws.LegalString
-import org.scalacheck.Arbitrary
-import org.scalacheck.Cogen
-import org.scalacheck.Gen
-
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -30,14 +24,19 @@ import java.time.OffsetDateTime
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
-import scala.jdk.CollectionConverters._
+import kantan.codecs.laws.IllegalString
+import kantan.codecs.laws.LegalString
+import org.scalacheck.Arbitrary
+import org.scalacheck.Cogen
+import org.scalacheck.Gen
+import scala.jdk.CollectionConverters.*
 import scala.util.Try
 
 object arbitrary extends ArbitraryInstances with kantan.codecs.laws.discipline.ArbitraryInstances
 
 // This is mostly ripped straight from circe's implementation.
 trait ArbitraryInstances {
-  import kantan.codecs.laws.discipline.arbitrary._
+  import kantan.codecs.laws.discipline.arbitrary.*
 
   // - Instant instances -----------------------------------------------------------------------------------------------
   // -------------------------------------------------------------------------------------------------------------------
@@ -87,7 +86,7 @@ trait ArbitraryInstances {
   implicit val arbLocalDateTime: Arbitrary[LocalDateTime] = Arbitrary(
     for {
       instant <- Arbitrary.arbitrary[Instant]
-      zoneId  <- Arbitrary.arbitrary[ZoneId]
+      zoneId <- Arbitrary.arbitrary[ZoneId]
     } yield LocalDateTime.ofInstant(instant, zoneId)
   )
 
@@ -105,7 +104,7 @@ trait ArbitraryInstances {
   implicit val arbZonedDateTime: Arbitrary[ZonedDateTime] = Arbitrary(
     for {
       instant <- Arbitrary.arbitrary[Instant]
-      zoneId  <- Arbitrary.arbitrary[ZoneId]
+      zoneId <- Arbitrary.arbitrary[ZoneId]
     } yield ZonedDateTime.ofInstant(
       instant,
       if(zoneId == ZoneId.of("GMT0")) ZoneId.of("UTC") else zoneId // avoid JDK-8138664
@@ -125,7 +124,7 @@ trait ArbitraryInstances {
   implicit val arbOffsetDateTime: Arbitrary[OffsetDateTime] = Arbitrary(
     for {
       instant <- Arbitrary.arbitrary[Instant]
-      zoneId  <- Arbitrary.arbitrary[ZoneId]
+      zoneId <- Arbitrary.arbitrary[ZoneId]
     } yield OffsetDateTime.ofInstant(instant, zoneId)
   )
 

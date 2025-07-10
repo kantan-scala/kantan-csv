@@ -16,9 +16,6 @@
 
 package kantan.csv
 
-import kantan.csv.laws.discipline.DisciplineSuite
-import kantan.csv.laws.discipline.SerializableTests
-
 import java.io.File
 import java.net.URI
 import java.net.URL
@@ -27,6 +24,8 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.UUID
+import kantan.csv.laws.discipline.DisciplineSuite
+import kantan.csv.laws.discipline.SerializableTests
 import scala.reflect.ClassTag
 
 class SerializationTests extends DisciplineSuite with VersionSpecificSerializationTests {

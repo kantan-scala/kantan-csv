@@ -20,13 +20,13 @@ import com.github.sbt.git.SbtGit.git
 import com.jsuereth.sbtpgp.PgpKeys.publishSigned
 import kantan.sbt.release.KantanRelease
 import kantan.sbt.scalafix.KantanScalafixPlugin
-import kantan.sbt.scalafix.KantanScalafixPlugin.autoImport._
+import kantan.sbt.scalafix.KantanScalafixPlugin.autoImport.*
 import kantan.sbt.scalafmt.KantanScalafmtPlugin
-import kantan.sbt.scalafmt.KantanScalafmtPlugin.autoImport._
-import sbt.Keys._
-import sbt._
-import sbtrelease.ReleasePlugin.autoImport.ReleaseTransformations._
-import sbtrelease.ReleasePlugin.autoImport._
+import kantan.sbt.scalafmt.KantanScalafmtPlugin.autoImport.*
+import sbt.*
+import sbt.Keys.*
+import sbtrelease.ReleasePlugin.autoImport.*
+import sbtrelease.ReleasePlugin.autoImport.ReleaseTransformations.*
 
 /** Plugin that sets kantan-specific values.
   *
@@ -42,7 +42,7 @@ object KantanKantanPlugin extends AutoPlugin {
   object autoImport {
     val kantanProject: SettingKey[String] = settingKey("Name of the kantan project")
   }
-  import autoImport._
+  import autoImport.*
 
   override def trigger =
     allRequirements
@@ -50,24 +50,24 @@ object KantanKantanPlugin extends AutoPlugin {
   override def requires: Plugins =
     KantanScalafixPlugin && KantanScalafmtPlugin
 
-  override lazy val projectSettings: Seq[Setting[_]] = generalSettings ++ remoteSettings
+  override lazy val projectSettings: Seq[Setting[?]] = generalSettings ++ remoteSettings
 
   def Scala213 =
     "2.13.16"
 
-  lazy val generalSettings: Seq[Setting[_]] =
+  lazy val generalSettings: Seq[Setting[?]] =
     Seq(
-      name                 := s"kantan.${kantanProject.value}",
-      organization         := "com.nrinaudo",
+      name := s"kantan.${kantanProject.value}",
+      organization := "com.nrinaudo",
       organizationHomepage := Some(url("https://nrinaudo.github.io")),
-      organizationName     := "Nicolas Rinaudo",
-      crossScalaVersions   := Seq(Scala213),
-      scalaVersion         := Scala213,
-      licenses             := Seq("Apache-2.0" -> url("https://www.apache.org/licenses/LICENSE-2.0.html")),
+      organizationName := "Nicolas Rinaudo",
+      crossScalaVersions := Seq(Scala213),
+      scalaVersion := Scala213,
+      licenses := Seq("Apache-2.0" -> url("https://www.apache.org/licenses/LICENSE-2.0.html")),
       // This must be enabled for all modules, to make sure that aggregation picks up on multi-release. Typically,
       // root projects are unpublished, but if they do not have releaseCrossBuilder set to true, no underlying project
       // will either.
-      releaseCrossBuild             := true,
+      releaseCrossBuild := true,
       releasePublishArtifactsAction := publishSigned.value,
       releaseProcess := Seq[ReleaseStep](
         checkSnapshotDependencies,
@@ -98,10 +98,10 @@ object KantanKantanPlugin extends AutoPlugin {
     )
 
   /** Remote identifiers, computed from [[autoImport.kantanProject]]. */
-  lazy val remoteSettings: Seq[Setting[_]] =
+  lazy val remoteSettings: Seq[Setting[?]] =
     Seq(
-      homepage       := Some(url(s"https://nrinaudo.github.io/kantan.${kantanProject.value}")),
-      apiURL         := Some(url(s"https://nrinaudo.github.io/kantan.${kantanProject.value}/api/")),
+      homepage := Some(url(s"https://nrinaudo.github.io/kantan.${kantanProject.value}")),
+      apiURL := Some(url(s"https://nrinaudo.github.io/kantan.${kantanProject.value}/api/")),
       git.remoteRepo := s"git@github.com:nrinaudo/kantan.${kantanProject.value}.git",
       scmInfo := Some(
         ScmInfo(

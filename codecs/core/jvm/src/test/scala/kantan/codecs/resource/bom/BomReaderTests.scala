@@ -16,14 +16,13 @@
 
 package kantan.codecs.resource.bom
 
+import java.io.ByteArrayInputStream
+import java.io.Reader
+import java.nio.charset.Charset
 import org.scalacheck.Gen
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
-
-import java.io.ByteArrayInputStream
-import java.io.Reader
-import java.nio.charset.Charset
 import scala.io.Codec
 
 /** Makes sure `BomReader` reads BOMs as expected. */

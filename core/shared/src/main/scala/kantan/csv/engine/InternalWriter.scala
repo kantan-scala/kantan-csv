@@ -16,10 +16,9 @@
 
 package kantan.csv.engine
 
+import java.io.Writer
 import kantan.csv.CsvConfiguration
 import kantan.csv.CsvWriter
-
-import java.io.Writer
 import scala.annotation.tailrec
 
 private[csv] class InternalWriter(private val out: Writer, val conf: CsvConfiguration) extends CsvWriter[Seq[String]] {

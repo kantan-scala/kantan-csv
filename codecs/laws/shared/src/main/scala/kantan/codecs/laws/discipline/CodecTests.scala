@@ -20,7 +20,7 @@ import kantan.codecs.laws.CodecLaws
 import kantan.codecs.laws.CodecValue
 import kantan.codecs.laws.CodecValue.IllegalValue
 import kantan.codecs.laws.CodecValue.LegalValue
-import kantan.codecs.laws.discipline.arbitrary._
+import kantan.codecs.laws.discipline.arbitrary.*
 import org.scalacheck.Arbitrary
 import org.scalacheck.Cogen
 import org.scalacheck.Prop.forAll
@@ -34,36 +34,36 @@ trait CodecTests[E, D, F, T] extends DecoderTests[E, D, F, T] with EncoderTests[
     new DefaultRuleSet(
       "round trip",
       Some(encoder[A, B]),
-      "round trip (encoding)"              -> forAll(laws.roundTripEncoding _),
-      "round trip (decoding)"              -> forAll(laws.roundTripDecoding _),
-      "leftMap identity(encoding)"         -> forAll(laws.leftMapIdentityEncoding _),
-      "leftMap composition(decoding)"      -> forAll(laws.leftMapCompositionEncoding[A, B] _),
-      "imap identity (encoding)"           -> forAll(laws.imapIdentityEncoding _),
-      "imap identity (decoding)"           -> forAll(laws.imapIdentityDecoding _),
-      "imap composition (encoding)"        -> forAll(laws.imapCompositionEncoding[A, B] _),
-      "imap composition (decoding)"        -> forAll(laws.imapCompositionDecoding[A, B] _),
-      "imapEncoded identity (encoding)"    -> forAll(laws.imapEncodedIdentityEncoding _),
-      "imapEncoded identity (decoding)"    -> forAll(laws.imapEncodedIdentityDecoding _),
+      "round trip (encoding)" -> forAll(laws.roundTripEncoding _),
+      "round trip (decoding)" -> forAll(laws.roundTripDecoding _),
+      "leftMap identity(encoding)" -> forAll(laws.leftMapIdentityEncoding _),
+      "leftMap composition(decoding)" -> forAll(laws.leftMapCompositionEncoding[A, B] _),
+      "imap identity (encoding)" -> forAll(laws.imapIdentityEncoding _),
+      "imap identity (decoding)" -> forAll(laws.imapIdentityDecoding _),
+      "imap composition (encoding)" -> forAll(laws.imapCompositionEncoding[A, B] _),
+      "imap composition (decoding)" -> forAll(laws.imapCompositionDecoding[A, B] _),
+      "imapEncoded identity (encoding)" -> forAll(laws.imapEncodedIdentityEncoding _),
+      "imapEncoded identity (decoding)" -> forAll(laws.imapEncodedIdentityDecoding _),
       "imapEncoded composition (encoding)" -> forAll(laws.imapEncodedCompositionEncoding[A, B] _),
-      "imapEncoded composition(decoding)"  -> forAll(laws.imapEncodedCompositionDecoding[A, B] _)
+      "imapEncoded composition(decoding)" -> forAll(laws.imapEncodedCompositionDecoding[A, B] _)
     )
 
   def bijectiveCodec[A: Arbitrary: Cogen, B: Arbitrary: Cogen]: RuleSet =
     new RuleSet {
       implicit val arbValues: Arbitrary[CodecValue[E, D, T]] = Arbitrary(arbLegal.arbitrary)
 
-      val name    = "bijective codec"
-      val bases   = Nil
+      val name = "bijective codec"
+      val bases = Nil
       val parents = Seq(coreRules[A, B], bijectiveDecoder[A, B])
-      val props   = Seq.empty
+      val props = Seq.empty
     }
 
   def codec[A: Arbitrary: Cogen, B: Arbitrary: Cogen](implicit ai: Arbitrary[IllegalValue[E, D, T]]): RuleSet =
     new RuleSet {
-      val name    = "codec"
-      val bases   = Nil
+      val name = "codec"
+      val bases = Nil
       val parents = Seq(coreRules[A, B], decoder[A, B])
-      val props   = Seq.empty
+      val props = Seq.empty
     }
 }
 
@@ -73,13 +73,13 @@ object CodecTests {
     al: Arbitrary[LegalValue[E, D, T]]
   ): CodecTests[E, D, F, T] =
     new CodecTests[E, D, F, T] {
-      override val laws     = l
+      override val laws = l
       override val arbLegal = al
-      override val arbF     = implicitly[Arbitrary[F]]
-      override val cogenF   = Cogen[F]
-      override val cogenD   = Cogen[D]
-      override val cogenE   = Cogen[E]
-      override val arbD     = implicitly[Arbitrary[D]]
-      override val arbE     = implicitly[Arbitrary[E]]
+      override val arbF = implicitly[Arbitrary[F]]
+      override val cogenF = Cogen[F]
+      override val cogenD = Cogen[D]
+      override val cogenE = Cogen[E]
+      override val arbD = implicitly[Arbitrary[D]]
+      override val arbE = implicitly[Arbitrary[E]]
     }
 }

@@ -17,10 +17,10 @@
 package kantan.codecs.scalaz
 
 import kantan.codecs.scalaz.laws.discipline.ScalazDisciplineSuite
-import kantan.codecs.scalaz.laws.discipline.arbitrary._
+import kantan.codecs.scalaz.laws.discipline.arbitrary.*
 import kantan.codecs.strings.DecodeError
 import scalaz.Show
-import scalaz.scalacheck.ScalazProperties.{equal => equ}
+import scalaz.scalacheck.ScalazProperties.equal as equ
 
 class DecodeErrorTests extends ScalazDisciplineSuite {
 

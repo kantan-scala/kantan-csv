@@ -22,7 +22,7 @@ import org.scalacheck.Arbitrary
 import org.scalacheck.Cogen
 import scalaz.Maybe
 import scalaz.\/
-import scalaz.scalacheck.{ScalazArbitrary => SA}
+import scalaz.scalacheck.ScalazArbitrary as SA
 
 object arbitrary extends ArbitraryInstances
 

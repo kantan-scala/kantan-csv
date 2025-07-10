@@ -16,10 +16,9 @@
 
 package kantan.csv
 
+import java.io.Reader
 import kantan.codecs.resource.ResourceIterator
 import kantan.csv.engine.ReaderEngine
-
-import java.io.Reader
 
 /** Provides instance creation and summoning methods. */
 object CsvReader {

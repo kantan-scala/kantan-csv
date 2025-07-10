@@ -16,12 +16,11 @@
 
 package kantan.csv
 
+import java.net.URL
 import kantan.csv.laws.discipline.CellCodecTests
 import kantan.csv.laws.discipline.DisciplineSuite
 import kantan.csv.laws.discipline.RowCodecTests
-import kantan.csv.laws.discipline.arbitrary._
-
-import java.net.URL
+import kantan.csv.laws.discipline.arbitrary.*
 
 class URLCodecTests extends DisciplineSuite {
 

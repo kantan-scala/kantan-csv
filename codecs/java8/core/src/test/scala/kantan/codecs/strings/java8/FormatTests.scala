@@ -16,16 +16,15 @@
 
 package kantan.codecs.strings.java8
 
-import kantan.codecs.laws.SerializableLaws
-import kantan.codecs.laws.discipline.DisciplineSuite
-import kantan.codecs.laws.discipline.SerializableTests
-import kantan.codecs.strings.java8.laws.discipline.arbitrary._
-
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+import kantan.codecs.laws.SerializableLaws
+import kantan.codecs.laws.discipline.DisciplineSuite
+import kantan.codecs.laws.discipline.SerializableTests
+import kantan.codecs.strings.java8.laws.discipline.arbitrary.*
 
 class FormatTests extends DisciplineSuite {
 
@@ -39,7 +38,7 @@ class FormatTests extends DisciplineSuite {
 
     val formatStr = "yyyy-MM-dd'T'HH:mm:ss"
 
-    val format    = Format.from(formatStr).getOrElse(sys.error(s"Not a valid format: '$formatStr"))
+    val format = Format.from(formatStr).getOrElse(sys.error(s"Not a valid format: '$formatStr"))
     val formatter = DateTimeFormatter.ofPattern(formatStr)
 
     forAll { (d: LocalDateTime) =>
@@ -54,7 +53,7 @@ class FormatTests extends DisciplineSuite {
 
     val formatStr = "yyyy-MM-dd'T'HH:mm:ssxx"
 
-    val format    = Format.from(formatStr).getOrElse(sys.error(s"Not a valid format: '$formatStr"))
+    val format = Format.from(formatStr).getOrElse(sys.error(s"Not a valid format: '$formatStr"))
     val formatter = DateTimeFormatter.ofPattern(formatStr)
 
     forAll { (d: ZonedDateTime) =>
@@ -68,7 +67,7 @@ class FormatTests extends DisciplineSuite {
 
     val formatStr = "HH:mm:ss"
 
-    val format    = Format.from(formatStr).getOrElse(sys.error(s"Not a valid format: '$formatStr"))
+    val format = Format.from(formatStr).getOrElse(sys.error(s"Not a valid format: '$formatStr"))
     val formatter = DateTimeFormatter.ofPattern(formatStr)
 
     forAll { (d: LocalTime) =>
@@ -83,7 +82,7 @@ class FormatTests extends DisciplineSuite {
 
     val formatStr = "yyyy-MM-dd"
 
-    val format    = Format.from(formatStr).getOrElse(sys.error(s"Not a valid format: '$formatStr"))
+    val format = Format.from(formatStr).getOrElse(sys.error(s"Not a valid format: '$formatStr"))
     val formatter = DateTimeFormatter.ofPattern(formatStr)
 
     forAll { (d: LocalDate) =>
@@ -97,7 +96,7 @@ class FormatTests extends DisciplineSuite {
 
     val formatStr = "yyyy-MM-dd'T'HH:mm:ssxx"
 
-    val format    = Format.from(formatStr).getOrElse(sys.error(s"Not a valid format: '$formatStr"))
+    val format = Format.from(formatStr).getOrElse(sys.error(s"Not a valid format: '$formatStr"))
     val formatter = DateTimeFormatter.ofPattern(formatStr)
 
     forAll { (d: ZonedDateTime) =>

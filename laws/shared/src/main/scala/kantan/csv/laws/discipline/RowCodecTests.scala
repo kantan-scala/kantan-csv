@@ -20,7 +20,7 @@ import kantan.csv.DecodeError
 import kantan.csv.codecs
 import kantan.csv.laws.LegalRow
 import kantan.csv.laws.RowCodecLaws
-import kantan.csv.laws.discipline.arbitrary._
+import kantan.csv.laws.discipline.arbitrary.*
 import org.scalacheck.Arbitrary
 import org.scalacheck.Cogen
 

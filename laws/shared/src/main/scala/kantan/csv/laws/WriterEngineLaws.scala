@@ -17,7 +17,7 @@
 package kantan.csv.laws
 
 import kantan.csv.engine.WriterEngine
-import kantan.csv.ops._
+import kantan.csv.ops.*
 import kantan.csv.rfc
 
 trait WriterEngineLaws extends RfcWriterLaws {

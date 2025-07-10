@@ -16,14 +16,13 @@
 
 package kantan.codecs.strings
 
-import kantan.codecs.`export`.Exported
-
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.OffsetDateTime
 import java.time.ZonedDateTime
+import kantan.codecs.`export`.Exported
 
 package object java8 extends TimeCodecCompanion[String, DecodeError, codecs.type] with ToFormatLiteral {
 

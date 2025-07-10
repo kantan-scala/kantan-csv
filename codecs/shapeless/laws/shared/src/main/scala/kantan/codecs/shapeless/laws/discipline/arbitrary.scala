@@ -16,7 +16,7 @@
 
 package kantan.codecs.shapeless.laws.discipline
 
-import org.scalacheck.derive._
+import org.scalacheck.derive.*
 
 object arbitrary extends ArbitraryInstances with kantan.codecs.laws.discipline.ArbitraryInstances
 

@@ -28,7 +28,7 @@ trait KnownFormatsReaderTests extends Laws {
       name = "knownFormats",
       parent = None,
       "excel for mac 12.0" -> Prop(laws.excelMac120),
-      "numbers 1.0.3"      -> Prop(laws.numbers103),
-      "google docs"        -> Prop(laws.googleDocs)
+      "numbers 1.0.3" -> Prop(laws.numbers103),
+      "google docs" -> Prop(laws.googleDocs)
     )
 }

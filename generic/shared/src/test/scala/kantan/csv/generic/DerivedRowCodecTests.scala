@@ -19,8 +19,8 @@ package kantan.csv.generic
 import kantan.codecs.shapeless.laws.Left
 import kantan.codecs.shapeless.laws.Or
 import kantan.codecs.shapeless.laws.Right
-import kantan.csv.generic.Instances._
-import kantan.csv.generic.arbitrary._
+import kantan.csv.generic.Instances.*
+import kantan.csv.generic.arbitrary.*
 import kantan.csv.laws.LegalRow
 import kantan.csv.laws.discipline.DisciplineSuite
 import kantan.csv.laws.discipline.RowCodecTests

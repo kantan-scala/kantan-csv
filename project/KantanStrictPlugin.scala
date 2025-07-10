@@ -17,7 +17,7 @@
 package kantan.sbt.kantan
 
 import kantan.sbt.StrictPlugin
-import sbt._
+import sbt.*
 import wartremover.WartRemover
 
 object KantanStrictPlugin extends AutoPlugin {

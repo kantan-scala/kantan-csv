@@ -17,7 +17,7 @@
 package kantan.csv.laws
 
 import kantan.csv.engine.ReaderEngine
-import kantan.csv.ops._
+import kantan.csv.ops.*
 import kantan.csv.rfc
 
 /** Laws based on [[https://github.com/maxogden/csv-spectrum csv-pectrum]]. */

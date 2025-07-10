@@ -16,7 +16,8 @@
 
 package kantan.codecs.strings.java8
 
-import kantan.codecs.laws.CodecValue.{IllegalValue, LegalValue}
+import kantan.codecs.laws.CodecValue.IllegalValue
+import kantan.codecs.laws.CodecValue.LegalValue
 import org.scalacheck.Arbitrary
 
 object codec {

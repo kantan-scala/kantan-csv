@@ -16,15 +16,14 @@
 
 package kantan.codecs.strings
 
+import java.nio.file.AccessMode
 import kantan.codecs.laws.discipline.DecoderTests
 import kantan.codecs.laws.discipline.DisciplineSuite
 import kantan.codecs.laws.discipline.EncoderTests
 import kantan.codecs.laws.discipline.StringCodecTests
 import kantan.codecs.laws.discipline.StringDecoderTests
 import kantan.codecs.laws.discipline.StringEncoderTests
-import kantan.codecs.laws.discipline.arbitrary._
-
-import java.nio.file.AccessMode
+import kantan.codecs.laws.discipline.arbitrary.*
 
 class AccessModeCodecTests extends DisciplineSuite {
 

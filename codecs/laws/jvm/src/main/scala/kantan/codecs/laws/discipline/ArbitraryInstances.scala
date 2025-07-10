@@ -16,11 +16,6 @@
 
 package kantan.codecs.laws.discipline
 
-import kantan.codecs.laws.CodecValue.IllegalValue
-import org.scalacheck.Arbitrary
-import org.scalacheck.Cogen
-import org.scalacheck.Gen
-
 import java.io.EOFException
 import java.io.File
 import java.io.FileNotFoundException
@@ -29,6 +24,10 @@ import java.net.URI
 import java.net.URL
 import java.nio.file.AccessMode
 import java.nio.file.Path
+import kantan.codecs.laws.CodecValue.IllegalValue
+import org.scalacheck.Arbitrary
+import org.scalacheck.Cogen
+import org.scalacheck.Gen
 
 trait ArbitraryInstances extends CommonArbitraryInstances {
   // This is just a sample java enum.
@@ -41,7 +40,7 @@ trait ArbitraryInstances extends CommonArbitraryInstances {
     Arbitrary {
       for {
         str <- Gen.nonEmptyListOf(Gen.alphaNumChar)
-        i   <- Gen.choose(0, str.length)
+        i <- Gen.choose(0, str.length)
       } yield {
         val (h, t) = str.splitAt(i)
         IllegalValue(s"${h.toString} ${t.toString}")
@@ -50,23 +49,23 @@ trait ArbitraryInstances extends CommonArbitraryInstances {
 
   val genPathElement: Gen[String] = for {
     length <- Gen.choose(1, 10)
-    path   <- Gen.listOfN(length, Gen.alphaLowerChar)
+    path <- Gen.listOfN(length, Gen.alphaLowerChar)
   } yield path.mkString
 
   val genURL: Gen[URL] = for {
     protocol <- Gen.oneOf("http", "https")
-    host     <- Gen.identifier
-    port     <- Gen.choose(0, 65535)
-    length   <- Gen.choose(0, 5)
-    path     <- Gen.listOfN(length, genPathElement)
+    host <- Gen.identifier
+    port <- Gen.choose(0, 65535)
+    length <- Gen.choose(0, 5)
+    path <- Gen.listOfN(length, genPathElement)
   } yield
-  // public URI(String scheme, String userInfo, String host, int port, String path, String query, String fragment)
-  new URI(protocol, "", host, port, path.mkString("/", "/", ""), "", "").toURL()
+    // public URI(String scheme, String userInfo, String host, int port, String path, String query, String fragment)
+    new URI(protocol, "", host, port, path.mkString("/", "/", ""), "", "").toURL()
 
   implicit val arbURL: Arbitrary[URL] = Arbitrary(genURL)
   implicit val arbURI: Arbitrary[URI] = Arbitrary(genURL.map(_.toURI))
-  implicit val cogenUrl: Cogen[URL]   = implicitly[Cogen[String]].contramap(_.toString)
-  implicit val cogenUri: Cogen[URI]   = implicitly[Cogen[String]].contramap(_.toString)
+  implicit val cogenUrl: Cogen[URL] = implicitly[Cogen[String]].contramap(_.toString)
+  implicit val cogenUri: Cogen[URI] = implicitly[Cogen[String]].contramap(_.toString)
 
   implicit val arbFile: Arbitrary[File] = Arbitrary(
     Gen.nonEmptyListOf(Gen.identifier).map(ss => new File(ss.fold("")(_ + System.getProperty("file.separator") + _)))

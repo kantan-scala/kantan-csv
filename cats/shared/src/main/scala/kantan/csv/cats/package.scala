@@ -28,13 +28,13 @@ package object cats extends CommonInstances with DecoderInstances with EncoderIn
   // - Eq instances ----------------------------------------------------------------------------------------------------
   // -------------------------------------------------------------------------------------------------------------------
 
-  implicit val csvOutOfBoundsEq: Eq[DecodeError.OutOfBounds]         = Eq.fromUniversalEquals
-  implicit val csvTypeErrorEq: Eq[DecodeError.TypeError]             = Eq.fromUniversalEquals
-  implicit val csvDecodeErrorEq: Eq[DecodeError]                     = Eq.fromUniversalEquals
+  implicit val csvOutOfBoundsEq: Eq[DecodeError.OutOfBounds] = Eq.fromUniversalEquals
+  implicit val csvTypeErrorEq: Eq[DecodeError.TypeError] = Eq.fromUniversalEquals
+  implicit val csvDecodeErrorEq: Eq[DecodeError] = Eq.fromUniversalEquals
   implicit val csvNoSuchElementEq: Eq[ParseError.NoSuchElement.type] = Eq.fromUniversalEquals
-  implicit val csvIoErrorEq: Eq[ParseError.IOError]                  = Eq.fromUniversalEquals
-  implicit val csvParseErrorEq: Eq[ParseError]                       = Eq.fromUniversalEquals
-  implicit val csvReadErrorEq: Eq[ReadError]                         = Eq.fromUniversalEquals
+  implicit val csvIoErrorEq: Eq[ParseError.IOError] = Eq.fromUniversalEquals
+  implicit val csvParseErrorEq: Eq[ParseError] = Eq.fromUniversalEquals
+  implicit val csvReadErrorEq: Eq[ReadError] = Eq.fromUniversalEquals
 
   // - Misc. instances --------------------------------------------------------------------------------------------------
   // -------------------------------------------------------------------------------------------------------------------

@@ -16,7 +16,7 @@
 
 package kantan.csv.enumeratum.values
 
-import kantan.codecs.enumeratum.laws.discipline._
+import kantan.codecs.enumeratum.laws.discipline.*
 import kantan.csv.CellDecoder
 import kantan.csv.CellEncoder
 import kantan.csv.RowDecoder

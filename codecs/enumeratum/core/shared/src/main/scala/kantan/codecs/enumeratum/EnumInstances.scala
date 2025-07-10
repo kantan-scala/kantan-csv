@@ -21,7 +21,6 @@ import enumeratum.EnumEntry
 import kantan.codecs.Decoder
 import kantan.codecs.Encoder
 import kantan.codecs.error.IsError
-
 import scala.annotation.nowarn
 
 /** Defines implicit `Decoder` instances for any enumeratum `Enum` type. */
@@ -34,7 +33,7 @@ trait DecoderInstances {
   ): Decoder[E, D, F, T] = {
     // Enum is not serializable. The following is to make sure that the generated Decoder doesn't embark a
     // non-serializable value and becomes non-serializable itself.
-    val map       = enumD.namesToValuesMap
+    val map = enumD.namesToValuesMap
     val enumLabel = enumD.values.map(_.entryName).mkString("[", ", ", "]")
 
     decoder.emap { name =>

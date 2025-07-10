@@ -40,7 +40,7 @@ import kantan.csv.rfc
 final class CsvSinkOps[A: CsvSink](val a: A) extends VersionSpecificCsvSinkOps[A] {
   @deprecated("use asCsvWriter(CsvConfiguration) instead", "0.1.18")
   def asCsvWriter[B: HeaderEncoder](sep: Char, header: String*)(implicit e: WriterEngine): CsvWriter[B] =
-    asCsvWriter(rfc.withCellSeparator(sep).withHeader(header: _*))
+    asCsvWriter(rfc.withCellSeparator(sep).withHeader(header*))
 
   /** Shorthand for [[CsvSink.writer[A](s:S,conf:kantan\.csv\.CsvConfiguration* CsvSink.writer]]. */
   def asCsvWriter[B: HeaderEncoder](conf: CsvConfiguration)(implicit e: WriterEngine): CsvWriter[B] =

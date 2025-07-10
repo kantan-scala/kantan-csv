@@ -17,10 +17,10 @@
 package kantan.sbt.release
 
 import com.github.sbt.sbtghpages.GhpagesPlugin.autoImport.ghpagesPushSite
-import kantan.sbt.KantanPlugin.autoImport._
-import sbt.Keys._
-import sbt._
-import sbtrelease.ReleasePlugin.autoImport._
+import kantan.sbt.KantanPlugin.autoImport.*
+import sbt.*
+import sbt.Keys.*
+import sbtrelease.ReleasePlugin.autoImport.*
 
 object KantanRelease {
 
@@ -32,7 +32,7 @@ object KantanRelease {
     ReleaseStep(
       action = { st: State =>
         val extracted = Project.extract(st)
-        val ref       = extracted.get(thisProjectRef)
+        val ref = extracted.get(thisProjectRef)
 
         val stCompile = extracted.runAggregated(ref / Compile / checkStyle, st)
         extracted.runAggregated(ref / Test / checkStyle, stCompile)
@@ -42,7 +42,7 @@ object KantanRelease {
   /** Runs `pushSite`. */
   lazy val runPushSite: ReleaseStep = { st: State =>
     val extracted = Project.extract(st)
-    val ref       = extracted.get(thisProjectRef)
+    val ref = extracted.get(thisProjectRef)
 
     extracted.runAggregated(ref / ghpagesPushSite, st)
   }

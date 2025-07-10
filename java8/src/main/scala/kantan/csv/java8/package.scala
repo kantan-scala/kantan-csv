@@ -16,18 +16,17 @@
 
 package kantan.csv
 
-import kantan.codecs.`export`.Exported
-import kantan.codecs.strings.StringDecoder
-import kantan.codecs.strings.StringEncoder
-import kantan.codecs.strings.java8.TimeCodecCompanion
-import kantan.codecs.strings.java8.ToFormatLiteral
-
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.OffsetDateTime
 import java.time.ZonedDateTime
+import kantan.codecs.`export`.Exported
+import kantan.codecs.strings.StringDecoder
+import kantan.codecs.strings.StringEncoder
+import kantan.codecs.strings.java8.TimeCodecCompanion
+import kantan.codecs.strings.java8.ToFormatLiteral
 
 /** Declares [[kantan.csv.CellDecoder]] and [[kantan.csv.CellEncoder]] instances for java8 date and time types.
   *

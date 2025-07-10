@@ -17,11 +17,11 @@
 package kantan.codecs.scalaz
 
 import kantan.codecs.scalaz.laws.discipline.ScalazDisciplineSuite
-import kantan.codecs.scalaz.laws.discipline.arbitrary._
-import kantan.codecs.scalaz.laws.discipline.equality._
+import kantan.codecs.scalaz.laws.discipline.arbitrary.*
+import kantan.codecs.scalaz.laws.discipline.equality.*
 import kantan.codecs.strings.StringEncoder
 import scalaz.scalacheck.ScalazProperties.contravariant
-import scalaz.std.string._
+import scalaz.std.string.*
 
 class EncoderTests extends ScalazDisciplineSuite {
   checkAll("StringEncoder", contravariant.laws[StringEncoder])

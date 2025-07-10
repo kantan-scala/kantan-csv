@@ -16,13 +16,13 @@
 
 package kantan.codecs.shapeless
 
-import kantan.codecs.shapeless.Instances._
+import kantan.codecs.shapeless.Instances.*
 import kantan.codecs.shapeless.laws.Or
 import kantan.codecs.shapeless.laws.discipline.DisciplineSuite
 import kantan.codecs.shapeless.laws.discipline.StringCodecTests
 import kantan.codecs.shapeless.laws.discipline.StringDecoderTests
 import kantan.codecs.shapeless.laws.discipline.StringEncoderTests
-import kantan.codecs.shapeless.laws.discipline.arbitrary._
+import kantan.codecs.shapeless.laws.discipline.arbitrary.*
 import kantan.codecs.strings.StringEncoder
 import shapeless.CNil
 

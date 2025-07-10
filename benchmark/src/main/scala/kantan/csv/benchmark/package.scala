@@ -16,7 +16,7 @@
 
 package kantan.csv
 
-import kantan.csv.ops._
+import kantan.csv.ops.*
 
 package object benchmark {
   type CsvEntry = (Int, String, Boolean, Float)

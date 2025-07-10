@@ -18,7 +18,7 @@ package kantan.codecs.enumeratum.laws.discipline
 
 import enumeratum.Enum
 import enumeratum.EnumEntry
-import enumeratum.values._
+import enumeratum.values.*
 
 /** Defines a standard `Enum` for tests to use. */
 sealed trait Enumerated extends EnumEntry

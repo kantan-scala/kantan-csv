@@ -37,8 +37,8 @@ class DecoderCompanionTests extends AnyFunSuite with ScalaCheckPropertyChecks wi
 
   test("DecoderCompanion.oneOf should be equivalent to Decoder.oneOf for non-empty lists") {
     forAll { (h: Dec, t: List[Dec], str: String) =>
-      val cDec = Companion.oneOf((h :: t).map(Companion.from[Int]): _*)
-      val dDec = Decoder.oneOf((h :: t).map(Decoder.from[String, Int, String, codec.type]): _*)
+      val cDec = Companion.oneOf((h :: t).map(Companion.from[Int])*)
+      val dDec = Decoder.oneOf((h :: t).map(Decoder.from[String, Int, String, codec.type])*)
 
       cDec.decode(str) should be(dDec.decode(str))
     }

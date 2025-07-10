@@ -19,7 +19,7 @@ package kantan.csv.engine.jackson
 import kantan.csv.laws.Cell
 import kantan.csv.laws.discipline.DisciplineSuite
 import kantan.csv.laws.discipline.WriterEngineTests
-import kantan.csv.ops._
+import kantan.csv.ops.*
 import kantan.csv.rfc
 
 class JacksonWriterTests extends DisciplineSuite {

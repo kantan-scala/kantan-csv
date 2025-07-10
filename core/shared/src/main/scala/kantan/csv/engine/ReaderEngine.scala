@@ -16,14 +16,13 @@
 
 package kantan.csv.engine
 
+import java.io.Reader
 import kantan.codecs.resource.ResourceIterator
 import kantan.csv.CsvConfiguration
 import kantan.csv.CsvReader
 import kantan.csv.ParseError
 import kantan.csv.ParseResult
 import kantan.csv.ReadResult
-
-import java.io.Reader
 
 /** Provides kantan.csv with CSV parsing functionality.
   *

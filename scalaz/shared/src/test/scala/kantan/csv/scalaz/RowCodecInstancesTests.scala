@@ -20,17 +20,17 @@ import kantan.codecs.scalaz.laws.discipline.ScalazDisciplineSuite
 import kantan.csv.DecodeError
 import kantan.csv.RowDecoder
 import kantan.csv.RowEncoder
-import kantan.csv.scalaz.arbitrary._
-import kantan.csv.scalaz.equality._
+import kantan.csv.scalaz.arbitrary.*
+import kantan.csv.scalaz.equality.*
 import org.scalacheck.Arbitrary
 import org.scalacheck.Gen
 import scalaz.Equal
 import scalaz.scalacheck.ScalazProperties.contravariant
 import scalaz.scalacheck.ScalazProperties.monadError
 import scalaz.scalacheck.ScalazProperties.plus
-import scalaz.std.anyVal._
-import scalaz.std.list._
-import scalaz.std.string._
+import scalaz.std.anyVal.*
+import scalaz.std.list.*
+import scalaz.std.string.*
 
 class RowCodecInstancesTests extends ScalazDisciplineSuite {
 
