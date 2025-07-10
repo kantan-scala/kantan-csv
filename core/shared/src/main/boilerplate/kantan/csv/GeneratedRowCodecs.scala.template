@@ -19,7 +19,7 @@ package kantan.csv
 /** Defines [[RowDecoder]] instances for types with various arities. */
 trait GeneratedRowCodecs {
   private def combine[A](decoder: RowDecoder[A])(encoder: RowEncoder[A]): RowCodec[A] =
-    RowCodec.from(decoder.decode _)(encoder.encode _)
+    RowCodec.from(decoder.decode)(encoder.encode)
 
   /** Creates a new [[RowCodec]] instance from the specified encoding and decoding functions.
    *

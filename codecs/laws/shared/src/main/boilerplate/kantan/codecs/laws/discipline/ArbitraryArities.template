@@ -39,7 +39,7 @@ trait ArbitraryArities {
     genLegalWith1(([#d1: D1#]) => Tuple1([#d1#]))(([#e1: E1#]) => Tuple1([#e1#]))
 
   def genIllegalTuple1[[#E1#], [#D1#], T](implicit [#arbD1: Arbitrary[IllegalValue[E1, D1, T]]#]): Gen[IllegalValue[Tuple1[[#E1#]], Tuple1[[#D1#]], T]] =
-    genIllegalWith1(([#e1: E1#]) => Tuple1([#e1#]))([#arbD1#])#
+    genIllegalWith1(([#e1: E1#]) => Tuple1([#e1#]))(using [#arbD1#])#
 
   ]
 }
