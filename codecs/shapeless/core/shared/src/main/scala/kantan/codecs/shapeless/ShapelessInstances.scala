@@ -55,7 +55,8 @@ trait ShapelessInstances {
     DerivedEncoder.from(s => er.value.encode(gen.to(s)))
 
   /** Similar to [[caseClassEncoder]], but working with `LabelledGeneric` rather than just `Generic`. */
-  implicit def caseClassEncoderFromLabelled[E, D, T, H <: HList](implicit
+  @deprecated("will be removed")
+  def caseClassEncoderFromLabelled[E, D, T, H <: HList](implicit
     generic: LabelledGeneric.Aux[D, H],
     hEncoder: Lazy[Encoder[E, H, T]]
   ): DerivedEncoder[E, D, T] =
@@ -73,7 +74,8 @@ trait ShapelessInstances {
     DerivedDecoder.from(s => dr.value.decode(s).map(gen.from))
 
   /** Similar to [[caseClassDecoder]], but working with `LabelledGeneric` rather than just `Generic`. */
-  implicit def caseClassDecoderFromLabelled[E, D, F, T, H <: HList](implicit
+  @deprecated("will be removed")
+  def caseClassDecoderFromLabelled[E, D, F, T, H <: HList](implicit
     generic: LabelledGeneric.Aux[D, H],
     hDecoder: Lazy[Decoder[E, H, F, T]]
   ): DerivedDecoder[E, D, F, T] =
