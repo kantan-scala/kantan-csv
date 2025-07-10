@@ -40,7 +40,7 @@ final class CsvRowEncoderOps[A: RowEncoder](val a: A) {
 
 trait ToCsvRowEncoderOps {
   implicit def toCsvRowEncoderOps[A: HeaderEncoder](a: A): CsvRowEncoderOps[A] =
-    new CsvRowEncoderOps(a)(HeaderEncoder[A].rowEncoder)
+    new CsvRowEncoderOps(a)(using HeaderEncoder[A].rowEncoder)
 }
 
 object rowEncoder extends ToCsvRowEncoderOps

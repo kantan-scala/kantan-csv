@@ -146,7 +146,7 @@ final class CsvSourceOps[A: CsvSource](val a: A) {
     sep: Char,
     header: Boolean
   )(e: ReaderEngine, factory: Factory[B, C[B]]): C[B] =
-    unsafeReadCsv(rfc.withCellSeparator(sep).withHeader(header))(HeaderDecoder[B], e, factory)
+    unsafeReadCsv(rfc.withCellSeparator(sep).withHeader(header))(using HeaderDecoder[B], e, factory)
 
   /** Reads the underlying resource as a CSV stream (unsafely).
     *
