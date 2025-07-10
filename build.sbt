@@ -118,8 +118,7 @@ lazy val commons = project
   .dependsOn(coreJVM, lawsJVM % Test)
   .settings(
     libraryDependencies ++= Seq(
-      "org.apache.commons"      % "commons-csv"             % Versions.commonsCsv,
-      "org.scala-lang.modules" %% "scala-collection-compat" % Versions.collectionCompat
+      "org.apache.commons" % "commons-csv" % Versions.commonsCsv
     )
   )
 
