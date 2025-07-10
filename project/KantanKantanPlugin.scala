@@ -20,9 +20,7 @@ import com.github.sbt.git.SbtGit.git
 import com.jsuereth.sbtpgp.PgpKeys.publishSigned
 import kantan.sbt.release.KantanRelease
 import kantan.sbt.scalafix.KantanScalafixPlugin
-import kantan.sbt.scalafix.KantanScalafixPlugin.autoImport.*
 import kantan.sbt.scalafmt.KantanScalafmtPlugin
-import kantan.sbt.scalafmt.KantanScalafmtPlugin.autoImport.*
 import sbt.*
 import sbt.Keys.*
 import sbtrelease.ReleasePlugin.autoImport.*
