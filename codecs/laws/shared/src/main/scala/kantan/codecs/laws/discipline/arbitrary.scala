@@ -151,7 +151,6 @@ trait CommonArbitraryInstances extends ArbitraryArities {
   implicit val cogenStringDecodeError: Cogen[DecodeError] = implicitly[Cogen[String]].contramap(_.message)
   implicit val cogenUUID: Cogen[UUID] =
     Cogen.tuple2[Long, Long].contramap(uuid => (uuid.getMostSignificantBits, uuid.getLeastSignificantBits))
-  @SuppressWarnings(Array("org.wartremover.warts.ToString"))
   implicit val cogenDate: Cogen[Date] = Cogen(_.getTime)
 
   // - Exceptions ------------------------------------------------------------------------------------------------------

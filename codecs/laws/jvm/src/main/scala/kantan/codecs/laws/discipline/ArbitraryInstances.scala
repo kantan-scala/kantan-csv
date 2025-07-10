@@ -73,7 +73,6 @@ trait ArbitraryInstances extends CommonArbitraryInstances {
 
   implicit val arbPath: Arbitrary[Path] = Arbitrary(arbFile.arbitrary.map(_.toPath))
 
-  @SuppressWarnings(Array("org.wartremover.warts.ToString"))
   implicit val cogenPath: Cogen[Path] = implicitly[Cogen[String]].contramap(_.toString)
 
   implicit val cogenFile: Cogen[File] = implicitly[Cogen[String]].contramap(_.toString)
