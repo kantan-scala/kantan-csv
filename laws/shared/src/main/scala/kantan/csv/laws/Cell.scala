@@ -32,12 +32,12 @@ sealed trait Cell extends Product with Serializable {
 }
 
 object Cell {
-  final case class Escaped private[Cell] (override val value: String) extends Cell {
+  final case class Escaped private[csv] (override val value: String) extends Cell {
     override def encoded: String =
       "\"" + value.replaceAll("\"", "\"\"") + "\""
   }
 
-  final case class NonEscaped private[Cell] (override val value: String) extends Cell {
+  final case class NonEscaped private[csv] (override val value: String) extends Cell {
     override def encoded =
       value
   }
@@ -88,8 +88,8 @@ object Cell {
 
   implicit val cellShrink: Shrink[Cell] = Shrink {
     case Empty         => Shrink.shrinkAny.shrink(Empty)
-    case Escaped(s)    => Shrink.shrinkString.shrink(s).filter(containsEscapable).map(Escaped)
-    case NonEscaped(s) => Shrink.shrinkString.shrink(s).filter(_.nonEmpty).map(NonEscaped)
+    case Escaped(s)    => Shrink.shrinkString.shrink(s).filter(containsEscapable).map(Escaped.apply)
+    case NonEscaped(s) => Shrink.shrinkString.shrink(s).filter(_.nonEmpty).map(NonEscaped.apply)
   }
 
   // - CSV row generators ----------------------------------------------------------------------------------------------
