@@ -98,7 +98,6 @@ trait PlatformSpecificInstances {
     * res2: String = /home/nrinaudo
     *   }}}
     */
-  @SuppressWarnings(Array("org.wartremover.warts.ToString"))
   implicit val pathStringCodec: StringCodec[Path] =
     StringCodec.from(StringDecoder.makeSafe("Path")(p => Paths.get(p.trim)))(_.toString)
 
