@@ -173,7 +173,7 @@ lazy val codecsCore = kantanCrossProject("codecs-core", "codecs/core")
     )
   )
   .jvmSettings(
-    libraryDependencies += "commons-io" % "commons-io" % "2.18.0" % Test
+    libraryDependencies += "commons-io" % "commons-io" % "2.19.0" % Test
   )
   .enablePlugins(PublishedPlugin)
   .laws("codecs-laws")
