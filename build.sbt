@@ -312,7 +312,7 @@ lazy val codecsEnumeratum = kantanCrossProject("codecs-enumeratum", "codecs/enum
       }
     },
     libraryDependencies ++= Seq(
-      "com.beachape"  %%% "enumeratum" % "1.7.6",
+      "com.beachape"  %%% "enumeratum" % "1.9.0",
       "org.scalatest" %%% "scalatest"  % "3.2.19" % Test
     )
   )
