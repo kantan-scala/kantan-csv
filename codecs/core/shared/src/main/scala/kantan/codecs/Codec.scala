@@ -60,5 +60,5 @@ object Codec {
     }
 
   def from[E, D, F, T](d: Decoder[E, D, F, T], e: Encoder[E, D, T]): Codec[E, D, F, T] =
-    from(d.decode _)(e.encode)
+    from(d.decode)(e.encode)
 }

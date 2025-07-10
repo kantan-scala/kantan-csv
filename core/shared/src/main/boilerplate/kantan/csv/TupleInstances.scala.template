@@ -27,7 +27,7 @@ trait TupleInstances {
     * }}}
     */
   implicit def tupleRowDecoder1[[#A1: CellDecoder#]]: RowDecoder[Tuple1[[#A1#]]] =
-    RowDecoder.ordered(Tuple1.apply[[#A1#]] _)#
+    RowDecoder.ordered(Tuple1.apply[[#A1#]])#
 
   ]
 
