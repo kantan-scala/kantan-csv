@@ -1,6 +1,8 @@
 ThisBuild / kantanProject := "csv"
 ThisBuild / startYear     := Some(2015)
 
+ThisBuild / scalafixDependencies += "com.github.xuwei-k" %% "scalafix-rules" % "0.6.12"
+
 lazy val jsModules: Seq[ProjectReference] = Seq(
   cats.js,
   codecsCats.js,
