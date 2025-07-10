@@ -55,7 +55,6 @@ object KantanKantanPlugin extends AutoPlugin {
   def Scala213 =
     "2.13.16"
 
-  @SuppressWarnings(Array("org.wartremover.warts.IterableOps"))
   lazy val generalSettings: Seq[Setting[_]] =
     Seq(
       name                 := s"kantan.${kantanProject.value}",

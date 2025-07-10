@@ -22,7 +22,6 @@ import sbt.Keys._
 import sbt._
 
 /** Configures publication for kantan projects. */
-@SuppressWarnings(Array("org.wartremover.warts.IterableOps"))
 object KantanPublishedPlugin extends AutoPlugin {
   override def trigger =
     allRequirements
