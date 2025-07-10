@@ -1,6 +1,6 @@
 addSbtPlugin("pl.project13.scala" % "sbt-jmh" % "0.4.7")
 
-addSbtPlugin("org.wartremover" % "sbt-wartremover" % "3.3.2")
+addSbtPlugin("org.wartremover" % "sbt-wartremover" % "3.4.0")
 
 addSbtPlugin("de.heikoseeberger" % "sbt-header" % "5.10.0")
 
