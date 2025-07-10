@@ -20,5 +20,5 @@ jobs:
       - uses: scala-steward-org/scala-steward-action@5021652c555c5724af574758b78ea5be49640007 # v2.75.0
         with:
           github-token: ${{ steps.app-token.outputs.token }}
-          author-email: "1565841+kantan-bot[bot]@users.noreply.github.com"
+          author-email: "220091877+kantan-bot[bot]@users.noreply.github.com"
           author-name: "kantan-bot[bot]"
