@@ -310,7 +310,7 @@ lazy val codecsEnumeratum = kantanCrossProject("codecs-enumeratum", "codecs/enum
 lazy val codecsEnumeratumLaws = kantanCrossProject("codecs-enumeratum-laws", "codecs/enumeratum-laws")
   .in(file("codecs/enumeratum/laws"))
   .settings(moduleName := "kantan.codecs-enumeratum-laws")
-  .settings(libraryDependencies += "com.beachape" %%% "enumeratum-scalacheck" % "1.7.5")
+  .settings(libraryDependencies += "com.beachape" %%% "enumeratum-scalacheck" % "1.9.0")
   .enablePlugins(PublishedPlugin)
   .dependsOn(codecsCore, codecsLaws, codecsEnumeratum)
 
