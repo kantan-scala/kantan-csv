@@ -25,14 +25,14 @@ import java.util.Date
 trait PlatformSpecificCellDecoderInstances {
 
   def dateDecoder(format: DateFormat): CellDecoder[Date] =
-    codecs.fromStringDecoder(StringDecoder.dateDecoder(format))
+    codecs.fromStringDecoder(using StringDecoder.dateDecoder(format))
 
 }
 
 trait PlatformSpecificCellEncoderInstances {
 
   def dateEncoder(format: DateFormat): CellEncoder[Date] =
-    codecs.fromStringEncoder(StringEncoder.dateEncoder(format))
+    codecs.fromStringEncoder(using StringEncoder.dateEncoder(format))
 
 }
 
