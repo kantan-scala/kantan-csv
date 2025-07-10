@@ -30,11 +30,8 @@ object KantanPublishedPlugin extends AutoPlugin {
     KantanKantanPlugin && PublishedPlugin && KantanReleasePlugin
 
   override lazy val projectSettings: Seq[Setting[?]] = Seq(
-    publishTo := Some(
-      if(isSnapshot.value)
-        Opts.resolver.sonatypeOssSnapshots.head
-      else
-        Opts.resolver.sonatypeStaging
+    publishTo := (
+      if(isSnapshot.value) None else localStaging.value
     ),
     versionScheme := Some("early-semver")
   )
