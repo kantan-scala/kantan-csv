@@ -21,7 +21,7 @@ import eu.timepit.refined.numeric.Positive
 import kantan.csv.laws.discipline.CellCodecTests
 import kantan.csv.laws.discipline.DisciplineSuite
 import kantan.csv.laws.discipline.RowCodecTests
-import kantan.csv.refined.arbitrary._
+import kantan.csv.refined.arbitrary.*
 
 class RefinedCodecTests extends DisciplineSuite {
 

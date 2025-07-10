@@ -16,10 +16,9 @@
 
 package kantan.csv.engine
 
+import java.io.Writer
 import kantan.csv.CsvConfiguration
 import kantan.csv.CsvWriter
-
-import java.io.Writer
 
 /** Provides factory-like services for [[CsvWriter]].
   *

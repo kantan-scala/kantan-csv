@@ -17,13 +17,13 @@
 package kantan.codecs.scalaz
 
 import kantan.codecs.scalaz.laws.discipline.ScalazDisciplineSuite
-import kantan.codecs.scalaz.laws.discipline.arbitrary._
-import kantan.codecs.scalaz.laws.discipline.equality._
+import kantan.codecs.scalaz.laws.discipline.arbitrary.*
+import kantan.codecs.scalaz.laws.discipline.equality.*
 import kantan.codecs.strings.DecodeError
 import kantan.codecs.strings.StringDecoder
 import scalaz.scalacheck.ScalazProperties.monadError
 import scalaz.scalacheck.ScalazProperties.plus
-import scalaz.std.anyVal._
+import scalaz.std.anyVal.*
 
 class DecoderTests extends ScalazDisciplineSuite {
   checkAll("StringDecoder", monadError.laws[StringDecoder, DecodeError])

@@ -21,7 +21,7 @@ import cats.kernel.laws.discipline.EqTests
 import kantan.csv.DecodeError
 import kantan.csv.ParseError
 import kantan.csv.ReadError
-import kantan.csv.cats.arbitrary._
+import kantan.csv.cats.arbitrary.*
 import kantan.csv.laws.discipline.DisciplineSuite
 
 class ErrorTests extends DisciplineSuite {

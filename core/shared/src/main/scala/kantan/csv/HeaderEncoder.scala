@@ -27,7 +27,7 @@ object HeaderEncoder extends GeneratedHeaderEncoders {
 
   implicit def defaultHeaderEncoder[A: RowEncoder]: HeaderEncoder[A] =
     new HeaderEncoder[A] {
-      override val header     = None
+      override val header = None
       override val rowEncoder = RowEncoder[A]
     }
 }

@@ -16,7 +16,7 @@
 
 package kantan.csv.benchmark
 
-import kantan.csv.ops._
+import kantan.csv.ops.*
 import kantan.csv.rfc
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers

@@ -22,7 +22,7 @@ import kantan.csv.DecodeResult
 import kantan.csv.RowDecoder
 import kantan.csv.RowEncoder
 import org.scalacheck.Arbitrary
-import org.scalacheck.Arbitrary.{arbitrary => arb}
+import org.scalacheck.Arbitrary.arbitrary as arb
 
 object equality {
   @SuppressWarnings(Array("org.wartremover.warts.PublicInference"))

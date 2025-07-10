@@ -1,5 +1,5 @@
 ThisBuild / kantanProject := "csv"
-ThisBuild / startYear     := Some(2015)
+ThisBuild / startYear := Some(2015)
 
 ThisBuild / scalafixDependencies += "com.github.xuwei-k" %% "scalafix-rules" % "0.6.12"
 
@@ -53,9 +53,9 @@ lazy val benchmark = project
   .dependsOn(coreJVM, jackson, commons, lawsJVM % Test)
   .settings(
     libraryDependencies ++= Seq(
-      "com.opencsv"           % "opencsv"           % "5.11.2",
-      "com.univocity"         % "univocity-parsers" % "2.9.1",
-      "com.github.tototoshi" %% "scala-csv"         % "2.0.0"
+      "com.opencsv" % "opencsv" % "5.11.2",
+      "com.univocity" % "univocity-parsers" % "2.9.1",
+      "com.github.tototoshi" %% "scala-csv" % "2.0.0"
     )
   )
 
@@ -106,7 +106,7 @@ lazy val generic = kantanCrossProject("generic", "generic")
   .dependsOn(core, laws % Test, codecsShapeless, codecsShapelessLaws % Test)
 
 lazy val genericJVM = generic.jvm
-lazy val genericJS  = generic.js
+lazy val genericJS = generic.js
 
 // - scalaz projects ---------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------
@@ -116,7 +116,7 @@ lazy val scalaz = kantanCrossProject("scalaz", "scalaz")
   .dependsOn(core, laws % Test, codecsScalaz, codecsScalazLaws % Test)
 
 lazy val scalazJVM = scalaz.jvm
-lazy val scalazJS  = scalaz.js
+lazy val scalazJS = scalaz.js
 
 // - cats projects -----------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------
@@ -126,14 +126,14 @@ lazy val cats = kantanCrossProject("cats", "cats")
   .dependsOn(core, laws % Test, codecsCats, codecsCatsLaws % Test)
 
 lazy val catsJVM = cats.jvm
-lazy val catsJS  = cats.js
+lazy val catsJS = cats.js
 
 // - java8 projects ----------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------
 lazy val java8 = project
   .settings(
     moduleName := "kantan.csv-java8",
-    name       := "java8"
+    name := "java8"
   )
   .enablePlugins(PublishedPlugin)
   .dependsOn(coreJVM, lawsJVM % "test", codecsJava8, codecsJava8Laws % Test)
@@ -155,7 +155,7 @@ lazy val enumeratum = kantanCrossProject("enumeratum", "enumeratum")
   .dependsOn(core, laws % Test, codecsEnumeratum, codecsEnumeratumLaws % Test)
 
 lazy val enumeratumJVM = enumeratum.jvm
-lazy val enumeratumJS  = enumeratum.js
+lazy val enumeratumJS = enumeratum.js
 
 // - Command alisases --------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------
@@ -188,9 +188,9 @@ lazy val codecsLaws = kantanCrossProject("codecs-laws", "codecs/laws")
   .dependsOn(codecsCore)
   .settings(
     libraryDependencies ++= Seq(
-      "org.scalacheck" %%% "scalacheck"           % "1.18.1",
-      "org.scalatest"  %%% "scalatest"            % "3.2.19",
-      "org.typelevel"  %%% "discipline-scalatest" % "2.3.0"
+      "org.scalacheck" %%% "scalacheck" % "1.18.1",
+      "org.scalatest" %%% "scalatest" % "3.2.19",
+      "org.typelevel" %%% "discipline-scalatest" % "2.3.0"
     )
   )
 
@@ -225,7 +225,7 @@ lazy val codecsCatsLaws = kantanCrossProject("codecs-cats-laws", "codecs/cats-la
 lazy val codecsJava8 = Project(id = "codecs-java8", base = file("codecs/java8/core"))
   .settings(
     moduleName := "kantan.codecs-java8",
-    name       := "java8"
+    name := "java8"
   )
   .enablePlugins(PublishedPlugin)
   .dependsOn(codecsCoreJVM)
@@ -239,7 +239,7 @@ lazy val codecsJava8 = Project(id = "codecs-java8", base = file("codecs/java8/co
 lazy val codecsJava8Laws = Project(id = "codecs-java8-laws", base = file("codecs/java8/laws"))
   .settings(
     moduleName := "kantan.codecs-java8-laws",
-    name       := "java8-laws"
+    name := "java8-laws"
   )
   .enablePlugins(PublishedPlugin)
   .dependsOn(codecsCoreJVM, codecsLawsJVM, codecsJava8)
@@ -253,8 +253,8 @@ lazy val codecsScalaz = kantanCrossProject("codecs-scalaz", "codecs/scalaz")
   .dependsOn(codecsCore)
   .settings(
     libraryDependencies ++= Seq(
-      "org.scalaz"    %%% "scalaz-core" % "7.3.8",
-      "org.scalatest" %%% "scalatest"   % "3.2.19" % Test
+      "org.scalaz" %%% "scalaz-core" % "7.3.8",
+      "org.scalatest" %%% "scalatest" % "3.2.19" % Test
     )
   )
   .laws("codecs-scalaz-laws")
@@ -266,9 +266,9 @@ lazy val codecsScalazLaws = kantanCrossProject("codecs-scalaz-laws", "codecs/sca
   .dependsOn(codecsCore, codecsLaws, codecsScalaz)
   .settings(
     libraryDependencies ++= Seq(
-      "org.scalaz"    %%% "scalaz-core"               % "7.3.8",
-      "org.scalaz"    %%% "scalaz-scalacheck-binding" % "7.3.8",
-      "org.scalatest" %%% "scalatest"                 % "3.2.19" % "optional"
+      "org.scalaz" %%% "scalaz-core" % "7.3.8",
+      "org.scalaz" %%% "scalaz-scalacheck-binding" % "7.3.8",
+      "org.scalatest" %%% "scalatest" % "3.2.19" % "optional"
     )
   )
 
@@ -281,7 +281,7 @@ lazy val codecsRefined = kantanCrossProject("codecs-refined", "codecs/refined")
   .dependsOn(codecsCore)
   .settings(
     libraryDependencies ++= Seq(
-      "eu.timepit"    %%% "refined"   % "0.11.3",
+      "eu.timepit" %%% "refined" % "0.11.3",
       "org.scalatest" %%% "scalatest" % "3.2.19" % Test
     )
   )
@@ -312,8 +312,8 @@ lazy val codecsEnumeratum = kantanCrossProject("codecs-enumeratum", "codecs/enum
       }
     },
     libraryDependencies ++= Seq(
-      "com.beachape"  %%% "enumeratum" % "1.9.0",
-      "org.scalatest" %%% "scalatest"  % "3.2.19" % Test
+      "com.beachape" %%% "enumeratum" % "1.9.0",
+      "org.scalatest" %%% "scalatest" % "3.2.19" % Test
     )
   )
   .laws("codecs-enumeratum-laws")
@@ -334,7 +334,7 @@ lazy val codecsShapeless = kantanCrossProject("codecs-shapeless", "codecs/shapel
   .dependsOn(codecsCore)
   .settings(
     libraryDependencies ++= Seq(
-      "com.chuusai"   %%% "shapeless" % "2.3.13",
+      "com.chuusai" %%% "shapeless" % "2.3.13",
       "org.scalatest" %%% "scalatest" % "3.2.19" % Test
     )
   )
@@ -344,7 +344,7 @@ lazy val codecsShapelessLaws = kantanCrossProject("codecs-shapeless-laws", "code
   .in(file("codecs/shapeless/laws"))
   .settings(moduleName := "kantan.codecs-shapeless-laws")
   .settings(
-    libraryDependencies             +=
+    libraryDependencies +=
       "com.github.alexarchambault" %%% "scalacheck-shapeless_1.18" % "1.3.2"
   )
   .enablePlugins(PublishedPlugin)

@@ -17,7 +17,7 @@
 package kantan.codecs.enumeratum.values
 
 import kantan.codecs.enumeratum.laws.discipline.EnumeratedChar
-import kantan.codecs.enumeratum.laws.discipline.arbitrary._
+import kantan.codecs.enumeratum.laws.discipline.arbitrary.*
 import kantan.codecs.laws.discipline.DisciplineSuite
 import kantan.codecs.laws.discipline.StringCodecTests
 import kantan.codecs.laws.discipline.StringDecoderTests

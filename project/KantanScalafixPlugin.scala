@@ -18,19 +18,19 @@ package kantan.sbt.scalafix
 
 import kantan.sbt.KantanPlugin
 import kantan.sbt.Resources
-import sbt.Keys._
-import sbt._
+import sbt.*
+import sbt.Keys.*
 import scalafix.sbt.ScalafixPlugin
-import scalafix.sbt.ScalafixPlugin.autoImport._
+import scalafix.sbt.ScalafixPlugin.autoImport.*
 
 /** Provides support for shared scalafix configuration files. */
 object KantanScalafixPlugin extends AutoPlugin {
   object autoImport {
     val scalafixResource: SettingKey[Option[String]] = settingKey("resource that holds the scalafix configuration")
-    val copyScalafixConfig: TaskKey[Unit]            = taskKey("Copies the scalafix resource if necessary")
+    val copyScalafixConfig: TaskKey[Unit] = taskKey("Copies the scalafix resource if necessary")
   }
 
-  import autoImport._
+  import autoImport.*
 
   override def trigger =
     allRequirements
@@ -38,14 +38,14 @@ object KantanScalafixPlugin extends AutoPlugin {
   override def requires: Plugins =
     KantanPlugin && ScalafixPlugin
 
-  override def buildSettings: Seq[Setting[_]] =
+  override def buildSettings: Seq[Setting[?]] =
     Seq(
-      semanticdbEnabled      := true,
+      semanticdbEnabled := true,
       semanticdbIncludeInJar := false,
-      semanticdbVersion      := scalafixSemanticdb.revision
+      semanticdbVersion := scalafixSemanticdb.revision
     )
 
-  override lazy val projectSettings: Seq[Setting[_]] =
+  override lazy val projectSettings: Seq[Setting[?]] =
     rawScalafixSettings(Compile, Test) ++ Seq(
       scalafixResource := None,
       copyScalafixConfig := {
@@ -56,7 +56,7 @@ object KantanScalafixPlugin extends AutoPlugin {
     )
 
   // Makes sure all relevant scalafix tasks depend on copyScalafixConfig
-  private def rawScalafixSettings(configs: Configuration*): Seq[Setting[_]] =
+  private def rawScalafixSettings(configs: Configuration*): Seq[Setting[?]] =
     configs.flatMap { config =>
       inConfig(config)(
         Seq(

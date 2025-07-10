@@ -16,7 +16,7 @@
 
 package kantan.sbt
 
-import sbt._
+import sbt.*
 
 /** Configures projects whose artifacts are meant for publication to maven.
   *

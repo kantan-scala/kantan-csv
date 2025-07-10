@@ -18,7 +18,7 @@ package kantan.sbt.kantan
 
 import de.heikoseeberger.sbtheader.AutomateHeaderPlugin
 import de.heikoseeberger.sbtheader.HeaderPlugin
-import sbt._
+import sbt.*
 
 object KantanAutomateHeaderPlugin extends AutoPlugin {
   override def trigger =

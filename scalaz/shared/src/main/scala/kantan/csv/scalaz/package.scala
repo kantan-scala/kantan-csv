@@ -28,13 +28,13 @@ package object scalaz extends DecoderInstances with EncoderInstances with Common
   // - Eq instances ----------------------------------------------------------------------------------------------------
   // -------------------------------------------------------------------------------------------------------------------
 
-  implicit val csvOutOfBoundsEqual: Equal[DecodeError.OutOfBounds]         = Equal.equalA
-  implicit val csvTypeErrorEqual: Equal[DecodeError.TypeError]             = Equal.equalA
-  implicit val csvDecodeErrorEqual: Equal[DecodeError]                     = Equal.equalA
+  implicit val csvOutOfBoundsEqual: Equal[DecodeError.OutOfBounds] = Equal.equalA
+  implicit val csvTypeErrorEqual: Equal[DecodeError.TypeError] = Equal.equalA
+  implicit val csvDecodeErrorEqual: Equal[DecodeError] = Equal.equalA
   implicit val csvNoSuchElementEqual: Equal[ParseError.NoSuchElement.type] = Equal.equalA
-  implicit val csvIoErrorEqual: Equal[ParseError.IOError]                  = Equal.equalA
-  implicit val csvParseErrorEqual: Equal[ParseError]                       = Equal.equalA
-  implicit val csvReadErrorEqual: Equal[ReadError]                         = Equal.equalA
+  implicit val csvIoErrorEqual: Equal[ParseError.IOError] = Equal.equalA
+  implicit val csvParseErrorEqual: Equal[ParseError] = Equal.equalA
+  implicit val csvReadErrorEqual: Equal[ReadError] = Equal.equalA
 
   implicit def foldableRowEncoder[F[_]: Foldable, A: CellEncoder]: RowEncoder[F[A]] =
     RowEncoder.from { as =>

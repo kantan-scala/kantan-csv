@@ -16,11 +16,10 @@
 
 package kantan.csv
 
-import kantan.csv.ops._
+import java.io.ByteArrayInputStream
+import kantan.csv.ops.*
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
-
-import java.io.ByteArrayInputStream
 
 class HeaderDecoderZipTests extends AnyFunSuite with Matchers {
   val x: HeaderDecoder[String] = HeaderDecoder.decoder[String, String]("A")(identity)

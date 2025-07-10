@@ -20,9 +20,9 @@ import kantan.codecs.scalaz.laws.discipline.ScalazDisciplineSuite
 import kantan.csv.DecodeError
 import kantan.csv.ParseError
 import kantan.csv.ReadError
-import kantan.csv.scalaz.arbitrary._
+import kantan.csv.scalaz.arbitrary.*
 import scalaz.Show
-import scalaz.scalacheck.ScalazProperties.{equal => equ}
+import scalaz.scalacheck.ScalazProperties.equal as equ
 
 class ErrorTests extends ScalazDisciplineSuite {
 

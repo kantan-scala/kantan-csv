@@ -16,10 +16,9 @@
 
 package kantan.csv.engine
 
+import java.io.Reader
 import kantan.csv.CsvConfiguration
 import kantan.csv.CsvReader
-
-import java.io.Reader
 import scala.annotation.tailrec
 import scala.collection.mutable.ArrayBuffer
 
@@ -31,12 +30,12 @@ private[engine] class InternalReader private (
   var length: Int
 ) extends CsvReader[Seq[String]] {
   private val cell = new StringBuilder
-  private val row  = ArrayBuffer[String]()
+  private val row = ArrayBuffer[String]()
 
-  private var leftover: Char       = _
+  private var leftover: Char = _
   private var hasLeftover: Boolean = false
 
-  private var mark: Int  = 0
+  private var mark: Int = 0
   private var index: Int = 0
 
   @inline private def dumpCell(): Unit = {
@@ -47,7 +46,7 @@ private[engine] class InternalReader private (
   private def endCell(): Unit = {
     if(cell.isEmpty) {
       if(index != mark) row += new String(characters, mark, index - mark - 1)
-      else row              += ""
+      else row += ""
     } else {
       dumpCell()
       row += cell.toString()
@@ -240,7 +239,7 @@ private[engine] class InternalReader private (
 private object InternalReader {
   def apply(data: Reader, conf: CsvConfiguration): InternalReader = {
     val characters = new Array[Char](2048)
-    val length     = data.read(characters)
+    val length = data.read(characters)
 
     new InternalReader(data, conf, characters, length)
   }
@@ -255,9 +254,9 @@ private object InternalReader {
   // Possible outcomes of parsing the beginning of a cell.
   final case class Finished(reason: Break) extends CellStart
   val CSeparator: Finished = Finished(Separator)
-  val CCR: Finished        = Finished(CR)
-  val CLF: Finished        = Finished(LF)
-  val CEOF: Finished       = Finished(EOF)
+  val CCR: Finished = Finished(CR)
+  val CLF: Finished = Finished(LF)
+  val CEOF: Finished = Finished(EOF)
   case object Escaped extends CellStart
   case object Raw extends CellStart
   sealed trait CellStart

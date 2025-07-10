@@ -19,7 +19,7 @@ package kantan.csv
 import kantan.csv.laws.discipline.CellCodecTests
 import kantan.csv.laws.discipline.DisciplineSuite
 import kantan.csv.laws.discipline.RowCodecTests
-import kantan.csv.laws.discipline.arbitrary._
+import kantan.csv.laws.discipline.arbitrary.*
 
 class OptionCodecTests extends DisciplineSuite {
 

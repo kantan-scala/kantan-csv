@@ -16,9 +16,6 @@
 
 package kantan.codecs.strings.java8
 
-import kantan.codecs.strings.StringDecoder
-import kantan.codecs.strings.StringResult
-
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -28,6 +25,8 @@ import java.time.ZoneOffset
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.TemporalAccessor
+import kantan.codecs.strings.StringDecoder
+import kantan.codecs.strings.StringResult
 
 /** `Serializable` wrapper around `DateTimeFormatter`.
   *

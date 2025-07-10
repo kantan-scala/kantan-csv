@@ -23,6 +23,6 @@ package object discipline {
 
   type StringEncoderTests[A] = EncoderTests[String, A, codecs.type]
   type StringDecoderTests[A] = DecoderTests[String, A, DecodeError, codecs.type]
-  type StringCodecTests[A]   = CodecTests[String, A, DecodeError, codecs.type]
+  type StringCodecTests[A] = CodecTests[String, A, DecodeError, codecs.type]
 
 }

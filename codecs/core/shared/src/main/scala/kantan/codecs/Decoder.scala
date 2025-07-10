@@ -16,8 +16,8 @@
 
 package kantan.codecs
 
-import kantan.codecs.error.IsError
 import kantan.codecs.`export`.DerivedDecoder
+import kantan.codecs.error.IsError
 
 /** Type class for types that can be decoded from other types.
   *
@@ -163,7 +163,7 @@ trait Decoder[E, D, F, T] extends Serializable {
   def product[DD](decoder: Decoder[E, DD, F, T]): Decoder[E, (D, DD), F, T] =
     Decoder.from { s =>
       for {
-        d  <- decode(s)
+        d <- decode(s)
         dd <- decoder.decode(s)
       } yield (d, dd)
     }
@@ -208,7 +208,7 @@ trait DecoderCompanion[E, F, T] extends Serializable {
     * the last failure otherwise.
     */
   @inline def oneOf[D](ds: Decoder[E, D, F, T]*)(implicit i: IsError[F]): Decoder[E, D, F, T] =
-    Decoder.oneOf(ds: _*)
+    Decoder.oneOf(ds*)
 }
 
 object Decoder {

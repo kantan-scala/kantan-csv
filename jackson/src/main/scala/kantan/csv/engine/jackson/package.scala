@@ -19,12 +19,11 @@ package kantan.csv.engine
 import com.fasterxml.jackson.databind.MappingIterator
 import com.fasterxml.jackson.databind.SequenceWriter
 import com.fasterxml.jackson.dataformat.csv.CsvGenerator
+import java.io.Reader
+import java.io.Writer
 import kantan.codecs.resource.ResourceIterator
 import kantan.csv.CsvConfiguration
 import kantan.csv.CsvWriter
-
-import java.io.Reader
-import java.io.Writer
 
 /** Provides CSV reader and writer engines using [[https://github.com/FasterXML/jackson-dataformat-csv jackson.csv]].
   *
@@ -39,7 +38,7 @@ package object jackson {
   type CsvMapper = com.fasterxml.jackson.dataformat.csv.CsvMapper
 
   type MappingIteratorBuilder = (Reader, CsvConfiguration) => MappingIterator[Array[String]]
-  type SequenceWriterBuilder  = (Writer, CsvConfiguration) => SequenceWriter
+  type SequenceWriterBuilder = (Writer, CsvConfiguration) => SequenceWriter
 
   private val MAPPER: CsvMapper = new CsvMapper()
   MAPPER.enable(com.fasterxml.jackson.dataformat.csv.CsvParser.Feature.WRAP_AS_ARRAY)

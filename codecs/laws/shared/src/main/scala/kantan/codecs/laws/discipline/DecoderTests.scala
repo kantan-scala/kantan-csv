@@ -20,7 +20,7 @@ import kantan.codecs.laws.CodecValue
 import kantan.codecs.laws.CodecValue.IllegalValue
 import kantan.codecs.laws.CodecValue.LegalValue
 import kantan.codecs.laws.DecoderLaws
-import kantan.codecs.laws.discipline.arbitrary._
+import kantan.codecs.laws.discipline.arbitrary.*
 import org.scalacheck.Arbitrary
 import org.scalacheck.Cogen
 import org.scalacheck.Prop.forAll
@@ -40,15 +40,15 @@ trait DecoderTests[E, D, F, T] extends Laws {
   private def coreRules[A: Arbitrary: Cogen, B: Arbitrary: Cogen](implicit arbED: Arbitrary[CodecValue[E, D, T]]) =
     new SimpleRuleSet(
       "core",
-      "decode"                       -> forAll(laws.decode _),
-      "map identity"                 -> forAll(laws.mapIdentity _),
-      "emap identity"                -> forAll(laws.emapIdentity _),
-      "map composition"              -> forAll(laws.mapComposition[A, B] _),
-      "emap composition"             -> forAll(laws.emapComposition[A, B] _),
-      "contramapEncoded identity"    -> forAll(laws.contramapEncodedIdentity _),
+      "decode" -> forAll(laws.decode _),
+      "map identity" -> forAll(laws.mapIdentity _),
+      "emap identity" -> forAll(laws.emapIdentity _),
+      "map composition" -> forAll(laws.mapComposition[A, B] _),
+      "emap composition" -> forAll(laws.emapComposition[A, B] _),
+      "contramapEncoded identity" -> forAll(laws.contramapEncodedIdentity _),
       "contramapEncoded composition" -> forAll(laws.contramapEncodedComposition[A, B] _),
-      "leftMap identity"             -> forAll(laws.leftMapIdentity _),
-      "leftMap composition"          -> forAll(laws.leftMapComposition[A, B] _)
+      "leftMap identity" -> forAll(laws.leftMapIdentity _),
+      "leftMap composition" -> forAll(laws.leftMapComposition[A, B] _)
     )
 
   def bijectiveDecoder[A: Arbitrary: Cogen, B: Arbitrary: Cogen]: RuleSet = {
@@ -73,12 +73,12 @@ object DecoderTests {
     al: Arbitrary[LegalValue[E, D, T]]
   ): DecoderTests[E, D, F, T] =
     new DecoderTests[E, D, F, T] {
-      override val laws     = l
+      override val laws = l
       override val arbLegal = al
-      override val arbF     = implicitly[Arbitrary[F]]
-      override val cogenF   = Cogen[F]
-      override val cogenD   = Cogen[D]
-      override val arbD     = implicitly[Arbitrary[D]]
-      override val arbE     = implicitly[Arbitrary[E]]
+      override val arbF = implicitly[Arbitrary[F]]
+      override val cogenF = Cogen[F]
+      override val cogenD = Cogen[D]
+      override val arbD = implicitly[Arbitrary[D]]
+      override val arbE = implicitly[Arbitrary[E]]
     }
 }

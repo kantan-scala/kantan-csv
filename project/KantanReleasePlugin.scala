@@ -17,10 +17,10 @@
 package kantan.sbt.release
 
 import kantan.sbt.KantanPlugin
-import sbt._
+import sbt.*
 import sbtrelease.ReleasePlugin
-import sbtrelease.ReleasePlugin.autoImport.ReleaseTransformations._
-import sbtrelease.ReleasePlugin.autoImport._
+import sbtrelease.ReleasePlugin.autoImport.*
+import sbtrelease.ReleasePlugin.autoImport.ReleaseTransformations.*
 
 /** Slightly improves the default release process.
   *
@@ -36,7 +36,7 @@ object KantanReleasePlugin extends AutoPlugin {
   override def requires: Plugins =
     KantanPlugin && ReleasePlugin
 
-  override lazy val projectSettings: Seq[Setting[_]] =
+  override lazy val projectSettings: Seq[Setting[?]] =
     releaseProcess := Seq[ReleaseStep](
       checkSnapshotDependencies,
       inquireVersions,

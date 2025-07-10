@@ -16,12 +16,11 @@
 
 package kantan.csv
 
+import java.io.File
 import kantan.csv.laws.discipline.CellCodecTests
 import kantan.csv.laws.discipline.DisciplineSuite
 import kantan.csv.laws.discipline.RowCodecTests
-import kantan.csv.laws.discipline.arbitrary._
-
-import java.io.File
+import kantan.csv.laws.discipline.arbitrary.*
 
 class FileCodecTests extends DisciplineSuite {
 

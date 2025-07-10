@@ -16,9 +16,9 @@
 
 package kantan.csv.cats
 
-import cats.instances.list._
+import cats.instances.list.*
 import kantan.csv.RowEncoder
-import kantan.csv.cats.arbitrary._
+import kantan.csv.cats.arbitrary.*
 import kantan.csv.laws.discipline.DisciplineSuite
 import kantan.csv.laws.discipline.RowEncoderTests
 import org.scalacheck.Arbitrary

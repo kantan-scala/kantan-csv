@@ -96,7 +96,7 @@ trait RowDecoderInstances {
     RowDecoder.from(_.foldLeft(DecodeResult(hb.newBuilder)) { (racc, s) =>
       for {
         acc <- racc
-        a   <- CellDecoder[A].decode(s)
+        a <- CellDecoder[A].decode(s)
       } yield acc += a
     }.map(_.result()))
 }

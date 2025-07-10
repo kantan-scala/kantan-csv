@@ -21,7 +21,7 @@ import kantan.csv.laws.LegalRow
 import kantan.csv.laws.discipline.CellCodecTests
 import kantan.csv.laws.discipline.DisciplineSuite
 import kantan.csv.laws.discipline.RowCodecTests
-import kantan.csv.scalaz.arbitrary._
+import kantan.csv.scalaz.arbitrary.*
 import org.scalacheck.Arbitrary
 import scalaz.\/
 
@@ -30,7 +30,7 @@ class DisjunctionCodecTests extends DisciplineSuite {
   // These 2 implicits are not found in 2.13. I'm not sure why - it *might* have to do with the change in import
   // statements behaviour?
   implicit val ai: Arbitrary[IllegalRow[(Int, Int, Int) \/ (Boolean, Float)]] = arbIllegalValueFromDec
-  implicit val al: Arbitrary[LegalRow[(Int, Int, Int) \/ (Boolean, Float)]]   = arbLegalValueFromEnc
+  implicit val al: Arbitrary[LegalRow[(Int, Int, Int) \/ (Boolean, Float)]] = arbLegalValueFromEnc
 
   checkAll("Int \\/ Boolean", CellCodecTests[Int \/ Boolean].codec[Byte, Float])
   checkAll(

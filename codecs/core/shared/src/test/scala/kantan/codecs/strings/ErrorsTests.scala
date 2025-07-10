@@ -16,7 +16,7 @@
 
 package kantan.codecs.strings
 
-import kantan.codecs.laws.discipline.arbitrary._
+import kantan.codecs.laws.discipline.arbitrary.*
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks

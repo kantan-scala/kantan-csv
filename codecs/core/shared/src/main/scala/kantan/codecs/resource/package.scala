@@ -22,9 +22,9 @@ import java.io.Reader
 import java.io.Writer
 
 package object resource {
-  type OpenResult[A]     = Either[ResourceError.OpenError, A]
-  type CloseResult       = Either[ResourceError.CloseError, Unit]
-  type ProcessResult[A]  = Either[ResourceError.ProcessError, A]
+  type OpenResult[A] = Either[ResourceError.OpenError, A]
+  type CloseResult = Either[ResourceError.CloseError, Unit]
+  type ProcessResult[A] = Either[ResourceError.ProcessError, A]
   type ResourceResult[A] = Either[ResourceError, A]
 
   /** [[Resource]] specialised for `java.io.InputStream`. */

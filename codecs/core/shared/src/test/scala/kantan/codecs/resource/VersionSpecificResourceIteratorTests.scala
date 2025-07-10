@@ -19,31 +19,31 @@ package kantan.codecs.resource
 trait VersionSpecificResourceIteratorTests { self: ResourceIteratorTests =>
   test("to(List) should behave as expected") {
     forAll { (is: List[Int]) =>
-      ResourceIterator(is: _*).to(List) should be(is)
+      ResourceIterator(is*).to(List) should be(is)
     }
   }
 
   test("iterator should behave as expected") {
     forAll { (is: List[Int]) =>
-      ResourceIterator(is: _*).iterator.sameElements(is.iterator) should be(true)
+      ResourceIterator(is*).iterator.sameElements(is.iterator) should be(true)
     }
   }
 
   test("zipWithIndex should behave as expected") {
     forAll { (is: List[Int]) =>
-      ResourceIterator(is: _*).zipWithIndex.toList should be(is.zipWithIndex)
+      ResourceIterator(is*).zipWithIndex.toList should be(is.zipWithIndex)
     }
   }
 
   test("scanLeft should behave as expected") {
     forAll { (is: List[String], z: Int, f: (Int, String) => Int) =>
-      ResourceIterator(is: _*).scanLeft(z)(f).toList should be(is.scanLeft(z)(f))
+      ResourceIterator(is*).scanLeft(z)(f).toList should be(is.scanLeft(z)(f))
     }
   }
 
   test("slice should behave as expected") {
     forAll { (is: List[Int], from: Int, to: Int) =>
-      ResourceIterator(is: _*).slice(from, to).toList should be(is.slice(from, to))
+      ResourceIterator(is*).slice(from, to).toList should be(is.slice(from, to))
     }
   }
 

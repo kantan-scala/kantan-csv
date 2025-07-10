@@ -17,7 +17,6 @@
 package kantan.codecs.collection
 
 import kantan.codecs.laws.discipline.SerializableTests
-
 import scala.collection.immutable.Queue
 import scala.collection.immutable.TreeSet
 

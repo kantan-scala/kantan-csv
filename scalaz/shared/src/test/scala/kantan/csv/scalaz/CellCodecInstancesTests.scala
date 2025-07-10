@@ -20,13 +20,13 @@ import kantan.codecs.scalaz.laws.discipline.ScalazDisciplineSuite
 import kantan.csv.CellDecoder
 import kantan.csv.CellEncoder
 import kantan.csv.DecodeError
-import kantan.csv.scalaz.arbitrary._
-import kantan.csv.scalaz.equality._
+import kantan.csv.scalaz.arbitrary.*
+import kantan.csv.scalaz.equality.*
 import scalaz.scalacheck.ScalazProperties.contravariant
 import scalaz.scalacheck.ScalazProperties.monadError
 import scalaz.scalacheck.ScalazProperties.plus
-import scalaz.std.anyVal._
-import scalaz.std.string._
+import scalaz.std.anyVal.*
+import scalaz.std.string.*
 
 class CellCodecInstancesTests extends ScalazDisciplineSuite {
 

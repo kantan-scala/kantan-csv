@@ -18,7 +18,7 @@ package kantan.codecs.laws.discipline
 
 import kantan.codecs.laws.LegalString
 import kantan.codecs.laws.StringDecoderLaws
-import kantan.codecs.laws.discipline.arbitrary._
+import kantan.codecs.laws.discipline.arbitrary.*
 import kantan.codecs.strings.DecodeError
 import kantan.codecs.strings.codecs
 import org.scalacheck.Arbitrary

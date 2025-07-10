@@ -25,7 +25,6 @@ import kantan.codecs.Decoder
 import kantan.codecs.Encoder
 import kantan.codecs.error.Error
 import kantan.codecs.strings.DecodeError
-
 import scala.annotation.tailrec
 
 trait DecoderInstances {

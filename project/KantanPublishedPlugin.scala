@@ -18,8 +18,8 @@ package kantan.sbt.kantan
 
 import kantan.sbt.PublishedPlugin
 import kantan.sbt.release.KantanReleasePlugin
-import sbt.Keys._
-import sbt._
+import sbt.*
+import sbt.Keys.*
 
 /** Configures publication for kantan projects. */
 object KantanPublishedPlugin extends AutoPlugin {
@@ -29,7 +29,7 @@ object KantanPublishedPlugin extends AutoPlugin {
   override def requires: Plugins =
     KantanKantanPlugin && PublishedPlugin && KantanReleasePlugin
 
-  override lazy val projectSettings: Seq[Setting[_]] = Seq(
+  override lazy val projectSettings: Seq[Setting[?]] = Seq(
     publishTo := Some(
       if(isSnapshot.value)
         Opts.resolver.sonatypeOssSnapshots.head

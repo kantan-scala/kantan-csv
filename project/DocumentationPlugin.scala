@@ -17,21 +17,21 @@
 package kantan.sbt
 
 import com.github.sbt.sbtghpages.GhpagesPlugin
-import com.github.sbt.sbtghpages.GhpagesPlugin.autoImport._
+import com.github.sbt.sbtghpages.GhpagesPlugin.autoImport.*
 import com.typesafe.sbt.site.SitePlugin
 import com.typesafe.sbt.site.SitePlugin.autoImport.makeSite
 import com.typesafe.sbt.site.SitePlugin.autoImport.siteSubdirName
 import com.typesafe.sbt.site.preprocess.PreprocessPlugin
-import com.typesafe.sbt.site.preprocess.PreprocessPlugin.autoImport._
-import com.typesafe.sbt.site.util.SiteHelpers._
+import com.typesafe.sbt.site.preprocess.PreprocessPlugin.autoImport.*
+import com.typesafe.sbt.site.util.SiteHelpers.*
 import mdoc.MdocPlugin
-import mdoc.MdocPlugin.autoImport._
-import sbt.Keys._
+import mdoc.MdocPlugin.autoImport.*
+import sbt.*
+import sbt.Keys.*
 import sbt.ScopeFilter.ProjectFilter
-import sbt._
-import sbtunidoc.BaseUnidocPlugin.autoImport._
+import sbtunidoc.BaseUnidocPlugin.autoImport.*
 import sbtunidoc.ScalaUnidocPlugin
-import sbtunidoc.ScalaUnidocPlugin.autoImport._
+import sbtunidoc.ScalaUnidocPlugin.autoImport.*
 
 /** Plugin for documentation projects.
   *
@@ -53,7 +53,7 @@ object DocumentationPlugin extends AutoPlugin {
     val docSourceUrl: SettingKey[Option[String]] = settingKey("scalac -doc-source-url parameter")
 
     def inProjectsIf(predicate: Boolean)(projects: ProjectReference*): ProjectFilter =
-      if(predicate) inProjects(projects: _*)
+      if(predicate) inProjects(projects*)
       else inProjects()
     val mdocSite: TaskKey[Seq[(File, String)]] =
       taskKey[Seq[(File, String)]]("create mdoc documentation in a way that lets sbt-site grab it")
@@ -61,12 +61,12 @@ object DocumentationPlugin extends AutoPlugin {
       settingKey[String]("name of the directory in which sbt-site will store mdoc documentation")
   }
 
-  import autoImport._
+  import autoImport.*
 
-  override def projectSettings: Seq[Setting[_]] =
+  override def projectSettings: Seq[Setting[?]] =
     scaladocSettings ++ mdocSettings ++ ghpagesSettings ++ siteSettings
 
-  def siteSettings: Seq[Setting[_]] =
+  def siteSettings: Seq[Setting[?]] =
     Seq(
       SitePlugin.autoImport.makeSite / includeFilter :=
         "*.yml" | "*.md" | "*.html" | "*.css" | "*.png" | "*.jpg" | "*.gif" | "*.js" | "*.eot" | "*.svg" | "*.ttf" |
@@ -76,14 +76,14 @@ object DocumentationPlugin extends AutoPlugin {
       addMappingsToSiteDir(ScalaUnidoc / packageDoc / mappings, ScalaUnidoc / siteSubdirName),
       // Configures task dependencies: doc → makeSite → mdoc
       makeSite := makeSite.dependsOn(mdocSite).value,
-      doc      := (Compile / doc).dependsOn(SitePlugin.autoImport.makeSite).value,
+      doc := (Compile / doc).dependsOn(SitePlugin.autoImport.makeSite).value,
       // Use a "managed" source directory for preprocessing - we want all documentation to be preprocessed, and the only
       // way I found to achieve that is to have all md files to be copied / generated to the same directory, and *then*
       // preprocess that.
       Preprocess / sourceDirectory := resourceManaged.value / "main" / "site-preprocess"
     )
 
-  def ghpagesSettings: Seq[Setting[_]] =
+  def ghpagesSettings: Seq[Setting[?]] =
     Seq(
       // We want ghpages to run jekyll for us - this means our build has zero dependency on non-JVM tools.
       ghpagesNoJekyll := false,
@@ -91,7 +91,7 @@ object DocumentationPlugin extends AutoPlugin {
       ghpagesPushSite := ghpagesPushSite.dependsOn(makeSite).value
     )
 
-  def mdocSettings: Seq[Setting[_]] =
+  def mdocSettings: Seq[Setting[?]] =
     Seq(
       mdocSite := {
         val out = mdocOut.value
@@ -99,17 +99,17 @@ object DocumentationPlugin extends AutoPlugin {
           (file, name) <- (out ** AllPassFilter --- out).pair(Path.relativeTo(out))
         } yield file -> name
       },
-      mdocSite           := mdocSite.dependsOn(mdoc.toTask(" ")).value,
+      mdocSite := mdocSite.dependsOn(mdoc.toTask(" ")).value,
       mdocExtraArguments += "--no-link-hygiene",
-      mdocSiteOut        := "./",
-      mdocIn             := (Compile / sourceDirectory).value / "mdoc",
+      mdocSiteOut := "./",
+      mdocIn := (Compile / sourceDirectory).value / "mdoc",
       mdocVariables := Map(
         "VERSION" -> version.value
       ),
       addMappingsToSiteDir(mdocSite, mdocSiteOut)
     )
 
-  def scaladocSettings: Seq[Setting[_]] =
+  def scaladocSettings: Seq[Setting[?]] =
     Seq(
       docSourceUrl := scmInfo.value.map(i => s"${i.browseUrl}/tree/master€{FILE_PATH}.scala"),
       ScalaUnidoc / unidoc / scalacOptions ++= Seq(

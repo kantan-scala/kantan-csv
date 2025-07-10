@@ -18,11 +18,11 @@ package kantan.codecs.refined.laws.discipline
 
 import eu.timepit.refined.api.Refined
 import eu.timepit.refined.numeric.Positive
-import eu.timepit.refined.scalacheck._
+import eu.timepit.refined.scalacheck.*
 import kantan.codecs.laws.CodecValue
 import kantan.codecs.laws.IllegalString
 import kantan.codecs.laws.LegalString
-import kantan.codecs.laws.discipline.arbitrary._
+import kantan.codecs.laws.discipline.arbitrary.*
 import org.scalacheck.Arbitrary
 
 object arbitrary extends ArbitraryInstances with kantan.codecs.laws.discipline.ArbitraryInstances

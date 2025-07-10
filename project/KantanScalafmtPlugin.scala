@@ -17,20 +17,20 @@
 package kantan.sbt.scalafmt
 
 import kantan.sbt.KantanPlugin
-import kantan.sbt.KantanPlugin.autoImport._
+import kantan.sbt.KantanPlugin.autoImport.*
 import kantan.sbt.Resources
 import org.scalafmt.sbt.ScalafmtPlugin
-import org.scalafmt.sbt.ScalafmtPlugin.autoImport._
-import sbt._
+import org.scalafmt.sbt.ScalafmtPlugin.autoImport.*
+import sbt.*
 
 /** Provides support for shared scalafmt configuration files. */
 object KantanScalafmtPlugin extends AutoPlugin {
   object autoImport {
     val scalafmtResource: SettingKey[Option[String]] = settingKey("resource that holds the scalafmt configuration")
-    val copyScalafmtConfig: TaskKey[Unit]            = taskKey("Copies the scalafmt resource if necessary")
+    val copyScalafmtConfig: TaskKey[Unit] = taskKey("Copies the scalafmt resource if necessary")
   }
 
-  import autoImport._
+  import autoImport.*
 
   override def trigger =
     allRequirements
@@ -38,10 +38,10 @@ object KantanScalafmtPlugin extends AutoPlugin {
   override def requires: Plugins =
     KantanPlugin && ScalafmtPlugin
 
-  override lazy val projectSettings: Seq[Setting[_]] =
+  override lazy val projectSettings: Seq[Setting[?]] =
     rawScalafmtSettings(Compile, Test) ++ checkStyleSettings ++ Seq(
       scalafmtResource := None,
-      scalafmtAll      := scalafmtAll.dependsOn(Compile / scalafmtSbt).value,
+      scalafmtAll := scalafmtAll.dependsOn(Compile / scalafmtSbt).value,
       copyScalafmtConfig := {
         val path = scalafmtConfig.value
 
@@ -50,7 +50,7 @@ object KantanScalafmtPlugin extends AutoPlugin {
     )
 
   // Makes sure checkStyle depends on the right scalafmt commands depending on the context.
-  private def checkStyleSettings: Seq[Setting[_]] =
+  private def checkStyleSettings: Seq[Setting[?]] =
     Seq(
       (Compile / checkStyle) := (Compile / checkStyle)
         .dependsOn(Compile / scalafmtCheck, Compile / scalafmtSbtCheck)
@@ -59,13 +59,13 @@ object KantanScalafmtPlugin extends AutoPlugin {
     )
 
   // Makes sure all relevant scalafmt tasks depend on copyScalafmtConfig
-  private def rawScalafmtSettings(configs: Configuration*): Seq[Setting[_]] =
+  private def rawScalafmtSettings(configs: Configuration*): Seq[Setting[?]] =
     configs.flatMap { config =>
       inConfig(config)(
         Seq(
-          scalafmt         := scalafmt.dependsOn(copyScalafmtConfig).value,
-          scalafmtCheck    := scalafmtCheck.dependsOn(copyScalafmtConfig).value,
-          scalafmtSbt      := scalafmtSbt.dependsOn(copyScalafmtConfig).value,
+          scalafmt := scalafmt.dependsOn(copyScalafmtConfig).value,
+          scalafmtCheck := scalafmtCheck.dependsOn(copyScalafmtConfig).value,
+          scalafmtSbt := scalafmtSbt.dependsOn(copyScalafmtConfig).value,
           scalafmtSbtCheck := scalafmtSbtCheck.dependsOn(copyScalafmtConfig).value
         )
       )

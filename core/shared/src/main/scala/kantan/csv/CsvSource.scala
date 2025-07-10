@@ -16,6 +16,8 @@
 
 package kantan.csv
 
+import java.io.IOException
+import java.io.Reader
 import kantan.codecs.collection.Factory
 import kantan.codecs.resource.ReaderResource
 import kantan.codecs.resource.ResourceIterator
@@ -24,9 +26,6 @@ import kantan.csv.DecodeError.TypeError
 import kantan.csv.ParseError.IOError
 import kantan.csv.ParseError.NoSuchElement
 import kantan.csv.engine.ReaderEngine
-
-import java.io.IOException
-import java.io.Reader
 
 /** Turns instances of `S` into valid sources of CSV data.
   *

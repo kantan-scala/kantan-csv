@@ -17,7 +17,6 @@
 package kantan.codecs.resource
 
 import kantan.codecs.ResultCompanion
-
 import scala.annotation.tailrec
 import scala.util.Try
 
@@ -71,7 +70,7 @@ trait ResourceIterator[+A] extends VersionSpecificResourceIterator[A] with java.
 
   // - Internal state handling -----------------------------------------------------------------------------------------
   // -------------------------------------------------------------------------------------------------------------------
-  private var isClosed                     = false
+  private var isClosed = false
   private var lastError: Option[Throwable] = None
 
   @inline
@@ -168,7 +167,7 @@ trait ResourceIterator[+A] extends VersionSpecificResourceIterator[A] with java.
     else
       new ResourceIterator[A] {
         var state = 0 // Current state. 0: not initialised. 1: `n` contains an interesting value. 2: back to normal.
-        var n: A  = _ // Where to store the first A that verifies p.
+        var n: A = _ // Where to store the first A that verifies p.
 
         def init(): Unit =
           // Skips all elements until one is found that doesn't match `p` or the end of the resource is reached.
@@ -290,7 +289,7 @@ trait ResourceIterator[+A] extends VersionSpecificResourceIterator[A] with java.
   def scanLeft[B](z: B)(f: (B, A) => B): ResourceIterator[B] =
     new ResourceIterator[B] {
       var consumed = false
-      var acc      = z
+      var acc = z
 
       override def checkNext =
         !consumed || self.hasNext
@@ -347,9 +346,9 @@ trait ResourceIterator[+A] extends VersionSpecificResourceIterator[A] with java.
     if(isEmpty) this
     else
       new ResourceIterator[A] {
-        var first         = true // Whether we've started reading from the resource.
-        var n: A          = _    // Latest value read from the resource.
-        var hasN: Boolean = _    // Whether or not n verifies p.
+        var first = true // Whether we've started reading from the resource.
+        var n: A = _ // Latest value read from the resource.
+        var hasN: Boolean = _ // Whether or not n verifies p.
 
         def takeNext(): Unit = {
           n = self.next()
@@ -385,7 +384,7 @@ trait ResourceIterator[+A] extends VersionSpecificResourceIterator[A] with java.
     else
       new ResourceIterator[B] {
         var n: Option[A] = _
-        var first        = true
+        var first = true
 
         def init(): Unit = {
           n = self.find(f.isDefinedAt)

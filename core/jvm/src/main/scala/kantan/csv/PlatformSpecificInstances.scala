@@ -16,11 +16,10 @@
 
 package kantan.csv
 
-import kantan.codecs.strings.StringDecoder
-import kantan.codecs.strings.StringEncoder
-
 import java.text.DateFormat
 import java.util.Date
+import kantan.codecs.strings.StringDecoder
+import kantan.codecs.strings.StringEncoder
 
 trait PlatformSpecificCellDecoderInstances {
 

@@ -18,7 +18,7 @@ package kantan.csv
 
 import kantan.csv.laws.discipline.DisciplineSuite
 import kantan.csv.laws.discipline.RowCodecTests
-import kantan.csv.laws.discipline.arbitrary._
+import kantan.csv.laws.discipline.arbitrary.*
 import org.scalacheck.Arbitrary
 import org.scalacheck.Gen
 

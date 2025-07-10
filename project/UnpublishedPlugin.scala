@@ -18,7 +18,7 @@ package kantan.sbt
 
 import sbt.AutoPlugin
 import sbt.Def
-import sbt.Keys._
+import sbt.Keys.*
 import sbt.Resolver
 import sbt.file
 
@@ -28,17 +28,17 @@ import sbt.file
   */
 object UnpublishedPlugin extends AutoPlugin {
 
-  override def projectSettings: Seq[Def.Setting[_]] =
+  override def projectSettings: Seq[Def.Setting[?]] =
     Seq(
       // List of settings grabbed from https://github.com/scala/scala-parallel-collections/pull/14.
-      makePom         := file(""),
-      deliver         := file(""),
-      deliverLocal    := file(""),
-      publish         := {},
-      publishLocal    := {},
-      publishM2       := {},
+      makePom := file(""),
+      deliver := file(""),
+      deliverLocal := file(""),
+      publish := {},
+      publishLocal := {},
+      publishM2 := {},
       publishArtifact := false,
-      publishTo       := Some(Resolver.file("devnull", file("/dev/null")))
+      publishTo := Some(Resolver.file("devnull", file("/dev/null")))
     )
 
   override def requires =

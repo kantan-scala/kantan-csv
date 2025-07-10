@@ -19,12 +19,11 @@ package kantan.csv.ops
 import kantan.codecs.laws.CodecValue
 import kantan.csv.laws.RowValue
 import kantan.csv.laws.asCsv
-import kantan.csv.laws.discipline.arbitrary._
+import kantan.csv.laws.discipline.arbitrary.*
 import kantan.csv.rfc
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
-
 import scala.util.Try
 
 class CsvSourceOpsTests extends AnyFunSuite with ScalaCheckPropertyChecks with Matchers {
@@ -71,7 +70,7 @@ class CsvSourceOpsTests extends AnyFunSuite with ScalaCheckPropertyChecks with M
 
     Try(csv) match {
       case scala.util.Success(is) => cmp(is, data)
-      case _ =>
+      case _                      =>
         data.filter(_.isIllegal).nonEmpty should be(true)
         ()
     }

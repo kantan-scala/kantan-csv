@@ -23,7 +23,7 @@ trait VersionSpecificCsvSink[-S] { self: CsvSink[S] =>
   def write[A: HeaderEncoder](s: S, rows: IterableOnce[A], sep: Char, header: String*)(implicit
     e: WriterEngine
   ): Unit =
-    write(s, rows, rfc.withCellSeparator(sep).withHeader(header: _*))
+    write(s, rows, rfc.withCellSeparator(sep).withHeader(header*))
 
   /** Writes the specified collections directly in the specifie `S`.
     *

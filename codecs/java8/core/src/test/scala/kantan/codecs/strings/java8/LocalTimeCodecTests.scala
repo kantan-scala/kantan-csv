@@ -16,6 +16,7 @@
 
 package kantan.codecs.strings.java8
 
+import java.time.LocalTime
 import kantan.codecs.laws.discipline.DisciplineSuite
 import kantan.codecs.laws.discipline.SerializableTests
 import kantan.codecs.laws.discipline.StringCodecTests
@@ -23,9 +24,7 @@ import kantan.codecs.laws.discipline.StringDecoderTests
 import kantan.codecs.laws.discipline.StringEncoderTests
 import kantan.codecs.strings.StringDecoder
 import kantan.codecs.strings.StringEncoder
-import kantan.codecs.strings.java8.laws.discipline.arbitrary._
-
-import java.time.LocalTime
+import kantan.codecs.strings.java8.laws.discipline.arbitrary.*
 
 class LocalTimeCodecTests extends DisciplineSuite {
 

@@ -16,9 +16,6 @@
 
 package kantan.codecs.strings
 
-import kantan.codecs.laws.discipline.DisciplineSuite
-import kantan.codecs.laws.discipline.SerializableTests
-
 import java.io.File
 import java.net.URI
 import java.net.URL
@@ -28,6 +25,8 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.UUID
+import kantan.codecs.laws.discipline.DisciplineSuite
+import kantan.codecs.laws.discipline.SerializableTests
 
 class SerializationTests extends DisciplineSuite {
 

@@ -26,8 +26,8 @@ import kantan.csv.laws.IllegalCell
 import kantan.csv.laws.IllegalRow
 import kantan.csv.laws.LegalCell
 import kantan.csv.laws.LegalRow
-import org.scalacheck.Arbitrary.{arbitrary => arb}
-import org.scalacheck._
+import org.scalacheck.*
+import org.scalacheck.Arbitrary.arbitrary as arb
 import org.scalacheck.rng.Seed
 
 object arbitrary extends ArbitraryInstances
@@ -42,24 +42,24 @@ trait ArbitraryInstances extends kantan.codecs.laws.discipline.ArbitraryInstance
   // -------------------------------------------------------------------------------------------------------------------
 
   val genOutOfBoundsError: Gen[DecodeError.OutOfBounds] = Gen.posNum[Int].map(DecodeError.OutOfBounds.apply)
-  val genTypeError: Gen[DecodeError.TypeError]          = genException.map(DecodeError.TypeError.apply)
-  val genDecodeError: Gen[DecodeError]                  = Gen.oneOf(genOutOfBoundsError, genTypeError)
+  val genTypeError: Gen[DecodeError.TypeError] = genException.map(DecodeError.TypeError.apply)
+  val genDecodeError: Gen[DecodeError] = Gen.oneOf(genOutOfBoundsError, genTypeError)
 
-  val genIOError: Gen[ParseError.IOError]                  = genIoException.map(ParseError.IOError.apply)
+  val genIOError: Gen[ParseError.IOError] = genIoException.map(ParseError.IOError.apply)
   val genNoSuchElement: Gen[ParseError.NoSuchElement.type] = Gen.const(ParseError.NoSuchElement)
-  val genParseError: Gen[ParseError]                       = Gen.oneOf(genIOError, genNoSuchElement)
+  val genParseError: Gen[ParseError] = Gen.oneOf(genIOError, genNoSuchElement)
 
   val genReadError: Gen[ReadError] = Gen.oneOf(genParseError, genDecodeError)
 
-  implicit val arbTypeError: Arbitrary[DecodeError.TypeError]             = Arbitrary(genTypeError)
-  implicit val arbIOError: Arbitrary[ParseError.IOError]                  = Arbitrary(genIOError)
+  implicit val arbTypeError: Arbitrary[DecodeError.TypeError] = Arbitrary(genTypeError)
+  implicit val arbIOError: Arbitrary[ParseError.IOError] = Arbitrary(genIOError)
   implicit val arbNoSuchElement: Arbitrary[ParseError.NoSuchElement.type] = Arbitrary(genNoSuchElement)
-  implicit val arbOutOfBounds: Arbitrary[DecodeError.OutOfBounds]         = Arbitrary(genOutOfBoundsError)
-  implicit val arbDecodeError: Arbitrary[DecodeError]                     = Arbitrary(genDecodeError)
-  implicit val arbParseError: Arbitrary[ParseError]                       = Arbitrary(genParseError)
+  implicit val arbOutOfBounds: Arbitrary[DecodeError.OutOfBounds] = Arbitrary(genOutOfBoundsError)
+  implicit val arbDecodeError: Arbitrary[DecodeError] = Arbitrary(genDecodeError)
+  implicit val arbParseError: Arbitrary[ParseError] = Arbitrary(genParseError)
   implicit val arbReadError: Arbitrary[ReadError] = Arbitrary(Gen.oneOf(genDecodeError, genParseError))
 
-  implicit val cogenCsvIOError: Cogen[ParseError.IOError]                  = Cogen[String].contramap(_.message)
+  implicit val cogenCsvIOError: Cogen[ParseError.IOError] = Cogen[String].contramap(_.message)
   implicit val cogenCsvNoSuchElement: Cogen[ParseError.NoSuchElement.type] = Cogen[Unit].contramap(_ => ())
   implicit val cogenCsvParseError: Cogen[ParseError] = Cogen { (seed: Seed, err: ParseError) =>
     err match {
@@ -69,7 +69,7 @@ trait ArbitraryInstances extends kantan.codecs.laws.discipline.ArbitraryInstance
   }
 
   implicit val cogenCsvOutOfBounds: Cogen[DecodeError.OutOfBounds] = Cogen[Int].contramap(_.index)
-  implicit val cogenCsvTypeError: Cogen[DecodeError.TypeError]     = Cogen[String].contramap(_.message)
+  implicit val cogenCsvTypeError: Cogen[DecodeError.TypeError] = Cogen[String].contramap(_.message)
   implicit val cogenCsvDecodeError: Cogen[DecodeError] = Cogen { (seed: Seed, err: DecodeError) =>
     err match {
       case error: DecodeError.OutOfBounds => cogenCsvOutOfBounds.perturb(seed, error)

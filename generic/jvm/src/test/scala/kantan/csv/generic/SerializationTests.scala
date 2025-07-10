@@ -21,7 +21,7 @@ import kantan.csv.CellDecoder
 import kantan.csv.CellEncoder
 import kantan.csv.RowDecoder
 import kantan.csv.RowEncoder
-import kantan.csv.generic.Instances._
+import kantan.csv.generic.Instances.*
 import kantan.csv.laws.discipline.DisciplineSuite
 import kantan.csv.laws.discipline.SerializableTests
 

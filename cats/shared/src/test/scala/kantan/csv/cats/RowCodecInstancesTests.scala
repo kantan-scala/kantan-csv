@@ -18,7 +18,7 @@ package kantan.csv.cats
 
 import cats.Eq
 import cats.data.EitherT
-import cats.instances.all._
+import cats.instances.all.*
 import cats.laws.discipline.ContravariantTests
 import cats.laws.discipline.MonadErrorTests
 import cats.laws.discipline.SemigroupKTests
@@ -26,8 +26,8 @@ import cats.laws.discipline.SemigroupalTests.Isomorphisms
 import kantan.csv.DecodeError
 import kantan.csv.RowDecoder
 import kantan.csv.RowEncoder
-import kantan.csv.cats.arbitrary._
-import kantan.csv.cats.equality._
+import kantan.csv.cats.arbitrary.*
+import kantan.csv.cats.equality.*
 import kantan.csv.laws.discipline.DisciplineSuite
 import org.scalacheck.Arbitrary
 import org.scalacheck.Gen
@@ -45,7 +45,7 @@ class RowCodecInstancesTests extends DisciplineSuite {
   // For some reason, these are not derived automatically. I *think* it's to do with the various codecs being type
   // aliases for types with many holes, but this is slightly beyond me.
   implicit val eqRowEitherT: Eq[EitherT[RowDecoder, DecodeError, Int]] = EitherT.catsDataEqForEitherT
-  implicit val rowIso: Isomorphisms[RowDecoder]                        = Isomorphisms.invariant
+  implicit val rowIso: Isomorphisms[RowDecoder] = Isomorphisms.invariant
 
   checkAll("RowDecoder", SemigroupKTests[RowDecoder].semigroupK[Int])
   checkAll("RowDecoder", MonadErrorTests[RowDecoder, DecodeError].monadError[Int, Int, Int])

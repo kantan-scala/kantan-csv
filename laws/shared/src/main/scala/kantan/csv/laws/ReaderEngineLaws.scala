@@ -17,7 +17,7 @@
 package kantan.csv.laws
 
 import kantan.csv.engine.ReaderEngine
-import kantan.csv.ops._
+import kantan.csv.ops.*
 import kantan.csv.rfc
 import org.scalacheck.Prop.throws
 
@@ -66,16 +66,14 @@ trait ReaderEngineLaws
 
   def hasDefiniteSize(csv: List[List[Cell]]): Boolean = {
     def loop[A](data: kantan.csv.CsvReader[A]): Boolean =
-      if(data.hasNext) !data.hasDefiniteSize && { data.next(); loop(data) }
-      else data.hasDefiniteSize
+      if(data.hasNext) !data.hasDefiniteSize && { data.next(); loop(data) } else data.hasDefiniteSize
 
     loop(asReader(csv))
   }
 
   def isEmpty(csv: List[List[Cell]]): Boolean = {
     def loop[A](data: kantan.csv.CsvReader[A]): Boolean =
-      if(data.hasNext) !data.isEmpty && { data.next(); loop(data) }
-      else data.isEmpty
+      if(data.hasNext) !data.isEmpty && { data.next(); loop(data) } else data.isEmpty
 
     loop(asReader(csv))
   }

@@ -18,8 +18,8 @@ package kantan.csv.scalaz
 
 import kantan.codecs.scalaz.laws.discipline.ScalazDisciplineSuite
 import kantan.csv.laws.discipline.RowEncoderTests
-import kantan.csv.scalaz.arbitrary._
-import scalaz.std.list._
+import kantan.csv.scalaz.arbitrary.*
+import scalaz.std.list.*
 
 class FoldableEncoderTests extends ScalazDisciplineSuite {
 

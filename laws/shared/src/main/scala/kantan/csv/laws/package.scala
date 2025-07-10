@@ -20,22 +20,22 @@ import kantan.codecs.laws.CodecLaws
 import kantan.codecs.laws.CodecValue
 import kantan.codecs.laws.DecoderLaws
 import kantan.codecs.laws.EncoderLaws
-import kantan.csv.ops._
+import kantan.csv.ops.*
 
 package object laws {
   type CellDecoderLaws[A] = DecoderLaws[String, A, DecodeError, codecs.type]
   type CellEncoderLaws[A] = EncoderLaws[String, A, codecs.type]
-  type CellCodecLaws[A]   = CodecLaws[String, A, DecodeError, codecs.type]
-  type RowDecoderLaws[A]  = DecoderLaws[Seq[String], A, DecodeError, codecs.type]
-  type RowEncoderLaws[A]  = EncoderLaws[Seq[String], A, codecs.type]
-  type RowCodecLaws[A]    = CodecLaws[Seq[String], A, DecodeError, codecs.type]
+  type CellCodecLaws[A] = CodecLaws[String, A, DecodeError, codecs.type]
+  type RowDecoderLaws[A] = DecoderLaws[Seq[String], A, DecodeError, codecs.type]
+  type RowEncoderLaws[A] = EncoderLaws[Seq[String], A, codecs.type]
+  type RowCodecLaws[A] = CodecLaws[Seq[String], A, DecodeError, codecs.type]
 
-  type CellValue[A]   = CodecValue[String, A, codecs.type]
-  type LegalCell[A]   = CodecValue.LegalValue[String, A, codecs.type]
+  type CellValue[A] = CodecValue[String, A, codecs.type]
+  type LegalCell[A] = CodecValue.LegalValue[String, A, codecs.type]
   type IllegalCell[A] = CodecValue.IllegalValue[String, A, codecs.type]
-  type RowValue[A]    = CodecValue[Seq[String], A, codecs.type]
-  type LegalRow[A]    = CodecValue.LegalValue[Seq[String], A, codecs.type]
-  type IllegalRow[A]  = CodecValue.IllegalValue[Seq[String], A, codecs.type]
+  type RowValue[A] = CodecValue[Seq[String], A, codecs.type]
+  type LegalRow[A] = CodecValue.LegalValue[Seq[String], A, codecs.type]
+  type IllegalRow[A] = CodecValue.IllegalValue[Seq[String], A, codecs.type]
 
   def asCsv[A](data: List[RowValue[A]], conf: CsvConfiguration): String =
     data.map(_.encoded).asCsv(conf)

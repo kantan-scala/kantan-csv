@@ -26,7 +26,7 @@ class RegressionTests extends AnyFunSuite {
     // Wart Remover false positive on statements that are not actually fields.
     @SuppressWarnings(Array("org.wartremover.warts.PublicInference"))
     object Test {
-      import kantan.csv.ops._
+      import kantan.csv.ops.*
 
       List(Foobar(3)).asCsv(rfc)
 

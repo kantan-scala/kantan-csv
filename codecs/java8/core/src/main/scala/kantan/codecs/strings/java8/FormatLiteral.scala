@@ -31,12 +31,12 @@ trait FormatLiteralMacro {
 
 object FormatLiteral extends FormatLiteralMacro {
   override def fmtImpl(c: Context)(args: c.Expr[Any]*): c.Expr[Format] = {
-    import c.universe._
+    import c.universe.*
 
     c.prefix.tree match {
       case Apply(_, List(Apply(_, List(lit @ Literal(Constant(str: String)))))) =>
         Format.from(str) match {
-          case Left(_) => c.abort(c.enclosingPosition, s"Illegal format: '$str'")
+          case Left(_)  => c.abort(c.enclosingPosition, s"Illegal format: '$str'")
           case Right(_) =>
             reify {
               val spliced = c.Expr[String](lit).splice

@@ -16,10 +16,9 @@
 
 package kantan.codecs.laws.discipline
 
-import org.scalacheck.Gen
-
 import java.io.EOFException
 import java.io.IOException
+import org.scalacheck.Gen
 
 trait ArbitraryInstances extends CommonArbitraryInstances {
 

@@ -16,11 +16,10 @@
 
 package kantan.codecs.enumeratum.values
 
-import enumeratum.values._
+import enumeratum.values.*
 import kantan.codecs.Decoder
 import kantan.codecs.Encoder
 import kantan.codecs.error.IsError
-
 import scala.annotation.nowarn
 
 // I would really prefer enumeratumDecoder && enumeratumEncoder to be implicit and to be sufficient, but somehow,
@@ -38,7 +37,7 @@ trait DecoderInstances {
   ): Decoder[E, D, F, T] = {
     // ValueEnum is not serializable. The following is to make sure that the generated Decoder doesn't embark a
     // non-serializable value and becomes non-serializable itself.
-    val map       = valueEnum.valuesToEntriesMap
+    val map = valueEnum.valuesToEntriesMap
     val enumLabel = valueEnum.values.map(_.value).mkString("[", ", ", "]")
 
     decoder.emap { value =>
