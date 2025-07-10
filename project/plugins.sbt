@@ -24,7 +24,7 @@ addSbtPlugin("com.github.sbt" % "sbt-pgp" % "2.3.1")
 
 addSbtPlugin("org.scoverage" %% "sbt-scoverage" % "2.3.1")
 
-addSbtPlugin("org.scalameta" % "sbt-mdoc" % "2.6.2")
+addSbtPlugin("org.scalameta" % "sbt-mdoc" % "2.6.5")
 
 addSbtPlugin("com.github.sbt" % "sbt-ghpages" % "0.8.0")
 
