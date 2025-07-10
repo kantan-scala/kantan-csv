@@ -21,7 +21,6 @@ lazy val jvmModules: Seq[ProjectReference] = Seq(
   jackson,
   java8,
   lawsJVM,
-  libra,
   refinedJVM,
   scalazJVM
 )
@@ -41,7 +40,7 @@ lazy val root = Project(id = "kantan-csv", base = file("."))
     """.stripMargin
   )
   .aggregate((jsModules ++ jvmModules :+ (docs: ProjectReference)): _*)
-  .dependsOn(coreJVM, genericJVM, libra, refinedJVM, enumeratumJVM)
+  .dependsOn(coreJVM, genericJVM, refinedJVM, enumeratumJVM)
 
 lazy val docs = project
   .enablePlugins(DocumentationPlugin)
@@ -55,7 +54,6 @@ lazy val docs = project
     coreJVM,
     java8,
     lawsJVM,
-    libra,
     catsJVM,
     scalazJVM,
     genericJVM,
@@ -217,22 +215,6 @@ lazy val enumeratum = kantanCrossProject("enumeratum")
 
 lazy val enumeratumJVM = enumeratum.jvm
 lazy val enumeratumJS  = enumeratum.js
-
-// - libra project -----------------------------------------------------------------------------------------------------
-// ---------------------------------------------------------------------------------------------------------------------
-lazy val libra = project
-  .settings(
-    moduleName := "kantan.csv-libra",
-    name       := "libra"
-  )
-  .enablePlugins(PublishedPlugin)
-  .dependsOn(coreJVM, lawsJVM % Test)
-  .settings(
-    libraryDependencies ++= Seq(
-      "com.nrinaudo" %% "kantan.codecs-libra"      % Versions.kantanCodecs,
-      "com.nrinaudo" %% "kantan.codecs-libra-laws" % Versions.kantanCodecs % Test
-    )
-  )
 
 // - Command alisases --------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------
