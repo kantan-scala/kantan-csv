@@ -43,8 +43,8 @@ object KantanScalaJsPlugin extends AutoPlugin {
     lazy val checkStyleJVM: TaskKey[Unit] = taskKey[Unit]("run style checks for JVM projects only")
 
     // format: off
-    def kantanCrossProject(id: String): CrossProject =
-      CrossProject(id = id, file(id))(JSPlatform, JVMPlatform)
+    def kantanCrossProject(id: String, base: String): CrossProject =
+      CrossProject(id = id, file(base))(JSPlatform, JVMPlatform)
         .withoutSuffixFor(JVMPlatform)
         .crossType(CrossType.Full)
         // Overrides the default sbt-boilerplate source directory: https://github.com/sbt/sbt-boilerplate/issues/21

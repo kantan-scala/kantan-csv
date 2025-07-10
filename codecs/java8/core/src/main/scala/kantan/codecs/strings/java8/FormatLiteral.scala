@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Nicolas Rinaudo
+ * Copyright 2015 Nicolas Rinaudo
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 
 package kantan.codecs.strings.java8
 
+import scala.language.experimental.macros
 import scala.reflect.macros.blackbox.Context
 
 final class FormatLiteral(val sc: StringContext) extends AnyVal {

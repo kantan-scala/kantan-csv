@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Nicolas Rinaudo
+ * Copyright 2015 Nicolas Rinaudo
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -324,7 +324,6 @@ class ResourceIteratorTests
   }
 
   test("toIterable should behave as expected") {
-    import scala.collection.compat._
     forAll { (is: List[Int]) =>
       ResourceIterator(is: _*).toIterable should be(is.to(Iterable))
     }
