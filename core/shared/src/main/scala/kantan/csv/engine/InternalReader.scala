@@ -23,7 +23,7 @@ import java.io.Reader
 import scala.annotation.tailrec
 import scala.collection.mutable.ArrayBuffer
 
-@SuppressWarnings(Array("org.wartremover.warts.MutableDataStructures", "org.wartremover.warts.Var"))
+@SuppressWarnings(Array("org.wartremover.warts.Var"))
 private[engine] class InternalReader private (
   val data: Reader,
   val conf: CsvConfiguration,
