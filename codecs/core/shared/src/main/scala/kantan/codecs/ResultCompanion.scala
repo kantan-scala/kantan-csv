@@ -61,7 +61,7 @@ object ResultCompanion {
 
     /** Attempts to evaluate the specified expression. */
     @inline def apply[S](s: => S): Either[F, S] =
-      nonFatal(fromThrowable _)(s)
+      nonFatal(fromThrowable)(s)
 
     /** Turns the specified `Try` into a result. */
     @inline def fromTry[S](t: Try[S]): Either[F, S] =

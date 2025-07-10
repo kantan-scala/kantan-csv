@@ -40,9 +40,9 @@ trait EqInstances {
     }
 
   implicit def decoderEq[E: Arbitrary, D: Eq, F: Eq, T]: Eq[Decoder[E, D, F, T]] =
-    Eq.by(_.decode _)
+    Eq.by(_.decode)
 
   implicit def encoderEq[E: Eq, D: Arbitrary, T]: Eq[Encoder[E, D, T]] =
-    Eq.by(_.encode _)
+    Eq.by(_.encode)
 
 }
