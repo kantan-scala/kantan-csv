@@ -42,7 +42,6 @@ object KantanScalaJsPlugin extends AutoPlugin {
     lazy val checkStyleJS: TaskKey[Unit] = taskKey[Unit]("run style checks for JS projects only")
     lazy val checkStyleJVM: TaskKey[Unit] = taskKey[Unit]("run style checks for JVM projects only")
 
-    // format: off
     def kantanCrossProject(id: String, base: String): CrossProject =
       CrossProject(id = id, file(base))(JSPlatform, JVMPlatform)
         .withoutSuffixFor(JVMPlatform)
@@ -50,7 +49,7 @@ object KantanScalaJsPlugin extends AutoPlugin {
         // Overrides the default sbt-boilerplate source directory: https://github.com/sbt/sbt-boilerplate/issues/21
         .settings(
           Compile / boilerplateSource := baseDirectory.value.getParentFile / "shared" / "src" / "main" / "boilerplate",
-          Test / boilerplateSource    := baseDirectory.value.getParentFile / "shared" / "src" / "test" / "boilerplate"
+          Test / boilerplateSource := baseDirectory.value.getParentFile / "shared" / "src" / "test" / "boilerplate"
         )
         .jsSettings(
           name := id + "-js",
@@ -59,15 +58,14 @@ object KantanScalaJsPlugin extends AutoPlugin {
           // Disables coverage in JS mode: https://github.com/scoverage/scalac-scoverage-plugin/issues/196
           coverageEnabled := false,
           // Disables parallel execution in JS mode: https://github.com/scala-js/scala-js/issues/1546
-          parallelExecution      := false,
-          Test / testJS          := (Test / test).value,
-          Test / testJVM         := { () },
+          parallelExecution := false,
+          Test / testJS := (Test / test).value,
+          Test / testJVM := (),
           Compile / checkStyleJS := (Compile / checkStyle).value,
-          Test / checkStyleJS    := (Test / checkStyle).value,
-          checkStyleJVM          := { () }
+          Test / checkStyleJS := (Test / checkStyle).value,
+          checkStyleJVM := ()
         )
         .jvmSettings(name := id + "-jvm")
-        // format: on
 
     /** Adds a `.laws` method for scala.js projects. */
     implicit class KantanJsOperations(private val proj: CrossProject) extends AnyVal {
@@ -81,15 +79,13 @@ object KantanScalaJsPlugin extends AutoPlugin {
   }
 
   import autoImport.*
-  // format: off
   override lazy val projectSettings: Seq[Setting[Task[Unit]]] = Seq(
-    Test / testJS           := { () },
-    Test / testJVM          := (Test / test).value,
-    checkStyleJS            := { () },
+    Test / testJS := (),
+    Test / testJVM := (Test / test).value,
+    checkStyleJS := (),
     Compile / checkStyleJVM := (Compile / checkStyle).value,
-    Test / checkStyleJVM    := (Test / checkStyle).value
+    Test / checkStyleJVM := (Test / checkStyle).value
   )
-  // format: on
 
   override def globalSettings: Seq[Setting[?]] =
     addCommandAlias(
