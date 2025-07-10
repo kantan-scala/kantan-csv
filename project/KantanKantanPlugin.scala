@@ -80,7 +80,7 @@ object KantanKantanPlugin extends AutoPlugin {
         commitReleaseVersion,
         tagRelease,
         publishArtifacts,
-        releaseStepCommand("sonatypeReleaseAll"),
+        releaseStepCommand("sonaRelease"),
         KantanRelease.runPushSite,
         setNextVersion,
         commitNextVersion,
