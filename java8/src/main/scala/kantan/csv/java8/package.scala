@@ -16,7 +16,7 @@
 
 package kantan.csv
 
-import kantan.codecs.export.Exported
+import kantan.codecs.`export`.Exported
 import kantan.codecs.strings.StringDecoder
 import kantan.codecs.strings.StringEncoder
 import kantan.codecs.strings.java8.TimeCodecCompanion
