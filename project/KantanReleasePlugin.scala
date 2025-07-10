@@ -25,8 +25,6 @@ import sbtrelease.ReleasePlugin.autoImport.ReleaseTransformations.*
 /** Slightly improves the default release process.
   *
   * This will:
-  *   - force a clean compile without scoverage code instrumentation (I've mistakenly published instrumented bytecode
-  *     before).
   *   - run `checkStyle` before running tests.
   */
 object KantanReleasePlugin extends AutoPlugin {
@@ -41,7 +39,6 @@ object KantanReleasePlugin extends AutoPlugin {
       checkSnapshotDependencies,
       inquireVersions,
       runClean,
-      KantanRelease.runCoverageOff,
       KantanRelease.runCheckStyle,
       runTest,
       setReleaseVersion,

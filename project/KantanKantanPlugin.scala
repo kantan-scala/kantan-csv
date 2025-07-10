@@ -71,7 +71,6 @@ object KantanKantanPlugin extends AutoPlugin {
         checkSnapshotDependencies,
         inquireVersions,
         runClean,
-        KantanRelease.runCoverageOff,
         KantanRelease.runCheckStyle,
         runTest,
         setReleaseVersion,

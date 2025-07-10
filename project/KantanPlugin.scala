@@ -90,10 +90,7 @@ object KantanPlugin extends AutoPlugin {
       "; clean"
         + "; checkStyle"
         + "; Test / checkStyle"
-        + "; coverageOn"
         + "; test"
-        + "; coverageAggregate"
-        + "; coverageOff"
         + "; doc"
     )
 

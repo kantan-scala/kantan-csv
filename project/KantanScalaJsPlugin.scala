@@ -25,7 +25,6 @@ import sbt.Keys.*
 import sbtcrossproject.CrossPlugin.autoImport.*
 import sbtcrossproject.CrossProject
 import scalajscrossproject.ScalaJSCrossPlugin.autoImport.*
-import scoverage.ScoverageKeys.coverageEnabled
 import spray.boilerplate.BoilerplatePlugin.autoImport.boilerplateSource
 
 object KantanScalaJsPlugin extends AutoPlugin {
@@ -55,8 +54,6 @@ object KantanScalaJsPlugin extends AutoPlugin {
           name := id + "-js",
           // Disables sbt-doctests in JS mode: https://github.com/tkawachi/sbt-doctest/issues/52
           doctestGenTests := Seq.empty,
-          // Disables coverage in JS mode: https://github.com/scoverage/scalac-scoverage-plugin/issues/196
-          coverageEnabled := false,
           // Disables parallel execution in JS mode: https://github.com/scala-js/scala-js/issues/1546
           parallelExecution := false,
           Test / testJS := (Test / test).value,
@@ -93,10 +90,7 @@ object KantanScalaJsPlugin extends AutoPlugin {
       "; clean"
         + "; checkStyleJVM"
         + "; Test/checkStyleJVM"
-        + "; coverageOn"
         + "; testJVM"
-        + "; coverageAggregate"
-        + "; coverageOff"
         + "; doc"
     ) ++ addCommandAlias(
       "validateJS",

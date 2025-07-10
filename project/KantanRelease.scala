@@ -24,9 +24,6 @@ import sbtrelease.ReleasePlugin.autoImport.*
 
 object KantanRelease {
 
-  /** Disables code instrumentation, to avoid publishing instrumented bytecode. */
-  lazy val runCoverageOff: ReleaseStep = releaseStepCommand("coverageOff")
-
   /** Runs checkStyle. */
   lazy val runCheckStyle: ReleaseStep =
     ReleaseStep(
