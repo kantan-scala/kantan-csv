@@ -20,7 +20,6 @@ import com.github.sbt.git.SbtGit.git
 import com.jsuereth.sbtpgp.PgpKeys.publishSigned
 import kantan.sbt.release.KantanRelease
 import kantan.sbt.scalafix.KantanScalafixPlugin
-import kantan.sbt.scalafmt.KantanScalafmtPlugin
 import sbt.*
 import sbt.Keys.*
 import sbtrelease.ReleasePlugin.autoImport.*
@@ -46,7 +45,7 @@ object KantanKantanPlugin extends AutoPlugin {
     allRequirements
 
   override def requires: Plugins =
-    KantanScalafixPlugin && KantanScalafmtPlugin
+    KantanScalafixPlugin
 
   override lazy val projectSettings: Seq[Setting[?]] = generalSettings ++ remoteSettings
 
@@ -71,7 +70,6 @@ object KantanKantanPlugin extends AutoPlugin {
         checkSnapshotDependencies,
         inquireVersions,
         runClean,
-        KantanRelease.runCheckStyle,
         runTest,
         setReleaseVersion,
         commitReleaseVersion,

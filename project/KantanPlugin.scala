@@ -62,8 +62,6 @@ object KantanPlugin extends AutoPlugin {
         else proj
     }
 
-    val checkStyle: TaskKey[Unit] = taskKey[Unit]("run all style checks")
-
   }
 
   import autoImport.*
@@ -75,21 +73,12 @@ object KantanPlugin extends AutoPlugin {
     JvmPlugin && HeaderPlugin
 
   override lazy val projectSettings: Seq[Setting[?]] =
-    generalSettings ++ scalacSettings ++ javacSettings ++
-      inConfig(Compile)(checkStyleSettings) ++ inConfig(Test)(checkStyleSettings)
-
-  /** By default, `checkStyle` does nothing. Other modules, such as scalafix and scalafmt, plug in to that. */
-  private def checkStyleSettings: Seq[Setting[?]] =
-    Seq(
-      checkStyle := {}
-    )
+    generalSettings ++ scalacSettings ++ javacSettings
 
   override def globalSettings: Seq[Setting[?]] =
     addCommandAlias(
       "validate",
       "; clean"
-        + "; checkStyle"
-        + "; Test / checkStyle"
         + "; test"
         + "; doc"
     )
