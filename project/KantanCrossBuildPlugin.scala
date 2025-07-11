@@ -23,7 +23,7 @@ import sbtcrossproject.CrossProject
 import scalajscrossproject.ScalaJSCrossPlugin.autoImport.*
 import spray.boilerplate.BoilerplatePlugin.autoImport.boilerplateSource
 
-object KantanScalaJsPlugin extends AutoPlugin {
+object KantanCrossBuildPlugin extends AutoPlugin {
 
   override def trigger =
     allRequirements
