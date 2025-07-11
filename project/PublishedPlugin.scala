@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-package kantan.sbt
-
 import sbt.*
 
 /** Configures projects whose artifacts are meant for publication to maven.

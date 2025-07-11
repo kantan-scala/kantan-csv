@@ -14,12 +14,8 @@
  * limitations under the License.
  */
 
-package kantan.sbt.kantan
-
 import com.github.sbt.git.SbtGit.git
 import com.jsuereth.sbtpgp.PgpKeys.publishSigned
-import kantan.sbt.release.KantanRelease
-import kantan.sbt.scalafix.KantanScalafixPlugin
 import sbt.*
 import sbt.Keys.*
 import sbtrelease.ReleasePlugin.autoImport.*

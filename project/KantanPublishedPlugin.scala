@@ -14,10 +14,6 @@
  * limitations under the License.
  */
 
-package kantan.sbt.kantan
-
-import kantan.sbt.PublishedPlugin
-import kantan.sbt.release.KantanReleasePlugin
 import sbt.*
 import sbt.Keys.*
 

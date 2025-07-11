@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-package kantan.sbt
-
 import sbt.*
 import sbt.Keys.*
 import wartremover.Wart

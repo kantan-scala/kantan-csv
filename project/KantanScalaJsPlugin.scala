@@ -14,10 +14,7 @@
  * limitations under the License.
  */
 
-package kantan.sbt
-package scalajs
-
-import _root_.kantan.sbt.KantanPlugin.setLaws
+import KantanPlugin.setLaws
 import com.github.tkawachi.doctest.DoctestPlugin.autoImport.*
 import sbt.*
 import sbt.Keys.*
