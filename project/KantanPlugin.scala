@@ -42,7 +42,14 @@ object KantanPlugin extends AutoPlugin {
     * This is perfectly legal, but not supported. You can, however, use `.laws("tests")` in project `a` to enable it.
     */
   def setLaws(name: String): Setting[Task[Classpath]] =
-    Test / unmanagedClasspath ++= (LocalProject(name) / Compile / fullClasspath).value
+    Test / unmanagedClasspath ++= {
+      scalaBinaryVersion.value match {
+        case "3" =>
+          (LocalProject(s"${name}3") / Compile / fullClasspath).value
+        case "2.13" =>
+          (LocalProject(name) / Compile / fullClasspath).value
+      }
+    }
 
   object autoImport {
 

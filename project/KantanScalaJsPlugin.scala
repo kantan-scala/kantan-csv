@@ -40,6 +40,9 @@ object KantanScalaJsPlugin extends AutoPlugin {
     def kantanCrossProject(id: String, base: String, laws: String): ProjectMatrix =
       kantanCrossProjectInternal(id = id, base = base, laws = Option(laws))
 
+    private def Scala3 =
+      "3.3.6"
+
     private def kantanCrossProjectInternal(id: String, base: String, laws: Option[String]): ProjectMatrix =
       ProjectMatrix(id = id, base = file(base))
         .settings(
@@ -101,13 +104,13 @@ object KantanScalaJsPlugin extends AutoPlugin {
           }
         )
         .jvmPlatform(
-          scalaVersions = Seq(KantanKantanPlugin.Scala213),
+          scalaVersions = Seq(KantanKantanPlugin.Scala213, Scala3),
           settings = Def.settings(
             laws.map(setLaws).toSeq
           )
         )
         .jsPlatform(
-          scalaVersions = Seq(KantanKantanPlugin.Scala213),
+          scalaVersions = Seq(KantanKantanPlugin.Scala213, Scala3),
           settings = Def.settings(
             name := s"$id-js",
             // Disables sbt-doctests in JS mode: https://github.com/tkawachi/sbt-doctest/issues/52
