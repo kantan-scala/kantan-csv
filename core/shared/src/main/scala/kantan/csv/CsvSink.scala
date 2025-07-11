@@ -86,7 +86,6 @@ object CsvSink {
     }
 
   // TODO: unsafe, unacceptable, what was I thinking.
-  @SuppressWarnings(Array("org.wartremover.warts.StringPlusAny"))
   implicit def fromResource[A: WriterResource]: CsvSink[A] =
     CsvSink.from(a =>
       WriterResource[A]

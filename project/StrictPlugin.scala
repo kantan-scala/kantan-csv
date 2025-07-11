@@ -47,6 +47,7 @@ object StrictPlugin extends AutoPlugin {
       inConfig(c)(
         Compile / compile / WartRemover.autoImport.wartremoverErrors ++=
           Warts.allBut(
+            Wart.StringPlusAny,
             Wart.ToString,
             Wart.MutableDataStructures,
             Wart.NonUnitStatements,

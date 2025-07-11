@@ -51,7 +51,6 @@ trait Decoder[E, D, F, T] extends Serializable {
     * [[decode]] should almost always be preferred, but this can be useful for code where crashing is an acceptable
     * reaction to failure.
     */
-  @SuppressWarnings(Array("org.wartremover.warts.StringPlusAny"))
   def unsafeDecode(e: E): D =
     decode(e).fold(
       error => sys.error(s"Failed to decode value $e: $error"),
@@ -114,7 +113,6 @@ trait Decoder[E, D, F, T] extends Serializable {
     *
     * You can think as [[collect]] as a bit like a [[filter]] and a [[map]] merged into one.
     */
-  @SuppressWarnings(Array("org.wartremover.warts.StringPlusAny"))
   def collect[DD](f: PartialFunction[D, DD])(implicit t: IsError[F]): Decoder[E, DD, F, T] =
     emap { d =>
       if(f.isDefinedAt(d)) Right(f(d))
@@ -195,7 +193,6 @@ trait DecoderCompanion[E, F, T] extends Serializable {
   @inline def fromUnsafe[D](f: E => D)(implicit t: IsError[F]): Decoder[E, D, F, T] =
     Decoder.fromUnsafe(f)
 
-  @SuppressWarnings(Array("org.wartremover.warts.StringPlusAny"))
   def fromPartial[D](f: PartialFunction[E, Either[F, D]])(implicit t: IsError[F]): Decoder[E, D, F, T] =
     Decoder.from { e =>
       if(f.isDefinedAt(e)) f(e)
@@ -248,7 +245,6 @@ object Decoder {
     * The generated decoder will try each of the specified decoders in turn, and return either the first success or, if
     * none is found, the last failure.
     */
-  @SuppressWarnings(Array("org.wartremover.warts.StringPlusAny"))
   def oneOf[E, D, F: IsError, T](ds: Decoder[E, D, F, T]*): Decoder[E, D, F, T] =
     ds.reduceOption(_ orElse _)
       .getOrElse(Decoder.from(d => Left(IsError[F].fromMessage(s"Not acceptable: '$d'"))))

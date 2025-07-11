@@ -59,7 +59,6 @@ final class CsvRowReadingOps[A: CsvSource](a: A) {
     * Note that this method is unsafe and will throw an exception if the string value is not a valid `A`. Prefer
     * [[readCsvRow]] whenever possible.
     */
-  @SuppressWarnings(Array("org.wartremover.warts.StringPlusAny"))
   def unsafeReadCsvRow[B: RowDecoder](conf: CsvConfiguration)(implicit e: ReaderEngine): B =
     readCsvRow[B](conf).fold(
       error => sys.error(s"Failed to decode value $a: $error"),
