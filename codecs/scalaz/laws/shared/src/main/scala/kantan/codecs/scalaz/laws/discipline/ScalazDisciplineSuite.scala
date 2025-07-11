@@ -27,7 +27,7 @@ class ScalazDisciplineSuite extends DisciplineSuite {
     var i = 0
     for((id, prop) <- props.properties) {
       i = i + 1
-      test(s"$name[${i.toString}].$id") {
+      test(s"$name[${i}].$id") {
         Checkers.check(prop)
       }
     }
