@@ -45,9 +45,6 @@ object KantanKantanPlugin extends AutoPlugin {
 
   override lazy val projectSettings: Seq[Setting[?]] = generalSettings ++ remoteSettings
 
-  def Scala213 =
-    "2.13.16"
-
   lazy val generalSettings: Seq[Setting[?]] =
     Seq(
       name := s"kantan.${kantanProject.value}",

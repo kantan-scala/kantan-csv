@@ -22,7 +22,7 @@ import sbt.internal.ProjectMatrix
 import sbtprojectmatrix.ProjectMatrixKeys.virtualAxes
 import spray.boilerplate.BoilerplatePlugin.autoImport.boilerplateSource
 
-object KantanScalaJsPlugin extends AutoPlugin {
+object KantanCrossBuildPlugin extends AutoPlugin {
 
   override def trigger =
     allRequirements
@@ -30,20 +30,35 @@ object KantanScalaJsPlugin extends AutoPlugin {
   override def requires =
     KantanPlugin
 
+  def Scala3 =
+    "3.3.6"
+
+  def Scala213 =
+    "2.13.16"
+
   object autoImport {
     lazy val testJS: TaskKey[Unit] = taskKey[Unit]("run tests for JS projects only")
     lazy val testJVM: TaskKey[Unit] = taskKey[Unit]("run tests for JVM projects only")
 
-    def kantanCrossProject(id: String, base: String): ProjectMatrix =
-      kantanCrossProjectInternal(id = id, base = base, laws = None)
+    def kantanCrossProject(id: String, base: String, enableScala3: Boolean = true): ProjectMatrix =
+      kantanCrossProjectInternal(id = id, base = base, laws = None, enableScala3 = enableScala3)
 
-    def kantanCrossProject(id: String, base: String, laws: String): ProjectMatrix =
-      kantanCrossProjectInternal(id = id, base = base, laws = Option(laws))
+    def kantanCrossProject(id: String, base: String, laws: String, enableScala3: Boolean): ProjectMatrix =
+      kantanCrossProjectInternal(id = id, base = base, laws = Option(laws), enableScala3 = enableScala3)
 
-    private def Scala3 =
-      "3.3.6"
+    private def kantanCrossProjectInternal(
+      id: String,
+      base: String,
+      laws: Option[String],
+      enableScala3: Boolean
+    ): ProjectMatrix = {
+      val scalaVersions =
+        if(enableScala3) {
+          Seq(Scala213, Scala3)
+        } else {
+          Seq(Scala213)
+        }
 
-    private def kantanCrossProjectInternal(id: String, base: String, laws: Option[String]): ProjectMatrix =
       ProjectMatrix(id = id, base = file(base))
         .settings(
           Seq(Compile, Test).flatMap { x =>
@@ -104,13 +119,13 @@ object KantanScalaJsPlugin extends AutoPlugin {
           }
         )
         .jvmPlatform(
-          scalaVersions = Seq(KantanKantanPlugin.Scala213, Scala3),
+          scalaVersions = scalaVersions,
           settings = Def.settings(
             laws.map(setLaws).toSeq
           )
         )
         .jsPlatform(
-          scalaVersions = Seq(KantanKantanPlugin.Scala213, Scala3),
+          scalaVersions = scalaVersions,
           settings = Def.settings(
             name := s"$id-js",
             // Disables sbt-doctests in JS mode: https://github.com/tkawachi/sbt-doctest/issues/52
@@ -122,6 +137,7 @@ object KantanScalaJsPlugin extends AutoPlugin {
             laws.map(x => setLaws(s"${x}JS")).toSeq
           )
         )
+    }
   }
 
   import autoImport.*
