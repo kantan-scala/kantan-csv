@@ -33,7 +33,7 @@ sealed abstract class DecodeError(msg: String) extends ReadError(msg)
 
 /** Declares all possible values of type [[DecodeError]]. */
 object DecodeError {
-  implicit val decodeErrorIsError: IsError[DecodeError] =
+  implicit lazy val decodeErrorIsError: IsError[DecodeError] =
     TypeError.isError.map(identity)
 
   /** Error that occurs when attempting to access a CSV cell whose index is outside of its row's boundaries.
