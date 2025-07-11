@@ -76,7 +76,7 @@ object KantanScalaJsPlugin extends AutoPlugin {
     addCommandAlias(
       "validateJVM",
       "; clean"
-        + "; all scalafmtCheckAll scalafmtSbtCheck"
+        + "; all scalafmtCheckAll scalafmtSbtCheck scalafixCheckAll"
         + "; testJVM"
         + "; doc"
     ) ++ addCommandAlias(
