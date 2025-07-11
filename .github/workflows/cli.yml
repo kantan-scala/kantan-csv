@@ -13,8 +13,6 @@ jobs:
       fail-fast: false
       matrix:
         os   :    [ubuntu-latest]
-        scala:    [2.13.x]
-        platform: [jvm, js]
         java :    [11, 21]
     runs-on: ${{ matrix.os }}
     steps:
@@ -30,10 +28,4 @@ jobs:
       - name: Cache
         uses: coursier/cache-action@v6
 
-      - name: Test JVM
-        if: matrix.platform == 'jvm'
-        run: sbt ++${{ matrix.scala }} validateJVM
-
-      - name: Test JS
-        if: matrix.platform == 'js'
-        run: sbt ++${{ matrix.scala }} validateJS
+      - run: sbt validate
