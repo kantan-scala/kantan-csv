@@ -75,7 +75,7 @@ object KantanPlugin extends AutoPlugin {
     JvmPlugin && HeaderPlugin
 
   override lazy val projectSettings: Seq[Setting[?]] =
-    generalSettings ++ scalacSettings ++ javacSettings ++ commonDependencies ++
+    generalSettings ++ scalacSettings ++ javacSettings ++
       inConfig(Compile)(checkStyleSettings) ++ inConfig(Test)(checkStyleSettings)
 
   /** By default, `checkStyle` does nothing. Other modules, such as scalafix and scalafmt, plug in to that. */
@@ -171,19 +171,4 @@ object KantanPlugin extends AutoPlugin {
       Compile / console / scalacOptions --= unusedImports
     )
   }
-
-  /** Includes common dependencies. */
-  lazy val commonDependencies: Seq[Setting[?]] =
-    Seq(
-      libraryDependencies ++= {
-        scalaBinaryVersion.value match {
-          case "3" =>
-            Nil
-          case _ =>
-            Seq(
-              "org.scala-lang" % "scala-reflect" % scalaVersion.value % "provided"
-            )
-        }
-      }
-    )
 }

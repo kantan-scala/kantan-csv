@@ -231,6 +231,7 @@ lazy val codecsJava8 = Project(id = "codecs-java8", base = file("codecs/java8/co
   .dependsOn(codecsCoreJVM)
   .settings(
     libraryDependencies ++= Seq(
+      "org.scala-lang" % "scala-reflect" % scalaVersion.value % "provided",
       "org.scalatest" %% "scalatest" % "3.2.19" % "test"
     )
   )
