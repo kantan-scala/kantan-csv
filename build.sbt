@@ -10,6 +10,8 @@ lazy val jsModules: Seq[ProjectReference] = Seq(
   codecsCore.js,
   codecsEnumeratum.js,
   codecsEnumeratumLaws.js,
+  codecsJava8.js,
+  codecsJava8Laws.js,
   codecsLaws.js,
   codecsRefined.js,
   codecsRefinedLaws.js,
@@ -20,6 +22,7 @@ lazy val jsModules: Seq[ProjectReference] = Seq(
   core.js,
   enumeratum.js,
   generic.js,
+  java8.js,
   laws.js,
   refined.js,
   scalaz.js
@@ -37,7 +40,7 @@ lazy val docs = project
   .settings(libraryDependencies += "joda-time" % "joda-time" % "2.14.0")
   .dependsOn(
     coreJVM,
-    java8,
+    java8.jvm,
     lawsJVM,
     catsJVM,
     scalazJVM,
@@ -130,13 +133,12 @@ lazy val catsJS = cats.js
 
 // - java8 projects ----------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------
-lazy val java8 = project
+lazy val java8 = kantanCrossProject("java8", "java8")
   .settings(
-    moduleName := "kantan.csv-java8",
-    name := "java8"
+    moduleName := "kantan.csv-java8"
   )
   .enablePlugins(PublishedPlugin)
-  .dependsOn(coreJVM, lawsJVM % "test", codecsJava8, codecsJava8Laws % Test)
+  .dependsOn(core, laws % "test", codecsJava8, codecsJava8Laws % Test)
 
 // - refined project ---------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------
@@ -222,28 +224,31 @@ lazy val codecsCatsLaws = kantanCrossProject("codecs-cats-laws", "codecs/cats-la
 
 // - java8 projects ----------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------
-lazy val codecsJava8 = Project(id = "codecs-java8", base = file("codecs/java8/core"))
+lazy val codecsJava8 = kantanCrossProject("codecs-java8", "codecs/java8/core")
   .settings(
     moduleName := "kantan.codecs-java8",
     name := "java8"
   )
   .enablePlugins(PublishedPlugin)
-  .dependsOn(codecsCoreJVM)
+  .dependsOn(codecsCore)
+  .jsSettings(
+    libraryDependencies += "io.github.cquiroz" %%% "scala-java-time" % "2.6.0"
+  )
   .settings(
     libraryDependencies ++= Seq(
       "org.scala-lang" % "scala-reflect" % scalaVersion.value % "provided",
-      "org.scalatest" %% "scalatest" % "3.2.19" % "test"
+      "org.scalatest" %%% "scalatest" % "3.2.19" % "test"
     )
   )
   .laws("codecs-java8-laws")
 
-lazy val codecsJava8Laws = Project(id = "codecs-java8-laws", base = file("codecs/java8/laws"))
+lazy val codecsJava8Laws = kantanCrossProject("codecs-java8-laws", "codecs/java8/laws")
   .settings(
     moduleName := "kantan.codecs-java8-laws",
     name := "java8-laws"
   )
   .enablePlugins(PublishedPlugin)
-  .dependsOn(codecsCoreJVM, codecsLawsJVM, codecsJava8)
+  .dependsOn(codecsCore, codecsLaws, codecsJava8)
 
 // - scalaz projects ---------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------
