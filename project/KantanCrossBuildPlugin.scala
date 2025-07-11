@@ -18,9 +18,8 @@ import KantanPlugin.setLaws
 import com.github.tkawachi.doctest.DoctestPlugin.autoImport.*
 import sbt.*
 import sbt.Keys.*
-import sbtcrossproject.CrossPlugin.autoImport.*
-import sbtcrossproject.CrossProject
-import scalajscrossproject.ScalaJSCrossPlugin.autoImport.*
+import sbt.internal.ProjectMatrix
+import sbtprojectmatrix.ProjectMatrixKeys.virtualAxes
 import spray.boilerplate.BoilerplatePlugin.autoImport.boilerplateSource
 
 object KantanCrossBuildPlugin extends AutoPlugin {
@@ -32,69 +31,141 @@ object KantanCrossBuildPlugin extends AutoPlugin {
     KantanPlugin
 
   object autoImport {
-    lazy val testJS: TaskKey[Unit] = taskKey[Unit]("run tests for JS projects only")
-    lazy val testJVM: TaskKey[Unit] = taskKey[Unit]("run tests for JVM projects only")
+    def Scala3 = "3.3.6"
 
-    def kantanCrossProject(id: String, base: String): CrossProject =
-      CrossProject(id = id, file(base))(JSPlatform, JVMPlatform)
-        .withoutSuffixFor(JVMPlatform)
-        .crossType(CrossType.Full)
-        // Overrides the default sbt-boilerplate source directory: https://github.com/sbt/sbt-boilerplate/issues/21
+    def Scala213 = "2.13.16"
+
+    def kantanCrossProject(id: String, base: String, enableScala3: Boolean = true): ProjectMatrix =
+      kantanCrossProjectInternal(id = id, base = base, laws = None, enableScala3 = enableScala3)
+
+    def kantanCrossProject(id: String, base: String, laws: String, enableScala3: Boolean): ProjectMatrix =
+      kantanCrossProjectInternal(id = id, base = base, laws = Option(laws), enableScala3 = enableScala3)
+
+    private def kantanCrossProjectInternal(
+      id: String,
+      base: String,
+      laws: Option[String],
+      enableScala3: Boolean
+    ): ProjectMatrix = {
+      val scalaVersions =
+        if(enableScala3) {
+          Seq(Scala213, Scala3)
+        } else {
+          Seq(Scala213)
+        }
+
+      ProjectMatrix(id = id, base = file(base))
         .settings(
-          Compile / boilerplateSource := baseDirectory.value.getParentFile / "shared" / "src" / "main" / "boilerplate",
-          Test / boilerplateSource := baseDirectory.value.getParentFile / "shared" / "src" / "test" / "boilerplate"
+          Seq(Compile, Test).flatMap { x =>
+            Seq(
+              x / boilerplateSource := file(base).getAbsoluteFile / "shared" / "src" / Defaults.nameForSrc(
+                x.name
+              ) / "boilerplate",
+              (x / unmanagedResourceDirectories) ++= {
+                if(virtualAxes.value.toSet.contains(VirtualAxis.jvm)) {
+                  Seq(
+                    file(base).getAbsoluteFile / "jvm" / "src" / Defaults.nameForSrc(x.name) / "resources"
+                  )
+                } else {
+                  Nil
+                }
+              },
+              (x / unmanagedSourceDirectories) ++= {
+                val sharedBase = file(base).getAbsoluteFile / "shared" / "src" / Defaults.nameForSrc(x.name)
+
+                Seq(
+                  sharedBase / "scala",
+                  scalaBinaryVersion.value match {
+                    case "2.13" =>
+                      sharedBase / "scala-2"
+                    case "3" =>
+                      sharedBase / "scala-3"
+                  }
+                )
+              },
+              (x / unmanagedSourceDirectories) ++= {
+                val xs = virtualAxes.value.toSet
+                val dirOpt =
+                  if(xs(VirtualAxis.jvm)) {
+                    Some("jvm")
+                  } else if(xs(VirtualAxis.js)) {
+                    Some("js")
+                  } else if(xs(VirtualAxis.native)) {
+                    Some("native")
+                  } else {
+                    None
+                  }
+
+                dirOpt.toSeq.flatMap { dir =>
+                  val platformBase = file(base).getAbsoluteFile / dir / "src" / Defaults.nameForSrc(x.name)
+
+                  Seq(
+                    platformBase / "scala",
+                    scalaBinaryVersion.value match {
+                      case "2.13" =>
+                        platformBase / "scala-2"
+                      case "3" =>
+                        platformBase / "scala-3"
+                    }
+                  )
+                }
+              }
+            )
+          }
         )
-        .jsSettings(
-          name := id + "-js",
-          // Disables sbt-doctests in JS mode: https://github.com/tkawachi/sbt-doctest/issues/52
-          doctestGenTests := Seq.empty,
-          // Disables parallel execution in JS mode: https://github.com/scala-js/scala-js/issues/1546
-          parallelExecution := false,
-          scalacOptions += {
-            val a = (LocalRootProject / baseDirectory).value.toURI.toString
-            val hash: String = sys.process.Process("git rev-parse HEAD").lineStream_!.head
-            val g = s"https://raw.githubusercontent.com/kantan-scala/kantan-csv/${hash}"
-            val key = scalaBinaryVersion.value match {
-              case "3" =>
-                "-scalajs-mapSourceURI"
-              case _ =>
-                "-P:scalajs:mapSourceURI"
+        .jvmPlatform(
+          scalaVersions = scalaVersions,
+          settings = Def.settings(
+            laws.map(setLaws).toSeq,
+            doctestGenTests := {
+              scalaBinaryVersion.value match {
+                case "3" =>
+                  Seq.empty
+                case _ =>
+                  // TODO enable with Scala 3 and disable Scala 2
+                  doctestGenTests.value
+              }
             }
-            s"${key}:$a->$g/"
-          },
-          Test / testJS := (Test / test).value,
-          Test / testJVM := ()
+          )
         )
-        .jvmSettings(name := id + "-jvm")
-
-    /** Adds a `.laws` method for scala.js projects. */
-    implicit class KantanJsOperations(private val proj: CrossProject) extends AnyVal {
-      def laws(name: String): CrossProject =
-        proj
-          .jvmSettings(setLaws(name + ""))
-          .jsSettings(setLaws(name + "JS"))
-
+        .jsPlatform(
+          scalaVersions = scalaVersions,
+          settings = Def.settings(
+            scalacOptions += {
+              val a = (LocalRootProject / baseDirectory).value.toURI.toString
+              val hash: String = sys.process.Process("git rev-parse HEAD").lineStream_!.head
+              val g = s"https://raw.githubusercontent.com/kantan-scala/kantan-csv/${hash}"
+              val key = scalaBinaryVersion.value match {
+                case "3" =>
+                  "-scalajs-mapSourceURI"
+                case _ =>
+                  "-P:scalajs:mapSourceURI"
+              }
+              s"${key}:$a->$g/"
+            },
+            name := s"$id-js",
+            // Disables sbt-doctests in JS mode: https://github.com/tkawachi/sbt-doctest/issues/52
+            doctestGenTests := Seq.empty,
+            // Disables parallel execution in JS mode: https://github.com/scala-js/scala-js/issues/1546
+            parallelExecution := false,
+            laws.map(x => setLaws(s"${x}JS")).toSeq
+          )
+        )
     }
 
   }
 
   import autoImport.*
-  override lazy val projectSettings: Seq[Setting[Task[Unit]]] = Seq(
-    Test / testJS := (),
-    Test / testJVM := (Test / test).value
-  )
 
   override def globalSettings: Seq[Setting[?]] =
     addCommandAlias(
-      "validateJVM",
-      "; clean"
-        + "; all scalafmtCheckAll scalafmtSbtCheck scalafixCheckAll scalafixConfigRuleNamesSortCheck"
-        + "; testJVM"
-        + "; doc"
-    ) ++ addCommandAlias(
-      "validateJS",
-      "; clean"
-        + "; testJS"
+      "validate",
+      Seq(
+        "clean",
+        "all scalafmtCheckAll scalafmtSbtCheck scalafixCheckAll scalafixConfigRuleNamesSortCheck",
+        "test",
+        "doc"
+      ).mkString("; ")
     )
 
 }

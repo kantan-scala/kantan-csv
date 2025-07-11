@@ -45,17 +45,11 @@ object KantanKantanPlugin extends AutoPlugin {
 
   override lazy val projectSettings: Seq[Setting[?]] = generalSettings ++ remoteSettings
 
-  def Scala213 =
-    "2.13.16"
-
   lazy val generalSettings: Seq[Setting[?]] =
     Seq(
-      name := s"kantan.${kantanProject.value}",
       organization := "com.nrinaudo",
       organizationHomepage := Some(url("https://nrinaudo.github.io")),
       organizationName := "Nicolas Rinaudo",
-      crossScalaVersions := Seq(Scala213),
-      scalaVersion := Scala213,
       licenses := Seq("Apache-2.0" -> url("https://www.apache.org/licenses/LICENSE-2.0.html")),
       // This must be enabled for all modules, to make sure that aggregation picks up on multi-release. Typically,
       // root projects are unpublished, but if they do not have releaseCrossBuilder set to true, no underlying project
