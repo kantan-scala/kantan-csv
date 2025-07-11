@@ -23,9 +23,6 @@ import sbtrelease.ReleasePlugin.autoImport.*
 import sbtrelease.ReleasePlugin.autoImport.ReleaseTransformations.*
 
 /** Slightly improves the default release process.
-  *
-  * This will:
-  *   - run `checkStyle` before running tests.
   */
 object KantanReleasePlugin extends AutoPlugin {
   override def trigger =
@@ -39,7 +36,6 @@ object KantanReleasePlugin extends AutoPlugin {
       checkSnapshotDependencies,
       inquireVersions,
       runClean,
-      KantanRelease.runCheckStyle,
       runTest,
       setReleaseVersion,
       commitReleaseVersion,

@@ -17,7 +17,6 @@
 package kantan.sbt
 package scalajs
 
-import _root_.kantan.sbt.KantanPlugin.autoImport.checkStyle
 import _root_.kantan.sbt.KantanPlugin.setLaws
 import com.github.tkawachi.doctest.DoctestPlugin.autoImport.*
 import sbt.*
@@ -38,8 +37,6 @@ object KantanScalaJsPlugin extends AutoPlugin {
   object autoImport {
     lazy val testJS: TaskKey[Unit] = taskKey[Unit]("run tests for JS projects only")
     lazy val testJVM: TaskKey[Unit] = taskKey[Unit]("run tests for JVM projects only")
-    lazy val checkStyleJS: TaskKey[Unit] = taskKey[Unit]("run style checks for JS projects only")
-    lazy val checkStyleJVM: TaskKey[Unit] = taskKey[Unit]("run style checks for JVM projects only")
 
     def kantanCrossProject(id: String, base: String): CrossProject =
       CrossProject(id = id, file(base))(JSPlatform, JVMPlatform)
@@ -57,10 +54,7 @@ object KantanScalaJsPlugin extends AutoPlugin {
           // Disables parallel execution in JS mode: https://github.com/scala-js/scala-js/issues/1546
           parallelExecution := false,
           Test / testJS := (Test / test).value,
-          Test / testJVM := (),
-          Compile / checkStyleJS := (Compile / checkStyle).value,
-          Test / checkStyleJS := (Test / checkStyle).value,
-          checkStyleJVM := ()
+          Test / testJVM := ()
         )
         .jvmSettings(name := id + "-jvm")
 
@@ -78,25 +72,19 @@ object KantanScalaJsPlugin extends AutoPlugin {
   import autoImport.*
   override lazy val projectSettings: Seq[Setting[Task[Unit]]] = Seq(
     Test / testJS := (),
-    Test / testJVM := (Test / test).value,
-    checkStyleJS := (),
-    Compile / checkStyleJVM := (Compile / checkStyle).value,
-    Test / checkStyleJVM := (Test / checkStyle).value
+    Test / testJVM := (Test / test).value
   )
 
   override def globalSettings: Seq[Setting[?]] =
     addCommandAlias(
       "validateJVM",
       "; clean"
-        + "; checkStyleJVM"
-        + "; Test/checkStyleJVM"
+        + "; all scalafmtCheckAll scalafmtSbtCheck"
         + "; testJVM"
         + "; doc"
     ) ++ addCommandAlias(
       "validateJS",
       "; clean"
-        + "; checkStyleJS"
-        + "; Test/checkStyleJS"
         + "; testJS"
     )
 

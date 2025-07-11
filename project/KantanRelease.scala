@@ -24,18 +24,6 @@ import sbtrelease.ReleasePlugin.autoImport.*
 
 object KantanRelease {
 
-  /** Runs checkStyle. */
-  lazy val runCheckStyle: ReleaseStep =
-    ReleaseStep(
-      action = { (st: State) =>
-        val extracted = Project.extract(st)
-        val ref = extracted.get(thisProjectRef)
-
-        val stCompile = extracted.runAggregated(ref / Compile / checkStyle, st)
-        extracted.runAggregated(ref / Test / checkStyle, stCompile)
-      }
-    )
-
   /** Runs `pushSite`. */
   lazy val runPushSite: ReleaseStep = { (st: State) =>
     val extracted = Project.extract(st)
