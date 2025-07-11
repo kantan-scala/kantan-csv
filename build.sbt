@@ -154,7 +154,7 @@ lazy val refined = kantanCrossProject("refined", "refined")
 
 // - enumeratum project ---------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------
-lazy val enumeratum = kantanCrossProject("enumeratum", "enumeratum", true)
+lazy val enumeratum = kantanCrossProject("enumeratum", "enumeratum")
   .settings(moduleName := "kantan.csv-enumeratum")
   .enablePlugins(PublishedPlugin)
   .dependsOn(core, laws % Test, codecsEnumeratum, codecsEnumeratumLaws % Test)
@@ -322,7 +322,7 @@ lazy val codecsEnumeratum =
       )
     )
 
-lazy val codecsEnumeratumLaws = kantanCrossProject("codecs-enumeratum-laws", "codecs/enumeratum/laws", true)
+lazy val codecsEnumeratumLaws = kantanCrossProject("codecs-enumeratum-laws", "codecs/enumeratum/laws")
   .settings(moduleName := "kantan.codecs-enumeratum-laws")
   .settings(libraryDependencies += "com.beachape" %%% "enumeratum-scalacheck" % "1.9.0")
   .settings(
