@@ -22,7 +22,7 @@ import wartremover.Warts
 
 /** Makes compilation much more strict.
   *
-  * This will make warnings fatal, as well as turn on various Scala linters (such as WartRemover).
+  * turn on various Scala linters (such as WartRemover).
   */
 object StrictPlugin extends AutoPlugin {
 
@@ -32,15 +32,7 @@ object StrictPlugin extends AutoPlugin {
   override def requires: Plugins =
     KantanPlugin && WartRemover
 
-  override lazy val projectSettings: Seq[Setting[?]] = wartRemoverSettings ++ scalacSettings
-
-  /** All warnings are fatal in `Compile`.
-    *
-    * I'd love to make warnings fatal in `Test` as well, but the problem is that some tests actually need to do some
-    * dodgy things to see what happens.
-    */
-  def scalacSettings: Seq[Setting[?]] =
-    Nil
+  override lazy val projectSettings: Seq[Setting[?]] = wartRemoverSettings
 
   def wartRemoverSettings: Seq[Setting[?]] =
     List(Compile, Test).flatMap { c =>
