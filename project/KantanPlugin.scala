@@ -63,14 +63,6 @@ object KantanPlugin extends AutoPlugin {
   override lazy val projectSettings: Seq[Setting[?]] =
     generalSettings ++ scalacSettings ++ javacSettings
 
-  override def globalSettings: Seq[Setting[?]] =
-    addCommandAlias(
-      "validate",
-      "; clean"
-        + "; test"
-        + "; doc"
-    )
-
   /** General settings. */
   lazy val generalSettings: Seq[Setting[?]] =
     Seq(
