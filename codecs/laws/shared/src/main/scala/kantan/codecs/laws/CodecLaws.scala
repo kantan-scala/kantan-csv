@@ -26,7 +26,7 @@ trait CodecLaws[E, D, F, T] extends DecoderLaws[E, D, F, T] with EncoderLaws[E, 
 
   // - Misc. laws ------------------------------------------------------------------------------------------------------
   // -------------------------------------------------------------------------------------------------------------------
-  def leftMapIdentityEncoding[A](d: D): Boolean =
+  def leftMapIdentityEncoding(d: D): Boolean =
     codec.encode(d) == codec.leftMap(identity).encode(d)
 
   def leftMapCompositionEncoding[A, B](d: D, f: F => A, g: A => B): Boolean =

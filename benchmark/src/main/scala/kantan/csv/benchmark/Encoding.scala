@@ -68,7 +68,7 @@ class Encoding {
 }
 
 object Encoding {
-  def write[A](data: List[CsvEntry])(f: Array[String] => Unit): Unit =
+  def write(data: List[CsvEntry])(f: Array[String] => Unit): Unit =
     data.foreach(entry => f(Array(entry._1.toString, entry._2, entry._3.toString, entry._4.toString)))
 
   def kantan(data: List[CsvEntry])(implicit engine: WriterEngine): String =
