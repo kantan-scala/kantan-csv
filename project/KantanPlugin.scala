@@ -50,19 +50,9 @@ object KantanPlugin extends AutoPlugin {
 
       def laws(name: String): Project =
         proj.settings(setLaws(name))
-
-      def aggregateIf(predicate: Boolean)(refs: ProjectReference*): Project =
-        if(predicate) proj.aggregate(refs*)
-        else proj
-
-      def dependsOnIf(predicate: Boolean)(refs: ClasspathDep[ProjectReference]*): Project =
-        if(predicate) proj.dependsOn(refs*)
-        else proj
     }
 
   }
-
-  import autoImport.*
 
   override def trigger =
     allRequirements
