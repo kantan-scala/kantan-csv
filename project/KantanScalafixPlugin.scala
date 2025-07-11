@@ -14,9 +14,6 @@
  * limitations under the License.
  */
 
-package kantan.sbt.scalafix
-
-import kantan.sbt.KantanPlugin
 import sbt.*
 import sbt.Keys.*
 import scalafix.sbt.ScalafixPlugin

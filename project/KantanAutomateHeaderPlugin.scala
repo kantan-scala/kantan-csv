@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-package kantan.sbt.kantan
-
 import de.heikoseeberger.sbtheader.AutomateHeaderPlugin
 import de.heikoseeberger.sbtheader.HeaderPlugin
 import sbt.*

@@ -14,10 +14,7 @@
  * limitations under the License.
  */
 
-package kantan.sbt.release
-
 import com.github.sbt.sbtghpages.GhpagesPlugin.autoImport.ghpagesPushSite
-import kantan.sbt.KantanPlugin.autoImport.*
 import sbt.*
 import sbt.Keys.*
 import sbtrelease.ReleasePlugin.autoImport.*

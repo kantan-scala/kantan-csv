@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-package kantan.sbt
-
 import com.github.tkawachi.doctest.DoctestPlugin.autoImport.*
 import de.heikoseeberger.sbtheader.HeaderPlugin
 import sbt.*

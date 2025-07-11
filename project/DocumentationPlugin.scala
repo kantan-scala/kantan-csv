@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-package kantan.sbt
-
 import com.github.sbt.sbtghpages.GhpagesPlugin
 import com.github.sbt.sbtghpages.GhpagesPlugin.autoImport.*
 import com.typesafe.sbt.site.SitePlugin

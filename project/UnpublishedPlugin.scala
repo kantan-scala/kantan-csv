@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-package kantan.sbt
-
 import sbt.AutoPlugin
 import sbt.Def
 import sbt.Keys.*

@@ -14,9 +14,6 @@
  * limitations under the License.
  */
 
-package kantan.sbt.kantan
-
-import kantan.sbt.StrictPlugin
 import sbt.*
 import wartremover.WartRemover
 
