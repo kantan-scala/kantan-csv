@@ -12,8 +12,6 @@ addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.5.5")
 
 addSbtPlugin("ch.epfl.scala" % "sbt-scalafix" % "0.14.3")
 
-addSbtPlugin("org.portable-scala" % "sbt-scalajs-crossproject" % "1.3.2")
-
 addSbtPlugin("org.scala-js" % "sbt-scalajs" % "1.19.0")
 
 addSbtPlugin("com.github.sbt" % "sbt-boilerplate" % "0.7.0")
@@ -29,3 +27,5 @@ addSbtPlugin("com.github.sbt" % "sbt-ghpages" % "0.8.0")
 addSbtPlugin("com.github.sbt" % "sbt-unidoc" % "0.5.0")
 
 addSbtPlugin("com.github.xuwei-k" % "scalafix-check" % "0.1.0")
+
+addSbtPlugin("com.eed3si9n" % "sbt-projectmatrix" % "0.11.0")
