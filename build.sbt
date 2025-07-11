@@ -235,8 +235,15 @@ lazy val codecsJava8 = kantanCrossProject("codecs-java8", "codecs/java8/core")
     libraryDependencies += "io.github.cquiroz" %%% "scala-java-time" % "2.6.0"
   )
   .settings(
+    libraryDependencies ++= {
+      scalaBinaryVersion.value match {
+        case "3" =>
+          Nil
+        case _ =>
+          Seq("org.scala-lang" % "scala-reflect" % scalaVersion.value % "provided")
+      }
+    },
     libraryDependencies ++= Seq(
-      "org.scala-lang" % "scala-reflect" % scalaVersion.value % "provided",
       "org.scalatest" %%% "scalatest" % "3.2.19" % "test"
     )
   )
