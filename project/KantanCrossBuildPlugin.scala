@@ -37,9 +37,6 @@ object KantanCrossBuildPlugin extends AutoPlugin {
     "2.13.16"
 
   object autoImport {
-    lazy val testJS: TaskKey[Unit] = taskKey[Unit]("run tests for JS projects only")
-    lazy val testJVM: TaskKey[Unit] = taskKey[Unit]("run tests for JVM projects only")
-
     def kantanCrossProject(id: String, base: String, enableScala3: Boolean = true): ProjectMatrix =
       kantanCrossProjectInternal(id = id, base = base, laws = None, enableScala3 = enableScala3)
 
@@ -141,8 +138,6 @@ object KantanCrossBuildPlugin extends AutoPlugin {
             doctestGenTests := Seq.empty,
             // Disables parallel execution in JS mode: https://github.com/scala-js/scala-js/issues/1546
             parallelExecution := false,
-            Test / testJS := (Test / test).value,
-            Test / testJVM := (),
             laws.map(x => setLaws(s"${x}JS")).toSeq
           )
         )
@@ -150,22 +145,16 @@ object KantanCrossBuildPlugin extends AutoPlugin {
   }
 
   import autoImport.*
-  override lazy val projectSettings: Seq[Setting[Task[Unit]]] = Seq(
-    Test / testJS := (),
-    Test / testJVM := (Test / test).value
-  )
 
   override def globalSettings: Seq[Setting[?]] =
     addCommandAlias(
-      "validateJVM",
-      "; clean"
-        + "; all scalafmtCheckAll scalafmtSbtCheck scalafixCheckAll scalafixConfigRuleNamesSortCheck"
-        + "; testJVM"
-        + "; doc"
-    ) ++ addCommandAlias(
-      "validateJS",
-      "; clean"
-        + "; testJS"
+      "validate",
+      Seq(
+        "clean",
+        "all scalafmtCheckAll scalafmtSbtCheck scalafixCheckAll scalafixConfigRuleNamesSortCheck",
+        "test",
+        "doc"
+      ).mkString("; ")
     )
 
 }
