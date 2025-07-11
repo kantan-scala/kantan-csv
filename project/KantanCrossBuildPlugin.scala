@@ -121,7 +121,16 @@ object KantanCrossBuildPlugin extends AutoPlugin {
         .jvmPlatform(
           scalaVersions = scalaVersions,
           settings = Def.settings(
-            laws.map(setLaws).toSeq
+            laws.map(setLaws).toSeq,
+            doctestGenTests := {
+              scalaBinaryVersion.value match {
+                case "3" =>
+                  Seq.empty
+                case _ =>
+                  // TODO enable with Scala 3 and disable Scala 2
+                  doctestGenTests.value
+              }
+            }
           )
         )
         .jsPlatform(

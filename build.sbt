@@ -29,7 +29,7 @@ lazy val jsModules: Seq[ProjectReference] = Seq(
   laws,
   refined,
   scalaz
-).map(_.js(Scala213): ProjectReference)
+).flatMap(_.js.get.map(x => x: ProjectReference))
 
 enablePlugins(UnpublishedPlugin)
 
@@ -76,6 +76,9 @@ lazy val benchmark = projectMatrix
 lazy val core = kantanCrossProject("core", "core", "laws", true)
   .settings(moduleName := "kantan.csv")
   .enablePlugins(PublishedPlugin, BoilerplatePlugin)
+  .settings(
+    libraryDependencies += "com.github.xuwei-k" %%% "unapply" % "0.1.0" % Test
+  )
   .dependsOn(codecsCore)
 
 lazy val laws = kantanCrossProject("laws", "laws")

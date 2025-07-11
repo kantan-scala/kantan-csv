@@ -147,7 +147,7 @@ object KantanPlugin extends AutoPlugin {
     // - nothing is fatal (use StrictKantanPlugin for that)
     val unusedImports = Seq("-Ywarn-unused:imports", "-Ywarn-unused-import")
     Seq(
-      scalacOptions := base(scalaVersion.value),
+      scalacOptions ++= base(scalaVersion.value),
       Compile / console / scalacOptions --= unusedImports
     )
   }
