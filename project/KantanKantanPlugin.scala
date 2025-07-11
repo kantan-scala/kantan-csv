@@ -47,7 +47,6 @@ object KantanKantanPlugin extends AutoPlugin {
 
   lazy val generalSettings: Seq[Setting[?]] =
     Seq(
-      name := s"kantan.${kantanProject.value}",
       organization := "com.nrinaudo",
       organizationHomepage := Some(url("https://nrinaudo.github.io")),
       organizationName := "Nicolas Rinaudo",

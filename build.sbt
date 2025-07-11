@@ -31,6 +31,7 @@ lazy val jsModules: Seq[ProjectReference] = Seq(
   scalaz
 ).flatMap(_.js.get.map(x => x: ProjectReference))
 
+scalaVersion := Scala213
 enablePlugins(UnpublishedPlugin)
 
 lazy val docs = projectMatrix
