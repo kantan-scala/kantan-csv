@@ -29,6 +29,7 @@ object UnpublishedPlugin extends AutoPlugin {
   override def projectSettings: Seq[Def.Setting[?]] =
     Seq(
       // List of settings grabbed from https://github.com/scala/scala-parallel-collections/pull/14.
+      publish / skip := true,
       makePom := file(""),
       deliver := file(""),
       deliverLocal := file(""),
