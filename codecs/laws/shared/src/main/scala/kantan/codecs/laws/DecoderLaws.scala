@@ -47,7 +47,7 @@ trait DecoderLaws[E, D, F, T] {
   def mapComposition[A, B](v: CodecValue[E, D, T], f: D => A, g: A => B): Boolean =
     decoder.map(f.andThen(g)).decode(v.encoded) == decoder.map(f).map(g).decode(v.encoded)
 
-  def leftMapIdentity[A](v: CodecValue[E, D, T]): Boolean =
+  def leftMapIdentity(v: CodecValue[E, D, T]): Boolean =
     decoder.decode(v.encoded) == decoder.leftMap(identity).decode(v.encoded)
 
   def leftMapComposition[A, B](v: CodecValue[E, D, T], f: F => A, g: A => B): Boolean =
