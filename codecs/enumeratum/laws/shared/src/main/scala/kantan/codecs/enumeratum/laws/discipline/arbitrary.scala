@@ -60,7 +60,9 @@ trait ArbitraryInstances
   ): Arbitrary[IllegalValue[String, A, codecs.type]] = {
     val legal = valueEnum.values.map(a => StringEncoder[V].encode(a.value))
     Arbitrary {
-      arb[String].suchThat(s => !legal.contains(s)).map(s => IllegalValue(s))
+      arb[String]
+        .suchThat(s => !legal.contains(s) && !s.toIntOption.map(_.toString).exists(legal.contains))
+        .map(s => IllegalValue(s))
     }
   }
 
