@@ -55,7 +55,7 @@ val filtered = iterator.filter(_.exists(_.year >= 1997)).map(_.map(_.make))
 At this point, no data has been parsed yet. We can now, say, take the first element:
 
 ```scala mdoc
-filtered.next
+filtered.next()
 ```
 
 And this will only read as much as it needs to decode that first row. You could iterate over huge CSV files this way
