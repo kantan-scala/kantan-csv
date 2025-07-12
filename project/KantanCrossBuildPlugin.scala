@@ -41,6 +41,35 @@ object KantanCrossBuildPlugin extends AutoPlugin {
     def kantanCrossProject(id: String, base: String, laws: String, enableScala3: Boolean): ProjectMatrix =
       kantanCrossProjectInternal(id = id, base = base, laws = Option(laws), enableScala3 = enableScala3)
 
+    private val crossDirectories: Map[String, Seq[String]] = {
+      val values = Seq("jvm", "js", "native")
+      val result = for {
+        x <- values
+        y <- values
+        if x != y
+      } yield {
+        val z = Seq(x, y).sorted.mkString("-")
+        Seq(x -> z, y -> z)
+      }
+      result.flatten.groupBy(_._1).map { case (k, v) => k -> v.map(_._2).sorted.distinct }
+    }
+
+    private def addSrcDir(base: File, platform: String, c: Configuration) = Def.setting(
+      crossDirectories(platform).flatMap { dir =>
+        val platformBase = base / dir / "src" / Defaults.nameForSrc(c.name)
+
+        Seq(
+          platformBase / "scala",
+          scalaBinaryVersion.value match {
+            case "2.13" =>
+              platformBase / "scala-2"
+            case "3" =>
+              platformBase / "scala-3"
+          }
+        )
+      }
+    )
+
     private def kantanCrossProjectInternal(
       id: String,
       base: String,
@@ -83,33 +112,6 @@ object KantanCrossBuildPlugin extends AutoPlugin {
                   }
                 )
               },
-              (x / unmanagedSourceDirectories) ++= {
-                val xs = virtualAxes.value.toSet
-                val dirValues =
-                  if(xs(VirtualAxis.jvm)) {
-                    Seq("jvm", "jvm-native", "jvm-js")
-                  } else if(xs(VirtualAxis.js)) {
-                    Seq("js", "js-native", "jvm-js")
-                  } else if(xs(VirtualAxis.native)) {
-                    Seq("native", "jvm-native", "js-native")
-                  } else {
-                    Nil
-                  }
-
-                dirValues.flatMap { dir =>
-                  val platformBase = file(base).getAbsoluteFile / dir / "src" / Defaults.nameForSrc(x.name)
-
-                  Seq(
-                    platformBase / "scala",
-                    scalaBinaryVersion.value match {
-                      case "2.13" =>
-                        platformBase / "scala-2"
-                      case "3" =>
-                        platformBase / "scala-3"
-                    }
-                  )
-                }
-              }
             )
           }
         )
@@ -117,6 +119,9 @@ object KantanCrossBuildPlugin extends AutoPlugin {
           scalaVersions = scalaVersions,
           settings = Def.settings(
             laws.map(setLaws).toSeq,
+            Seq(Compile, Test).map(c =>
+              c / unmanagedSourceDirectories ++= addSrcDir(file(base).getAbsoluteFile, "jvm", c).value
+            ),
             doctestGenTests := {
               scalaBinaryVersion.value match {
                 case "3" =>
@@ -131,6 +136,9 @@ object KantanCrossBuildPlugin extends AutoPlugin {
         .jsPlatform(
           scalaVersions = scalaVersions,
           settings = Def.settings(
+            Seq(Compile, Test).map(c =>
+              c / unmanagedSourceDirectories ++= addSrcDir(file(base).getAbsoluteFile, "js", c).value
+            ),
             scalacOptions += {
               val a = (LocalRootProject / baseDirectory).value.toURI.toString
               val hash: String = sys.process.Process("git rev-parse HEAD").lineStream_!.head
@@ -154,7 +162,9 @@ object KantanCrossBuildPlugin extends AutoPlugin {
         .nativePlatform(
           scalaVersions = scalaVersions,
           settings = Def.settings(
-            name := s"$id-native",
+            Seq(Compile, Test).map(c =>
+              c / unmanagedSourceDirectories ++= addSrcDir(file(base).getAbsoluteFile, "native", c).value
+            ),
             doctestGenTests := Seq.empty,
             laws.map(x => setLaws(s"${x}Native")).toSeq
           )
