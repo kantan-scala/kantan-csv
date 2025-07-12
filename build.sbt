@@ -315,7 +315,7 @@ lazy val codecsShapeless =
       )
     )
 
-lazy val codecsShapelessLaws = kantanCrossProject("codecs-shapeless-laws", "codecs/shapeless/laws", false)
+lazy val codecsShapelessLaws = kantanCrossProject("codecs-shapeless-laws", "codecs/shapeless/laws")
   .settings(moduleName := "kantan.codecs-shapeless-laws")
   .enablePlugins(PublishedPlugin)
-  .dependsOn(codecsCore, codecsLaws, codecsShapeless)
+  .dependsOn(codecsCore, codecsLaws)
