@@ -212,10 +212,7 @@ object Decoder {
 
   /** Creates a new [[Decoder]] instance that applies the specified function when decoding. */
   def from[E, D, F, T](f: E => Either[F, D]): Decoder[E, D, F, T] =
-    new Decoder[E, D, F, T] {
-      override def decode(e: E) =
-        f(e)
-    }
+    (e: E) => f(e)
 
   /** Turns an unsafe function into a [[Decoder]].
     *

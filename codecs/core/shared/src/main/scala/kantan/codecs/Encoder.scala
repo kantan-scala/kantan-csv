@@ -64,10 +64,7 @@ trait EncoderCompanion[E, T] {
 
 object Encoder {
   def from[E, D, T](f: D => E): Encoder[E, D, T] =
-    new Encoder[E, D, T] {
-      override def encode(d: D) =
-        f(d)
-    }
+    (d: D) => f(d)
 
   implicit def encoderFromExported[E, D, T](implicit ea: DerivedEncoder[E, D, T]): Encoder[E, D, T] =
     ea.value
