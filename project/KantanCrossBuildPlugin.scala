@@ -85,18 +85,18 @@ object KantanCrossBuildPlugin extends AutoPlugin {
               },
               (x / unmanagedSourceDirectories) ++= {
                 val xs = virtualAxes.value.toSet
-                val dirOpt =
+                val dirValues =
                   if(xs(VirtualAxis.jvm)) {
-                    Some("jvm")
+                    Seq("jvm", "jvm-native", "jvm-js")
                   } else if(xs(VirtualAxis.js)) {
-                    Some("js")
+                    Seq("js", "js-native", "jvm-js")
                   } else if(xs(VirtualAxis.native)) {
-                    Some("native")
+                    Seq("native", "jvm-native", "js-native")
                   } else {
-                    None
+                    Nil
                   }
 
-                dirOpt.toSeq.flatMap { dir =>
+                dirValues.flatMap { dir =>
                   val platformBase = file(base).getAbsoluteFile / dir / "src" / Defaults.nameForSrc(x.name)
 
                   Seq(
@@ -149,6 +149,14 @@ object KantanCrossBuildPlugin extends AutoPlugin {
             // Disables parallel execution in JS mode: https://github.com/scala-js/scala-js/issues/1546
             parallelExecution := false,
             laws.map(x => setLaws(s"${x}JS")).toSeq
+          )
+        )
+        .nativePlatform(
+          scalaVersions = scalaVersions,
+          settings = Def.settings(
+            name := s"$id-native",
+            doctestGenTests := Seq.empty,
+            laws.map(x => setLaws(s"${x}Native")).toSeq
           )
         )
     }
