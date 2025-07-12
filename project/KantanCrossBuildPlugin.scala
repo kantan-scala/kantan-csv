@@ -41,6 +41,35 @@ object KantanCrossBuildPlugin extends AutoPlugin {
     def kantanCrossProject(id: String, base: String, laws: String, enableScala3: Boolean): ProjectMatrix =
       kantanCrossProjectInternal(id = id, base = base, laws = Option(laws), enableScala3 = enableScala3)
 
+    private val crossDirectories: Map[VirtualAxis, Seq[String]] = {
+      val values = Seq(VirtualAxis.jvm, VirtualAxis.js, VirtualAxis.native)
+      val result = for {
+        x <- values
+        y <- values
+        if x != y
+      } yield {
+        val z = Seq(x.directorySuffix, y.directorySuffix).sorted.mkString("-")
+        Seq(x -> z, y -> z, x -> x.directorySuffix)
+      }
+      result.flatten.groupBy(_._1).map { case (k, v) => k -> v.map(_._2).sorted.distinct }
+    }
+
+    private def addSrcDir(base: File, platform: VirtualAxis, c: Configuration): Def.Initialize[Seq[File]] = Def.setting(
+      crossDirectories(platform).flatMap { dir =>
+        val platformBase = base / dir / "src" / Defaults.nameForSrc(c.name)
+
+        Seq(
+          platformBase / "scala",
+          scalaBinaryVersion.value match {
+            case "2.13" =>
+              platformBase / "scala-2"
+            case "3" =>
+              platformBase / "scala-3"
+          }
+        )
+      }
+    )
+
     private def kantanCrossProjectInternal(
       id: String,
       base: String,
@@ -82,33 +111,6 @@ object KantanCrossBuildPlugin extends AutoPlugin {
                       sharedBase / "scala-3"
                   }
                 )
-              },
-              (x / unmanagedSourceDirectories) ++= {
-                val xs = virtualAxes.value.toSet
-                val dirOpt =
-                  if(xs(VirtualAxis.jvm)) {
-                    Some("jvm")
-                  } else if(xs(VirtualAxis.js)) {
-                    Some("js")
-                  } else if(xs(VirtualAxis.native)) {
-                    Some("native")
-                  } else {
-                    None
-                  }
-
-                dirOpt.toSeq.flatMap { dir =>
-                  val platformBase = file(base).getAbsoluteFile / dir / "src" / Defaults.nameForSrc(x.name)
-
-                  Seq(
-                    platformBase / "scala",
-                    scalaBinaryVersion.value match {
-                      case "2.13" =>
-                        platformBase / "scala-2"
-                      case "3" =>
-                        platformBase / "scala-3"
-                    }
-                  )
-                }
               }
             )
           }
@@ -117,6 +119,9 @@ object KantanCrossBuildPlugin extends AutoPlugin {
           scalaVersions = scalaVersions,
           settings = Def.settings(
             laws.map(setLaws).toSeq,
+            Seq(Compile, Test).map(c =>
+              c / unmanagedSourceDirectories ++= addSrcDir(file(base).getAbsoluteFile, VirtualAxis.jvm, c).value
+            ),
             doctestGenTests := {
               scalaBinaryVersion.value match {
                 case "3" =>
@@ -131,6 +136,10 @@ object KantanCrossBuildPlugin extends AutoPlugin {
         .jsPlatform(
           scalaVersions = scalaVersions,
           settings = Def.settings(
+            Seq(Compile, Test)
+              .map(c =>
+                c / unmanagedSourceDirectories ++= addSrcDir(file(base).getAbsoluteFile, VirtualAxis.js, c).value
+              ),
             scalacOptions += {
               val a = (LocalRootProject / baseDirectory).value.toURI.toString
               val hash: String = sys.process.Process("git rev-parse HEAD").lineStream_!.head
@@ -149,6 +158,18 @@ object KantanCrossBuildPlugin extends AutoPlugin {
             // Disables parallel execution in JS mode: https://github.com/scala-js/scala-js/issues/1546
             parallelExecution := false,
             laws.map(x => setLaws(s"${x}JS")).toSeq
+          )
+        )
+        .nativePlatform(
+          scalaVersions = scalaVersions,
+          settings = Def.settings(
+            libraryDependencySchemes += "org.scala-native" %% "test-interface_native0.5" % VersionScheme.Always,
+            Seq(Compile, Test)
+              .map(c =>
+                c / unmanagedSourceDirectories ++= addSrcDir(file(base).getAbsoluteFile, VirtualAxis.native, c).value
+              ),
+            doctestGenTests := Seq.empty,
+            laws.map(x => setLaws(s"${x}Native")).toSeq
           )
         )
     }
