@@ -30,7 +30,7 @@ import scala.annotation.tailrec
 trait DecoderInstances {
 
   implicit final def decoderInstances[E, F, T]
-    : SemigroupK[({ type L[A] = Decoder[E, A, F, T] })#L] with MonadError[({ type L[A] = Decoder[E, A, F, T] })#L, F] =
+    : SemigroupK[({ type L[A] = Decoder[E, A, F, T] })#L] & MonadError[({ type L[A] = Decoder[E, A, F, T] })#L, F] =
     new SemigroupK[({ type L[A] = Decoder[E, A, F, T] })#L]
       with MonadError[({ type L[A] = Decoder[E, A, F, T] })#L, F] {
 

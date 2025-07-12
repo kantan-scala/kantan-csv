@@ -34,7 +34,7 @@ import scalaz.\/-
 trait DecoderInstances {
 
   implicit final def decoderInstances[E, F, T]
-    : MonadError[({ type L[A] = Decoder[E, A, F, T] })#L, F] with Plus[({ type L[A] = Decoder[E, A, F, T] })#L] =
+    : MonadError[({ type L[A] = Decoder[E, A, F, T] })#L, F] & Plus[({ type L[A] = Decoder[E, A, F, T] })#L] =
     new MonadError[({ type L[A] = Decoder[E, A, F, T] })#L, F] with Plus[({ type L[A] = Decoder[E, A, F, T] })#L] {
 
       override def point[A](a: => A): Decoder[E, A, F, T] =
