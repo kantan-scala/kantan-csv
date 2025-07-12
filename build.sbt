@@ -106,7 +106,7 @@ lazy val cats = kantanCrossProject("cats", "cats")
 
 // - java8 projects ----------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------
-lazy val java8 = kantanCrossProject("java8", "java8", false)
+lazy val java8 = kantanCrossProject("java8", "java8")
   .settings(
     moduleName := "kantan.csv-java8"
   )
@@ -190,7 +190,7 @@ lazy val codecsCatsLaws = kantanCrossProject("codecs-cats-laws", "codecs/cats/la
 
 // - java8 projects ----------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------
-lazy val codecsJava8 = kantanCrossProject("codecs-java8", "codecs/java8/core", "codecs-java8-laws", false)
+lazy val codecsJava8 = kantanCrossProject("codecs-java8", "codecs/java8/core", "codecs-java8-laws", true)
   .settings(
     moduleName := "kantan.codecs-java8",
     name := "java8"
@@ -215,7 +215,7 @@ lazy val codecsJava8 = kantanCrossProject("codecs-java8", "codecs/java8/core", "
     }
   )
 
-lazy val codecsJava8Laws = kantanCrossProject("codecs-java8-laws", "codecs/java8/laws", false)
+lazy val codecsJava8Laws = kantanCrossProject("codecs-java8-laws", "codecs/java8/laws")
   .settings(
     moduleName := "kantan.codecs-java8-laws",
     name := "java8-laws"
