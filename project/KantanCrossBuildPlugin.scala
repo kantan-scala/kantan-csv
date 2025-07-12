@@ -50,6 +50,18 @@ object KantanCrossBuildPlugin extends AutoPlugin {
           doctestGenTests := Seq.empty,
           // Disables parallel execution in JS mode: https://github.com/scala-js/scala-js/issues/1546
           parallelExecution := false,
+          scalacOptions += {
+            val a = (LocalRootProject / baseDirectory).value.toURI.toString
+            val hash: String = sys.process.Process("git rev-parse HEAD").lineStream_!.head
+            val g = s"https://raw.githubusercontent.com/kantan-scala/kantan-csv/${hash}"
+            val key = scalaBinaryVersion.value match {
+              case "3" =>
+                "-scalajs-mapSourceURI"
+              case _ =>
+                "-P:scalajs:mapSourceURI"
+            }
+            s"${key}:$a->$g/"
+          },
           Test / testJS := (Test / test).value,
           Test / testJVM := ()
         )
