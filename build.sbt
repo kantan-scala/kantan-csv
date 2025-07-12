@@ -1,6 +1,8 @@
 ThisBuild / kantanProject := "csv"
 ThisBuild / startYear := Some(2015)
 
+Global / concurrentRestrictions += Tags.limit(NativeTags.Link, 2)
+
 ThisBuild / scalafixDependencies += "com.github.xuwei-k" %% "scalafix-rules" % "0.6.12"
 
 scalaVersion := Scala213
