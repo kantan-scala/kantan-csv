@@ -77,10 +77,7 @@ trait Resource[I, R] { self =>
 
 object Resource extends PlatformSpecificInstances {
   def from[I, R](f: I => OpenResult[R]): Resource[I, R] =
-    new Resource[I, R] {
-      override def open(a: I) =
-        f(a)
-    }
+    (a: I) => f(a)
 
   // - Raw streams -----------------------------------------------------------------------------------------------------
   // -------------------------------------------------------------------------------------------------------------------
