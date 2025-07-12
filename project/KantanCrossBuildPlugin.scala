@@ -111,7 +111,7 @@ object KantanCrossBuildPlugin extends AutoPlugin {
                       sharedBase / "scala-3"
                   }
                 )
-              },
+              }
             )
           }
         )
@@ -136,9 +136,8 @@ object KantanCrossBuildPlugin extends AutoPlugin {
         .jsPlatform(
           scalaVersions = scalaVersions,
           settings = Def.settings(
-            Seq(Compile, Test).map(c =>
-              c / unmanagedSourceDirectories ++= addSrcDir(file(base).getAbsoluteFile, "js", c).value
-            ),
+            Seq(Compile, Test)
+              .map(c => c / unmanagedSourceDirectories ++= addSrcDir(file(base).getAbsoluteFile, "js", c).value),
             scalacOptions += {
               val a = (LocalRootProject / baseDirectory).value.toURI.toString
               val hash: String = sys.process.Process("git rev-parse HEAD").lineStream_!.head
@@ -162,9 +161,9 @@ object KantanCrossBuildPlugin extends AutoPlugin {
         .nativePlatform(
           scalaVersions = scalaVersions,
           settings = Def.settings(
-            Seq(Compile, Test).map(c =>
-              c / unmanagedSourceDirectories ++= addSrcDir(file(base).getAbsoluteFile, "native", c).value
-            ),
+            libraryDependencySchemes += "org.scala-native" %% "test-interface_native0.5" % VersionScheme.Always,
+            Seq(Compile, Test)
+              .map(c => c / unmanagedSourceDirectories ++= addSrcDir(file(base).getAbsoluteFile, "native", c).value),
             doctestGenTests := Seq.empty,
             laws.map(x => setLaws(s"${x}Native")).toSeq
           )
