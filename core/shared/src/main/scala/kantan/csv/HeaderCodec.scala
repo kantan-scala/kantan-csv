@@ -26,7 +26,7 @@ object HeaderCodec extends GeneratedHeaderCodecs {
       override def rowEncoder =
         enc.rowEncoder
 
-      override def fromHeader(header: Seq[String]) =
+      override def fromHeader(header: Seq[String]): DecodeResult[RowDecoder[A]] =
         dec.fromHeader(header)
       override def noHeader =
         dec.noHeader

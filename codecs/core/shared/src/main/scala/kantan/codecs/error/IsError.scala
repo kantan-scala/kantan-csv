@@ -40,11 +40,11 @@ trait IsError[E] extends Serializable { self =>
 
   def map[EE](f: E => EE): IsError[EE] =
     new IsError[EE] {
-      override def fromThrowable(t: Throwable) =
+      override def fromThrowable(t: Throwable): EE =
         f(self.fromThrowable(t))
-      override def fromMessage(msg: String) =
+      override def fromMessage(msg: String): EE =
         f(self.fromMessage(msg))
-      override def from(msg: String, t: Throwable) =
+      override def from(msg: String, t: Throwable): EE =
         f(self.from(msg, t))
     }
 }

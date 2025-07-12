@@ -37,19 +37,19 @@ trait DecoderInstances {
     : MonadError[({ type L[A] = Decoder[E, A, F, T] })#L, F] with Plus[({ type L[A] = Decoder[E, A, F, T] })#L] =
     new MonadError[({ type L[A] = Decoder[E, A, F, T] })#L, F] with Plus[({ type L[A] = Decoder[E, A, F, T] })#L] {
 
-      override def point[A](a: => A) =
+      override def point[A](a: => A): Decoder[E, A, F, T] =
         Decoder.from(_ => Right(a))
 
-      override def bind[A, B](fa: Decoder[E, A, F, T])(f: A => Decoder[E, B, F, T]) =
+      override def bind[A, B](fa: Decoder[E, A, F, T])(f: A => Decoder[E, B, F, T]): Decoder[E, B, F, T] =
         fa.flatMap(f)
 
-      override def handleError[A](fa: Decoder[E, A, F, T])(f: F => Decoder[E, A, F, T]) =
+      override def handleError[A](fa: Decoder[E, A, F, T])(f: F => Decoder[E, A, F, T]): Decoder[E, A, F, T] =
         fa.handleErrorWith(f)
 
-      override def raiseError[A](e: F) =
+      override def raiseError[A](e: F): Decoder[E, A, F, T] =
         Decoder.from(_ => Left(e))
 
-      override def plus[A](a: Decoder[E, A, F, T], b: => Decoder[E, A, F, T]) =
+      override def plus[A](a: Decoder[E, A, F, T], b: => Decoder[E, A, F, T]): Decoder[E, A, F, T] =
         a.orElse(b)
 
     }
@@ -59,7 +59,7 @@ trait EncoderInstances {
 
   implicit def encoderContravariant[E, T]: Contravariant[({ type L[A] = Encoder[E, A, T] })#L] =
     new Contravariant[({ type L[A] = Encoder[E, A, T] })#L] {
-      override def contramap[D, DD](fa: Encoder[E, D, T])(f: DD => D) =
+      override def contramap[D, DD](fa: Encoder[E, D, T])(f: DD => D): Encoder[E, DD, T] =
         fa.contramap(f)
     }
 

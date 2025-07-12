@@ -30,13 +30,13 @@ abstract class Error(message: String) extends Exception(message) with Product wi
 /** Provides useful instance creation methods for errors that might be created as a result of Java exceptions. */
 abstract class ErrorCompanion[T <: Error](defaultMsg: String)(f: String => T) extends Serializable {
   implicit val isError: IsError[T] = new IsError[T] {
-    override def from(msg: String, cause: Throwable) = {
+    override def from(msg: String, cause: Throwable): T = {
       val error = f(msg)
       error.initCause(cause)
       error
     }
 
-    override def fromMessage(msg: String) =
+    override def fromMessage(msg: String): T =
       from(msg, new Exception(msg))
 
     override def fromThrowable(cause: Throwable): T =

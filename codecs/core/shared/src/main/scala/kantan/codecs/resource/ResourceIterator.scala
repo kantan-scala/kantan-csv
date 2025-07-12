@@ -151,10 +151,10 @@ trait ResourceIterator[+A] extends VersionSpecificResourceIterator[A] with java.
 
         override def checkNext: Boolean =
           hasMore()
-        override def readNext() =
+        override def readNext(): A =
           if(hasMore()) self.next()
           else ResourceIterator.empty.next()
-        override def release() =
+        override def release(): Unit =
           self.close()
       }
 
@@ -185,7 +185,7 @@ trait ResourceIterator[+A] extends VersionSpecificResourceIterator[A] with java.
 
         // We have no choice here but to perform all IO-bound operations in `checkNext` - we can't know if there are more
         // elements to be had unless we read all of them until one that doesn't match `p` is found.
-        override def checkNext = {
+        override def checkNext: Boolean = {
           if(state == 0) init()
 
           if(state == 1) true
@@ -201,7 +201,7 @@ trait ResourceIterator[+A] extends VersionSpecificResourceIterator[A] with java.
           } else self.next()
         }
 
-        override def release() =
+        override def release(): Unit =
           self.close()
       }
 
@@ -209,9 +209,9 @@ trait ResourceIterator[+A] extends VersionSpecificResourceIterator[A] with java.
     new ResourceIterator[B] {
       override def checkNext =
         self.hasNext
-      override def readNext() =
+      override def readNext(): B =
         f(self.next())
-      override def release() =
+      override def release(): Unit =
         self.close()
     }
 
@@ -222,11 +222,11 @@ trait ResourceIterator[+A] extends VersionSpecificResourceIterator[A] with java.
   def flatMap[B](f: A => ResourceIterator[B]): ResourceIterator[B] = {
     var cur: ResourceIterator[B] = ResourceIterator.empty
     new ResourceIterator[B] {
-      override def checkNext =
+      override def checkNext: Boolean =
         cur.hasNext || self.hasNext && { cur = f(self.next()); checkNext }
-      override def readNext() =
+      override def readNext(): B =
         cur.next()
-      override def release() =
+      override def release(): Unit =
         self.close()
     }
   }
@@ -291,9 +291,9 @@ trait ResourceIterator[+A] extends VersionSpecificResourceIterator[A] with java.
       var consumed = false
       var acc = z
 
-      override def checkNext =
+      override def checkNext: Boolean =
         !consumed || self.hasNext
-      override def readNext() =
+      override def readNext(): B =
         if(consumed) {
           acc = f(acc, self.next())
           acc
@@ -301,7 +301,7 @@ trait ResourceIterator[+A] extends VersionSpecificResourceIterator[A] with java.
           consumed = true
           z
         }
-      override def release() =
+      override def release(): Unit =
         self.close()
     }
 
@@ -330,14 +330,14 @@ trait ResourceIterator[+A] extends VersionSpecificResourceIterator[A] with java.
   def take(n: Int): ResourceIterator[A] =
     new ResourceIterator[A] {
       var count = n
-      override def checkNext =
+      override def checkNext: Boolean =
         count > 0 && self.hasNext
-      override def readNext() =
+      override def readNext(): A =
         if(count > 0) {
           count -= 1
           self.next()
         } else ResourceIterator.empty.next()
-      override def release() =
+      override def release(): Unit =
         self.close()
     }
 
@@ -360,12 +360,12 @@ trait ResourceIterator[+A] extends VersionSpecificResourceIterator[A] with java.
           first = false
         }
 
-        override def checkNext = {
+        override def checkNext: Boolean = {
           if(first) init()
           hasN
         }
 
-        override def readNext() = {
+        override def readNext(): A = {
           if(first) init()
           if(hasN) {
             val n2 = n
@@ -375,7 +375,7 @@ trait ResourceIterator[+A] extends VersionSpecificResourceIterator[A] with java.
           } else ResourceIterator.empty.next()
         }
 
-        override def release() =
+        override def release(): Unit =
           self.close()
       }
 
@@ -391,12 +391,12 @@ trait ResourceIterator[+A] extends VersionSpecificResourceIterator[A] with java.
           first = false
         }
 
-        override def checkNext = {
+        override def checkNext: Boolean = {
           if(first) init()
           n.isDefined
         }
 
-        override def readNext() = {
+        override def readNext(): B = {
           if(first) init()
 
           val r = n.getOrElse(ResourceIterator.empty.next())
@@ -404,7 +404,7 @@ trait ResourceIterator[+A] extends VersionSpecificResourceIterator[A] with java.
           f(r)
         }
 
-        override def release() =
+        override def release(): Unit =
           self.close()
       }
 
@@ -413,9 +413,9 @@ trait ResourceIterator[+A] extends VersionSpecificResourceIterator[A] with java.
     new ResourceIterator[A] {
       override def checkNext =
         self.hasNext
-      override def readNext() =
+      override def readNext(): A =
         self.next()
-      override def release() = {
+      override def release(): Unit = {
         self.close()
         f()
       }
@@ -436,12 +436,12 @@ trait ResourceIterator[+A] extends VersionSpecificResourceIterator[A] with java.
     */
   def safe[F](empty: => F)(f: Throwable => F): ResourceIterator[Either[F, A]] =
     new ResourceIterator[Either[F, A]] {
-      override def readNext() =
+      override def readNext(): Either[F, A] =
         if(self.hasNext) ResultCompanion.nonFatal(f)(self.next())
         else Left(empty)
       override def checkNext =
         self.hasNext
-      override def release() =
+      override def release(): Unit =
         self.close()
     }
 }
@@ -451,7 +451,7 @@ object ResourceIterator {
     override def checkNext =
       false
     @SuppressWarnings(Array("org.wartremover.warts.Throw"))
-    override def readNext() =
+    override def readNext(): Nothing =
       throw new NoSuchElementException("next on empty resource iterator")
     override def release() =
       ()
@@ -464,7 +464,7 @@ object ResourceIterator {
     new ResourceIterator[A] {
       override def checkNext =
         as.hasNext
-      override def readNext() =
+      override def readNext(): A =
         as.next()
       override def release() =
         ()

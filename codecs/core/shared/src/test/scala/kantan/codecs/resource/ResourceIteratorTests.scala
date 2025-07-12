@@ -38,12 +38,12 @@ class ResourceIteratorTests
           i += 1
         }
 
-        override def readNext() = {
+        override def readNext(): A = {
           checkFail()
           it.next()
         }
 
-        override def checkNext = {
+        override def checkNext: Boolean = {
           checkFail()
           it.hasNext
         }

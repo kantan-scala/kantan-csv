@@ -28,6 +28,6 @@ trait OptionalLaws[A] {
 object OptionalLaws {
   implicit def apply[A: Optional]: OptionalLaws[A] =
     new OptionalLaws[A] {
-      override val optional = Optional[A]
+      override val optional: Optional[A] = Optional[A]
     }
 }
