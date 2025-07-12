@@ -3,40 +3,11 @@ ThisBuild / startYear := Some(2015)
 
 ThisBuild / scalafixDependencies += "com.github.xuwei-k" %% "scalafix-rules" % "0.6.12"
 
-lazy val jsModules: Seq[ProjectReference] = Seq(
-  cats.js,
-  codecsCats.js,
-  codecsCatsLaws.js,
-  codecsCore.js,
-  codecsEnumeratum.js,
-  codecsEnumeratumLaws.js,
-  codecsJava8.js,
-  codecsJava8Laws.js,
-  codecsLaws.js,
-  codecsRefined.js,
-  codecsRefinedLaws.js,
-  codecsScalaz.js,
-  codecsScalazLaws.js,
-  codecsShapeless.js,
-  codecsShapelessLaws.js,
-  core.js,
-  enumeratum.js,
-  generic.js,
-  java8.js,
-  laws.js,
-  refined.js,
-  scalaz.js
-)
-
 enablePlugins(UnpublishedPlugin)
 
 lazy val docs = project
   .enablePlugins(DocumentationPlugin)
   .settings(name := "docs")
-  .settings(
-    ScalaUnidoc / unidoc / unidocProjectFilter :=
-      inAnyProject -- inProjects(benchmark) -- inProjects(jsModules: _*)
-  )
   .settings(libraryDependencies += "joda-time" % "joda-time" % "2.14.0")
   .dependsOn(
     coreJVM,

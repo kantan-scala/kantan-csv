@@ -27,14 +27,11 @@ import mdoc.MdocPlugin.autoImport.*
 import sbt.*
 import sbt.Keys.*
 import sbt.ScopeFilter.ProjectFilter
-import sbtunidoc.BaseUnidocPlugin.autoImport.*
-import sbtunidoc.ScalaUnidocPlugin
-import sbtunidoc.ScalaUnidocPlugin.autoImport.*
 
 /** Plugin for documentation projects.
   *
   * Enabling this will set things up so that:
-  *   - `makeSite` compiles all mdoc files, generates the unidoc API and builds a complete documentation site.
+  *   - `makeSite` compiles all mdoc files and builds a complete documentation site.
   *   - `ghpagesPushSite` generates the site and pushes it to the current repository's github pages.
   */
 object DocumentationPlugin extends AutoPlugin {
@@ -43,7 +40,7 @@ object DocumentationPlugin extends AutoPlugin {
     noTrigger
 
   override def requires: Plugins =
-    PreprocessPlugin && UnpublishedPlugin && ScalaUnidocPlugin && GhpagesPlugin && MdocPlugin
+    PreprocessPlugin && UnpublishedPlugin && GhpagesPlugin && MdocPlugin
 
   object autoImport {
 
@@ -69,9 +66,6 @@ object DocumentationPlugin extends AutoPlugin {
       SitePlugin.autoImport.makeSite / includeFilter :=
         "*.yml" | "*.md" | "*.html" | "*.css" | "*.png" | "*.jpg" | "*.gif" | "*.js" | "*.eot" | "*.svg" | "*.ttf" |
           "*.woff" | "*.woff2" | "*.otf",
-      // Lets sbt-site know about unidoc.
-      ScalaUnidoc / siteSubdirName := "api",
-      addMappingsToSiteDir(ScalaUnidoc / packageDoc / mappings, ScalaUnidoc / siteSubdirName),
       // Configures task dependencies: doc → makeSite → mdoc
       makeSite := makeSite.dependsOn(mdocSite).value,
       doc := (Compile / doc).dependsOn(SitePlugin.autoImport.makeSite).value,
@@ -109,11 +103,6 @@ object DocumentationPlugin extends AutoPlugin {
 
   def scaladocSettings: Seq[Setting[?]] =
     Seq(
-      docSourceUrl := scmInfo.value.map(i => s"${i.browseUrl}/tree/master€{FILE_PATH}.scala"),
-      ScalaUnidoc / unidoc / scalacOptions ++= Seq(
-        "-sourcepath",
-        (LocalRootProject / baseDirectory).value.getAbsolutePath,
-        "-groups"
-      ) ++ docSourceUrl.value.map(v => Seq("-doc-source-url", v)).getOrElse(Seq.empty)
+      docSourceUrl := scmInfo.value.map(i => s"${i.browseUrl}/tree/master€{FILE_PATH}.scala")
     )
 }
