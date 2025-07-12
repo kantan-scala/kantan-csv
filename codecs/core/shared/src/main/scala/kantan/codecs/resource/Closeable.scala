@@ -28,10 +28,7 @@ object Closeable {
     ev
 
   def from[A](f: A => CloseResult): Closeable[A] =
-    new Closeable[A] {
-      override def close(a: A) =
-        f(a)
-    }
+    (a: A) => f(a)
 
   /** Instance for any type that extends `AutoCloseable`. */
   implicit def autoCloseable[A <: AutoCloseable]: Closeable[A] =
