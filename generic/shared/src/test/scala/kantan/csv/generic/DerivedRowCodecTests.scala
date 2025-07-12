@@ -16,19 +16,39 @@
 
 package kantan.csv.generic
 
+import kantan.codecs.Decoder
 import kantan.codecs.shapeless.laws.Left
 import kantan.codecs.shapeless.laws.Or
 import kantan.codecs.shapeless.laws.Right
+import kantan.csv.DecodeError
+import kantan.csv.codecs
 import kantan.csv.generic.Instances.*
 import kantan.csv.generic.arbitrary.*
 import kantan.csv.laws.LegalRow
 import kantan.csv.laws.discipline.DisciplineSuite
 import kantan.csv.laws.discipline.RowCodecTests
 import org.scalacheck.Arbitrary
+import org.scalacheck.Cogen
+import org.scalacheck.Gen
 
 object Instances {
   case class Simple(i: Int)
+
+  object Simple {
+    implicit val arbitrary: Arbitrary[Simple] =
+      Arbitrary(Gen.resultOf(apply))
+    implicit val cogen: Cogen[Simple] =
+      implicitly[Cogen[Int]].contramap(_.i)
+  }
+
   case class Complex(i: Int, b: Boolean, c: Option[Float])
+
+  object Complex {
+    implicit val arbitrary: Arbitrary[Complex] =
+      Arbitrary(Gen.resultOf(apply))
+    implicit val cogen: Cogen[Complex] =
+      implicitly[Cogen[Option[(Int, Boolean, Option[Float])]]].contramap(unapply)
+  }
 
   implicit val arbLegal: Arbitrary[LegalRow[Or[Complex, Simple]]] =
     arbLegalValue { (o: Or[Complex, Simple]) =>
@@ -39,8 +59,14 @@ object Instances {
     }
 }
 
-// Shapeless' Lazy generates code with Null that we need to ignore.
-@SuppressWarnings(Array("org.wartremover.warts.Null"))
+object DerivedRowCodecTests {
+  private val decoder: Decoder[Seq[String], Or[Complex, Simple], DecodeError, codecs.type] =
+    RowCodecTests[Or[Complex, Simple]].laws.decoder
+}
+
 class DerivedRowCodecTests extends DisciplineSuite {
+  private implicit val decoder: Decoder[Seq[String], Or[Complex, Simple], DecodeError, codecs.type] =
+    DerivedRowCodecTests.decoder
+
   checkAll("DerivedRowCodec[Or[Complex, Simple]]", RowCodecTests[Or[Complex, Simple]].codec[Byte, Float])
 }

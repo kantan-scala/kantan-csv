@@ -16,6 +16,7 @@
 
 package kantan.codecs.shapeless
 
+import kantan.codecs.Decoder
 import kantan.codecs.shapeless.Instances.*
 import kantan.codecs.shapeless.laws.Or
 import kantan.codecs.shapeless.laws.discipline.DisciplineSuite
@@ -23,11 +24,20 @@ import kantan.codecs.shapeless.laws.discipline.StringCodecTests
 import kantan.codecs.shapeless.laws.discipline.StringDecoderTests
 import kantan.codecs.shapeless.laws.discipline.StringEncoderTests
 import kantan.codecs.shapeless.laws.discipline.arbitrary.*
+import kantan.codecs.strings.DecodeError
 import kantan.codecs.strings.StringEncoder
+import kantan.codecs.strings.codecs
 import shapeless.CNil
 
-@SuppressWarnings(Array("org.wartremover.warts.Null"))
+object InstancesTests {
+  private val decoder: Decoder[String, Or[Int, Boolean], DecodeError, codecs.type] =
+    StringDecoderTests[Int Or Boolean].laws.decoder
+}
+
 class InstancesTests extends DisciplineSuite {
+
+  private implicit val decoder: Decoder[String, Or[Int, Boolean], DecodeError, codecs.type] =
+    InstancesTests.decoder
 
   // - Tests -----------------------------------------------------------------------------------------------------------
   // -------------------------------------------------------------------------------------------------------------------
