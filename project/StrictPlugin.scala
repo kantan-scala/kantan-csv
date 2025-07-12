@@ -45,22 +45,27 @@ object StrictPlugin extends AutoPlugin {
   def wartRemoverSettings: Seq[Setting[?]] =
     List(Compile, Test).flatMap { c =>
       inConfig(c)(
-        Compile / compile / WartRemover.autoImport.wartremoverErrors ++=
-          Warts.allBut(
-            Wart.StringPlusAny,
-            Wart.ToString,
+        Compile / compile / WartRemover.autoImport.wartremoverErrors ++= {
+          val exclude = Seq(
+            Wart.Any,
+            Wart.CaseClassPrivateApply,
+            Wart.EitherProjectionPartial,
+            Wart.Equals,
+            Wart.ImplicitConversion,
+            Wart.ImplicitParameter,
+            Wart.JavaNetURLConstructors,
             Wart.MutableDataStructures,
             Wart.NonUnitStatements,
-            Wart.Equals,
-            Wart.Overloading,
-            Wart.ImplicitParameter,
             Wart.Nothing,
-            Wart.ImplicitConversion,
-            Wart.Any,
+            Wart.Overloading,
             Wart.PublicInference, // Disabled because https://github.com/wartremover/wartremover/issues/337
             Wart.Recursion,
-            Wart.ScalaApp
+            Wart.StringPlusAny,
+            Wart.ToString
           )
+          assert(exclude.sortBy(_.clazz) == exclude)
+          Warts.allBut(exclude*)
+        }
       )
     }
 }
