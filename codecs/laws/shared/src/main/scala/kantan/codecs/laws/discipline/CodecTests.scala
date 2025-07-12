@@ -54,7 +54,7 @@ trait CodecTests[E, D, F, T] extends DecoderTests[E, D, F, T] with EncoderTests[
 
       val name = "bijective codec"
       val bases = Nil
-      val parents = Seq(coreRules[A, B], bijectiveDecoder[A, B])
+      val parents: Seq[RuleSet] = Seq(coreRules[A, B], bijectiveDecoder[A, B])
       val props = Seq.empty
     }
 
@@ -62,7 +62,7 @@ trait CodecTests[E, D, F, T] extends DecoderTests[E, D, F, T] with EncoderTests[
     new RuleSet {
       val name = "codec"
       val bases = Nil
-      val parents = Seq(coreRules[A, B], decoder[A, B])
+      val parents: Seq[RuleSet] = Seq(coreRules[A, B], decoder[A, B])
       val props = Seq.empty
     }
 }
@@ -75,11 +75,11 @@ object CodecTests {
     new CodecTests[E, D, F, T] {
       override val laws = l
       override val arbLegal = al
-      override val arbF = implicitly[Arbitrary[F]]
-      override val cogenF = Cogen[F]
-      override val cogenD = Cogen[D]
-      override val cogenE = Cogen[E]
-      override val arbD = implicitly[Arbitrary[D]]
-      override val arbE = implicitly[Arbitrary[E]]
+      override val arbF: Arbitrary[F] = implicitly[Arbitrary[F]]
+      override val cogenF: Cogen[F] = Cogen[F]
+      override val cogenD: Cogen[D] = Cogen[D]
+      override val cogenE: Cogen[E] = Cogen[E]
+      override val arbD: Arbitrary[D] = implicitly[Arbitrary[D]]
+      override val arbE: Arbitrary[E] = implicitly[Arbitrary[E]]
     }
 }

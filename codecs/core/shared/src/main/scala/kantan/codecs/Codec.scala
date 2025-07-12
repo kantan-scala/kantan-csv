@@ -53,9 +53,9 @@ trait CodecCompanion[E, F, T] {
 object Codec {
   def from[E, D, F, T](f: E => Either[F, D])(g: D => E): Codec[E, D, F, T] =
     new Codec[E, D, F, T] {
-      override def encode(d: D) =
+      override def encode(d: D): E =
         g(d)
-      override def decode(e: E) =
+      override def decode(e: E): Either[F, D] =
         f(e)
     }
 

@@ -33,7 +33,7 @@ trait OptionalTests[A] extends Laws {
 object OptionalTests {
   def apply[A: Arbitrary: OptionalLaws]: OptionalTests[A] =
     new OptionalTests[A] {
-      override val laws = implicitly[OptionalLaws[A]]
-      override val arbA = implicitly[Arbitrary[A]]
+      override val laws: OptionalLaws[A] = implicitly[OptionalLaws[A]]
+      override val arbA: Arbitrary[A] = implicitly[Arbitrary[A]]
     }
 }

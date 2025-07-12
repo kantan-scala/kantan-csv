@@ -51,6 +51,6 @@ object EncoderTests {
       override val laws = l
       override val arbLegal = al
       override val cogenE = ce
-      override val arbD = implicitly[Arbitrary[D]]
+      override val arbD: Arbitrary[D] = implicitly[Arbitrary[D]]
     }
 }

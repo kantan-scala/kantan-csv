@@ -76,9 +76,9 @@ object HeaderDecoder extends GeneratedHeaderDecoders {
   /** When no [[HeaderDecoder]] is available, fallback on whatever instance of [[RowDecoder]] is in scope. */
   implicit def defaultHeaderDecoder[A: RowDecoder]: HeaderDecoder[A] =
     new HeaderDecoder[A] {
-      override def noHeader =
+      override def noHeader: RowDecoder[A] =
         RowDecoder[A]
-      override def fromHeader(header: Seq[String]) =
+      override def fromHeader(header: Seq[String]): DecodeResult[RowDecoder[A]] =
         Right(RowDecoder[A])
     }
 }

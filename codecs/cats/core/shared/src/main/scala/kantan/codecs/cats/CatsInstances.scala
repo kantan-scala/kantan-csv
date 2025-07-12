@@ -76,7 +76,7 @@ trait EncoderInstances {
 
   implicit def encoderContravariant[E, T]: Contravariant[({ type L[A] = Encoder[E, A, T] })#L] =
     new Contravariant[({ type L[A] = Encoder[E, A, T] })#L] {
-      override def contramap[A, B](e: Encoder[E, A, T])(f: B => A) =
+      override def contramap[A, B](e: Encoder[E, A, T])(f: B => A): Encoder[E, B, T] =
         e.contramap(f)
     }
 
