@@ -40,7 +40,7 @@ object StrictPlugin extends AutoPlugin {
     * dodgy things to see what happens.
     */
   def scalacSettings: Seq[Setting[?]] =
-    Seq(Compile / compile / scalacOptions += "-Xfatal-warnings")
+    Seq(Compile / compile / scalacOptions += "-Werror")
 
   def wartRemoverSettings: Seq[Setting[?]] =
     List(Compile, Test).flatMap { c =>
