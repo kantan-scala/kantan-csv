@@ -1,6 +1,16 @@
 ThisBuild / kantanProject := "csv"
 ThisBuild / startYear := Some(2015)
 
+Global / concurrentRestrictions += Tags.limit(NativeTags.Link, 1)
+
+ThisBuild / concurrentRestrictions := List(
+  Tags.limitAll(
+    if((Global / insideCI).value) 1 else java.lang.Runtime.getRuntime.availableProcessors
+  ),
+  Tags.limit(Tags.ForkedTestGroup, 1),
+  Tags.exclusiveGroup(Tags.Clean)
+)
+
 ThisBuild / scalafixDependencies += "com.github.xuwei-k" %% "scalafix-rules" % "0.6.12"
 
 scalaVersion := Scala213
