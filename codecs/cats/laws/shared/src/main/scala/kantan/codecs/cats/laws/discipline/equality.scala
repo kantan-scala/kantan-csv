@@ -33,7 +33,7 @@ trait EqInstances {
       def eqv(x: A => B, y: A => B): Boolean = {
         val samples = List.fill(50)(Arbitrary.arbitrary[A].sample).collect {
           case Some(a) => a
-          case None    => sys.error("Could not generate arbitrary values to compare two functions")
+          case None => sys.error("Could not generate arbitrary values to compare two functions")
         }
         samples.forall(a => Eq[B].eqv(x(a), y(a)))
       }

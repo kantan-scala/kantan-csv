@@ -37,7 +37,7 @@ class DerivedCodecTests extends AnyFunSuite with ScalaCheckPropertyChecks with M
 
   val encode: Maybe[Int] => String = _ match {
     case Just(i) => i.toString
-    case None    => ""
+    case None => ""
   }
 
   test("Derived decoders should have a lower priority than bespoke ones") {

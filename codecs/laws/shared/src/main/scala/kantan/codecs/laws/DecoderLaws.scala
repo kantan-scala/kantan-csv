@@ -26,9 +26,9 @@ trait DecoderLaws[E, D, F, T] {
 
   private def cmp(result: Either[F, D], cv: CodecValue[E, D, T]): Boolean =
     (cv, result) match {
-      case (IllegalValue(_), Left(_))    => true
+      case (IllegalValue(_), Left(_)) => true
       case (LegalValue(_, d), Right(d2)) => d == d2
-      case _                             => false
+      case _ => false
     }
 
   // - Simple laws -----------------------------------------------------------------------------------------------------

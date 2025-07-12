@@ -38,7 +38,7 @@ class BomReaderTests extends AnyFunSuite with ScalaCheckPropertyChecks with Matc
     def go(reader: Reader, acc: StringBuilder): String =
       reader.read() match {
         case -1 => acc.toString()
-        case b  => go(reader, acc.append(b.toChar))
+        case b => go(reader, acc.append(b.toChar))
       }
 
     go(BomReader(new ByteArrayInputStream(InMemoryBomWriter.write(str, codec)), Codec.ISO8859), new StringBuilder)

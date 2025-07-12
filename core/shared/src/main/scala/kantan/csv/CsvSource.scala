@@ -102,8 +102,8 @@ trait CsvSource[-S] extends Serializable { self =>
   def unsafeReader[A: HeaderDecoder](s: S, conf: CsvConfiguration)(implicit engine: ReaderEngine): CsvReader[A] =
     reader[A](s, conf).map(_.left.map {
       case e @ TypeError(msg) => throw Option(e.getCause).getOrElse(new IllegalArgumentException(msg))
-      case NoSuchElement      => throw new NoSuchElementException
-      case e @ IOError(msg)   => throw Option(e.getCause).getOrElse(new IOException(msg))
+      case NoSuchElement => throw new NoSuchElementException
+      case e @ IOError(msg) => throw Option(e.getCause).getOrElse(new IOException(msg))
       case OutOfBounds(index) => throw new ArrayIndexOutOfBoundsException(index)
     }.merge)
 

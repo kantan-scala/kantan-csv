@@ -47,7 +47,7 @@ package object commons {
       .setDelimiter(conf.cellSeparator)
       .setQuote(conf.quote)
       .setQuoteMode(conf.quotePolicy match {
-        case CsvConfiguration.QuotePolicy.Always     => QuoteMode.ALL
+        case CsvConfiguration.QuotePolicy.Always => QuoteMode.ALL
         case CsvConfiguration.QuotePolicy.WhenNeeded => QuoteMode.MINIMAL
       })
       .get()

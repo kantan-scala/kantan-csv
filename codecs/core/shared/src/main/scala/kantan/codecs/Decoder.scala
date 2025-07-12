@@ -153,7 +153,7 @@ trait Decoder[E, D, F, T] extends Serializable {
   def flatMap[DD](f: D => Decoder[E, DD, F, T]): Decoder[E, DD, F, T] =
     Decoder.from { s =>
       decode(s) match {
-        case Right(d)    => f(d).decode(s)
+        case Right(d) => f(d).decode(s)
         case l @ Left(_) => l.asInstanceOf[Either[F, DD]]
       }
     }

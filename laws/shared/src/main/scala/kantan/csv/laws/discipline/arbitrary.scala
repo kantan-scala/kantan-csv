@@ -64,7 +64,7 @@ trait ArbitraryInstances extends kantan.codecs.laws.discipline.ArbitraryInstance
   implicit val cogenCsvParseError: Cogen[ParseError] = Cogen { (seed: Seed, err: ParseError) =>
     err match {
       case error: ParseError.NoSuchElement.type => cogenCsvNoSuchElement.perturb(seed, error)
-      case error: ParseError.IOError            => cogenCsvIOError.perturb(seed, error)
+      case error: ParseError.IOError => cogenCsvIOError.perturb(seed, error)
     }
   }
 
@@ -73,14 +73,14 @@ trait ArbitraryInstances extends kantan.codecs.laws.discipline.ArbitraryInstance
   implicit val cogenCsvDecodeError: Cogen[DecodeError] = Cogen { (seed: Seed, err: DecodeError) =>
     err match {
       case error: DecodeError.OutOfBounds => cogenCsvOutOfBounds.perturb(seed, error)
-      case error: DecodeError.TypeError   => cogenCsvTypeError.perturb(seed, error)
+      case error: DecodeError.TypeError => cogenCsvTypeError.perturb(seed, error)
     }
   }
 
   implicit val cogenCsvReadError: Cogen[ReadError] = Cogen { (seed: Seed, err: ReadError) =>
     err match {
       case error: DecodeError => cogenCsvDecodeError.perturb(seed, error)
-      case error: ParseError  => cogenCsvParseError.perturb(seed, error)
+      case error: ParseError => cogenCsvParseError.perturb(seed, error)
     }
   }
 

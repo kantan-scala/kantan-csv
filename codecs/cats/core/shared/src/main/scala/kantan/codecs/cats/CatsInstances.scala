@@ -62,8 +62,8 @@ trait DecoderInstances {
           @tailrec
           def loop(e: E, a1: A): Either[F, B] =
             f(a1).decode(e) match {
-              case l @ Left(_)         => l.asInstanceOf[Either[F, B]]
-              case Right(Left(a2))     => loop(e, a2)
+              case l @ Left(_) => l.asInstanceOf[Either[F, B]]
+              case Right(Left(a2)) => loop(e, a2)
               case Right(r @ Right(_)) => r.asInstanceOf[Either[F, B]]
             }
 

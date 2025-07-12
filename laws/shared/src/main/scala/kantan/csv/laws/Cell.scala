@@ -87,8 +87,8 @@ object Cell {
   implicit val cogenCell: Cogen[Cell] = Cogen[String].contramap(_.value)
 
   implicit val cellShrink: Shrink[Cell] = Shrink {
-    case Empty         => Shrink.shrinkAny.shrink(Empty)
-    case Escaped(s)    => Shrink.shrinkString.shrink(s).filter(containsEscapable).map(Escaped.apply)
+    case Empty => Shrink.shrinkAny.shrink(Empty)
+    case Escaped(s) => Shrink.shrinkString.shrink(s).filter(containsEscapable).map(Escaped.apply)
     case NonEscaped(s) => Shrink.shrinkString.shrink(s).filter(_.nonEmpty).map(NonEscaped.apply)
   }
 
