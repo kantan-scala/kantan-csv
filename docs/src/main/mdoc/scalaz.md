@@ -68,16 +68,16 @@ The following instance for cats type classes are provided:
 * [`Show`] and [`Equal`] for all error types ([`ReadError`] and all its descendants).
 * [`RowEncoder`] for any type that has a [`Foldable`].
 
-[`MonadError`]:https://static.javadoc.io/org.scalaz/scalaz_2.12/7.2.18/scalaz/MonadError.html
-[`Plus`]:https://static.javadoc.io/org.scalaz/scalaz_2.12/7.2.18/scalaz/Plus.html
-[`Show`]:https://static.javadoc.io/org.scalaz/scalaz_2.12/7.2.18/scalaz/Show.html
-[`Equal`]:https://static.javadoc.io/org.scalaz/scalaz_2.12/7.2.18/scalaz/Equal.html
-[`Foldable`]:https://static.javadoc.io/org.scalaz/scalaz_2.12/7.2.18/scalaz/Foldable.html
-[`\/`]:https://static.javadoc.io/org.scalaz/scalaz_2.12/7.2.18/scalaz/$bslash$div.html
-[`Maybe`]:https://static.javadoc.io/org.scalaz/scalaz_2.12/7.2.18/scalaz/Maybe.html
+[`MonadError`]:https://javadoc.io/doc/org.scalaz/scalaz_2.13/7.3.8/scalaz/MonadError.html
+[`Plus`]:https://javadoc.io/doc/org.scalaz/scalaz_2.13/7.3.8/scalaz/Plus.html
+[`Show`]:https://javadoc.io/doc/org.scalaz/scalaz_2.13/7.3.8/scalaz/Show.html
+[`Equal`]:https://javadoc.io/doc/org.scalaz/scalaz_2.13/7.3.8/scalaz/Equal.html
+[`Foldable`]:https://javadoc.io/doc/org.scalaz/scalaz_2.13/7.3.8/scalaz/Foldable.html
+[`\/`]:https://javadoc.io/doc/org.scalaz/scalaz_2.13/7.3.8/scalaz/$bslash$div.html
+[`Maybe`]:https://javadoc.io/doc/org.scalaz/scalaz_2.13/7.3.8/scalaz/Maybe.html
 [`CellEncoder`]:{{ site.baseurl }}/api/kantan/csv/package$$CellEncoder.html
 [`CellDecoder`]:{{ site.baseurl }}/api/kantan/csv/CellDecoder$.html
 [`RowDecoder`]:{{ site.baseurl }}/api/kantan/csv/RowDecoder$.html
 [`RowEncoder`]:{{ site.baseurl }}/api/kantan/csv/package$$RowEncoder.html
 [`ReadError`]:{{ site.baseurl }}/api/kantan/csv/ReadError.html
-[`Contravariant`]:https://static.javadoc.io/org.scalaz/scalaz_2.12/7.2.18/scalaz/Contravariant.html
+[`Contravariant`]:https://javadoc.io/doc/org.scalaz/scalaz_2.13/7.3.8/scalaz/Contravariant.html
