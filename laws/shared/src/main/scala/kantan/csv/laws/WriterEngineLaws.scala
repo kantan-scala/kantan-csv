@@ -27,8 +27,14 @@ trait WriterEngineLaws extends RfcWriterLaws {
     data.asCsv(rfc.quoteAll).trim == data.map(_.map(i => s""""${i}"""").mkString(",")).mkString("\r\n")
   }
 
-  def columnSeparator(csv: List[List[Cell]], c: Char): Boolean =
-    roundTripFor(csv, rfc.withCellSeparator(c))
+  def columnSeparator(csv: List[List[Cell]], c: Char): Boolean = {
+    if(rfc.quote == c) {
+      // https://github.com/apache/commons-csv/blob/59164c8b795ebd4cc0362c4c74d7c893c4a50303/src/main/java/org/apache/commons/csv/CSVFormat.java#L2605-L2610
+      true
+    } else {
+      roundTripFor(csv, rfc.withCellSeparator(c))
+    }
+  }
 }
 
 object WriterEngineLaws {
