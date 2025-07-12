@@ -30,7 +30,7 @@ new File("dodgy.csv").asCsvReader[(Int, Either[Int, Option[String]])](rfc)
 case class Point2D(x: Int, y: Int)
 
 // Parsing the content of a remote URL as a List[Point2D].
-new java.net.URL("http://someserver.com/points.csv").readCsv[List, Point2D](rfc.withHeader)
+new java.net.URI("http://someserver.com/points.csv").toURL.readCsv[List, Point2D](rfc.withHeader)
 
 // Writing to a CSV file.
 new File("output.csv").asCsvWriter[Point2D](rfc)
