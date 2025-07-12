@@ -34,8 +34,8 @@ class CsvSourceOpsTests extends AnyFunSuite with ScalaCheckPropertyChecks with M
 
     csv.zip(data).foreach {
       case (Right(is), CodecValue.LegalValue(_, cs)) => is should be(cs)
-      case (Left(_), CodecValue.IllegalValue(_))     =>
-      case (a, b)                                    => fail(s"$a is not compatible with $b")
+      case (Left(_), CodecValue.IllegalValue(_)) =>
+      case (a, b) => fail(s"$a is not compatible with $b")
     }
   }
 
@@ -63,14 +63,14 @@ class CsvSourceOpsTests extends AnyFunSuite with ScalaCheckPropertyChecks with M
   def compareUnsafe[A](csv: => List[A], data: List[RowValue[A]]): Unit = {
     def cmp(csv: List[A], data: List[RowValue[A]]): Unit =
       (csv, data) match {
-        case (Nil, Nil)                                                 => ()
+        case (Nil, Nil) => ()
         case (h1 :: t1, CodecValue.LegalValue(_, h2) :: t2) if h1 == h2 => cmp(t1, t2)
-        case (a, b)                                                     => fail(s"$a is not compatible with $b")
+        case (a, b) => fail(s"$a is not compatible with $b")
       }
 
     Try(csv) match {
       case scala.util.Success(is) => cmp(is, data)
-      case _                      =>
+      case _ =>
         data.filter(_.isIllegal).nonEmpty should be(true)
         ()
     }

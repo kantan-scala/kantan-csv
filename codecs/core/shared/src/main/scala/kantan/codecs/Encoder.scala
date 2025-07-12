@@ -77,7 +77,7 @@ object Encoder {
     eb: Encoder[E, D2, T]
   ): Encoder[E, Either[D1, D2], T] =
     Encoder.from {
-      case Left(a)  => ea.encode(a)
+      case Left(a) => ea.encode(a)
       case Right(b) => eb.encode(b)
     }
 }

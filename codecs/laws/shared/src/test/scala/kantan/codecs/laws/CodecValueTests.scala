@@ -33,7 +33,7 @@ class CodecValueTests extends AnyFunSuite with ScalaCheckPropertyChecks with Mat
     forAll { (v: StringValue[Int], f: Int => Float) =>
       v match {
         case LegalValue(s, i) => v.mapDecoded(f) should be(LegalValue(s, f(i)))
-        case IllegalValue(s)  => v.mapDecoded(f) should be(IllegalValue(s))
+        case IllegalValue(s) => v.mapDecoded(f) should be(IllegalValue(s))
       }
     }
   }
@@ -42,7 +42,7 @@ class CodecValueTests extends AnyFunSuite with ScalaCheckPropertyChecks with Mat
     forAll { (v: StringValue[Int], f: String => Long) =>
       v match {
         case LegalValue(s, i) => v.mapEncoded(f) should be(LegalValue(f(s), i))
-        case IllegalValue(s)  => v.mapEncoded(f) should be(IllegalValue(f(s)))
+        case IllegalValue(s) => v.mapEncoded(f) should be(IllegalValue(f(s)))
       }
     }
   }

@@ -36,7 +36,7 @@ object FormatLiteral extends FormatLiteralMacro {
     c.prefix.tree match {
       case Apply(_, List(Apply(_, List(lit @ Literal(Constant(str: String)))))) =>
         Format.from(str) match {
-          case Left(_)  => c.abort(c.enclosingPosition, s"Illegal format: '$str'")
+          case Left(_) => c.abort(c.enclosingPosition, s"Illegal format: '$str'")
           case Right(_) =>
             reify {
               val spliced = c.Expr[String](lit).splice

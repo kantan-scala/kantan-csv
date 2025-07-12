@@ -29,9 +29,9 @@ trait EqualInstances {
     new Equal[Decoder[E, D, F, T]] {
       override def equal(a1: Decoder[E, D, F, T], a2: Decoder[E, D, F, T]): Boolean =
         kantan.codecs.laws.discipline.equality.eq(a1.decode, a2.decode) {
-          case (Left(f1), Left(f2))   => implicitly[Equal[F]].equal(f1, f2)
+          case (Left(f1), Left(f2)) => implicitly[Equal[F]].equal(f1, f2)
           case (Right(d1), Right(d2)) => implicitly[Equal[D]].equal(d1, d2)
-          case _                      => false
+          case _ => false
         }
     }
 

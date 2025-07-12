@@ -111,8 +111,8 @@ private[engine] class InternalReader private (
   @inline
   final def nextCell(c: Char): InternalReader.Break =
     cellStart(c) match {
-      case InternalReader.Raw         => rawCell
-      case InternalReader.Escaped     => escapedCell(false)
+      case InternalReader.Raw => rawCell
+      case InternalReader.Escaped => escapedCell(false)
       case InternalReader.Finished(r) => r
     }
 
