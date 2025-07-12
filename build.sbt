@@ -101,10 +101,28 @@ lazy val commons = projectMatrix
 
 // - shapeless projects ------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------
-lazy val generic = kantanCrossProject("generic", "generic", false)
+lazy val generic = kantanCrossProject("generic", "generic")
   .settings(moduleName := "kantan.csv-generic")
   .enablePlugins(PublishedPlugin)
-  .dependsOn(core, laws % Test, codecsShapeless, codecsShapelessLaws % Test)
+  .dependsOn(core, laws % Test, codecsShapelessLaws % Test)
+  .configure { p =>
+    p.id match {
+      case "genericJVM2_13" =>
+        p.dependsOn(
+          codecsShapeless.jvm(Scala213)
+        )
+      case "genericJS2_13" =>
+        p.dependsOn(
+          codecsShapeless.js(Scala213)
+        )
+      case "genericNative2_13" =>
+        p.dependsOn(
+          codecsShapeless.native(Scala213)
+        )
+      case "genericJVM3" | "genericJS3" | "genericNative3" =>
+        p
+    }
+  }
 
 // - scalaz projects ---------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------

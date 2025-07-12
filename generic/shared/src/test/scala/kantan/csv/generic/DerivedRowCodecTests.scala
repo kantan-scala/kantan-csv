@@ -47,7 +47,7 @@ object Instances {
     implicit val arbitrary: Arbitrary[Complex] =
       Arbitrary(Gen.resultOf(apply))
     implicit val cogen: Cogen[Complex] =
-      implicitly[Cogen[Option[(Int, Boolean, Option[Float])]]].contramap(unapply)
+      implicitly[Cogen[(Int, Boolean, Option[Float])]].contramap(x => (x.i, x.b, x.c))
   }
 
   implicit val arbLegal: Arbitrary[LegalRow[Or[Complex, Simple]]] =
