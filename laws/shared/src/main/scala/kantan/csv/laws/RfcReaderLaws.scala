@@ -70,14 +70,15 @@ trait RfcReaderLaws {
     equals(valsToCsv(csv.map(_.map(v => "\"" + v.value + "\"")), ",", "\r\n"), csv)
 
   def unescapedDoubleQuotes(csv: List[List[Cell.NonEscaped]]): Boolean =
-    if(csv == List(List(Cell.NonEscaped("")))) {
-      // TODO fail
-      true
-    } else {
-      // Note that we trim here to make sure we don't have end up with whitespace followed by a double-quote: that'd be
-      // a valid start of escaped cell.
-      val corrupt = csv.map(_.map(_.map(_.trim.flatMap(_.toString + "\""))))
-      equals(valsToCsv(corrupt.map(_.map(_.value)), ",", "\r\n"), corrupt)
+    csv match {
+      case List(List(Cell.NonEscaped("" | " "))) =>
+        // TODO fail
+        true
+      case _ =>
+        // Note that we trim here to make sure we don't have end up with whitespace followed by a double-quote: that'd be
+        // a valid start of escaped cell.
+        val corrupt = csv.map(_.map(_.map(_.trim.flatMap(_.toString + "\""))))
+        equals(valsToCsv(corrupt.map(_.map(_.value)), ",", "\r\n"), corrupt)
     }
 
   // - RFC 4180: 2.6 ---------------------------------------------------------------------------------------------------
