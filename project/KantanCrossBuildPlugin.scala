@@ -49,12 +49,12 @@ object KantanCrossBuildPlugin extends AutoPlugin {
         if x != y
       } yield {
         val z = Seq(x, y).sorted.mkString("-")
-        Seq(x -> z, y -> z)
+        Seq(x -> z, y -> z, x -> x)
       }
       result.flatten.groupBy(_._1).map { case (k, v) => k -> v.map(_._2).sorted.distinct }
     }
 
-    private def addSrcDir(base: File, platform: String, c: Configuration) = Def.setting(
+    private def addSrcDir(base: File, platform: String, c: Configuration): Def.Initialize[Seq[File]] = Def.setting(
       crossDirectories(platform).flatMap { dir =>
         val platformBase = base / dir / "src" / Defaults.nameForSrc(c.name)
 
