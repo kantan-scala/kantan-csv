@@ -22,6 +22,8 @@ import sbt.*
 import sbt.Keys.*
 import sbt.internal.ProjectMatrix
 import sbtprojectmatrix.ProjectMatrixKeys.virtualAxes
+import scala.scalanative.sbtplugin.ScalaNativePlugin
+import scala.scalanative.sbtplugin.ScalaNativePlugin.autoImport.*
 import scalafix_check.ScalafixCheck.autoImport.scalafixCheckAll
 import spray.boilerplate.BoilerplatePlugin.autoImport.boilerplateSource
 
@@ -43,6 +45,40 @@ object KantanCrossBuildPlugin extends AutoPlugin {
 
     def kantanCrossProject(id: String, base: String, laws: String, enableScala3: Boolean): ProjectMatrix =
       kantanCrossProjectInternal(id = id, base = base, laws = Option(laws), enableScala3 = enableScala3)
+
+    private val crossDirectories: Map[VirtualAxis, Seq[String]] = {
+      val values = Seq(VirtualAxis.jvm, VirtualAxis.js, VirtualAxis.native)
+      val result = for {
+        x <- values
+        y <- values
+        if x != y
+      } yield {
+        val z = Seq(x.directorySuffix, y.directorySuffix).sorted.mkString("-")
+        Seq(x -> z, y -> z, x -> x.directorySuffix)
+      }
+      result.flatten.groupBy(_._1).map { case (k, v) => k -> v.map(_._2).sorted.distinct }
+    }
+
+    private def addSrcDir(base: File, platform: VirtualAxis): Def.SettingsDefinition = {
+      Seq(Compile, Test)
+        .map(c => c / unmanagedSourceDirectories ++= genSrcDir(base, platform, c).value)
+    }
+
+    private def genSrcDir(base: File, platform: VirtualAxis, c: Configuration): Def.Initialize[Seq[File]] = Def.setting(
+      crossDirectories(platform).flatMap { dir =>
+        val platformBase = base / dir / "src" / Defaults.nameForSrc(c.name)
+
+        Seq(
+          platformBase / "scala",
+          scalaBinaryVersion.value match {
+            case "2.13" =>
+              platformBase / "scala-2"
+            case "3" =>
+              platformBase / "scala-3"
+          }
+        )
+      }
+    )
 
     private def kantanCrossProjectInternal(
       id: String,
@@ -86,33 +122,6 @@ object KantanCrossBuildPlugin extends AutoPlugin {
                       sharedBase / "scala-3"
                   }
                 )
-              },
-              (x / unmanagedSourceDirectories) ++= {
-                val xs = virtualAxes.value.toSet
-                val dirOpt =
-                  if(xs(VirtualAxis.jvm)) {
-                    Some("jvm")
-                  } else if(xs(VirtualAxis.js)) {
-                    Some("js")
-                  } else if(xs(VirtualAxis.native)) {
-                    Some("native")
-                  } else {
-                    None
-                  }
-
-                dirOpt.toSeq.flatMap { dir =>
-                  val platformBase = file(base).getAbsoluteFile / dir / "src" / Defaults.nameForSrc(x.name)
-
-                  Seq(
-                    platformBase / "scala",
-                    scalaBinaryVersion.value match {
-                      case "2.13" =>
-                        platformBase / "scala-2"
-                      case "3" =>
-                        platformBase / "scala-3"
-                    }
-                  )
-                }
               }
             )
           }
@@ -123,6 +132,7 @@ object KantanCrossBuildPlugin extends AutoPlugin {
             laws.map(x => setLaws(s"${x}JVM")).toSeq,
             doctestTestFramework := DoctestTestFramework.ScalaTest,
             doctestScalaTestVersion := Some("3.2.19"),
+            addSrcDir(file(base).getAbsoluteFile, VirtualAxis.jvm),
             doctestGenTests := {
               scalaBinaryVersion.value match {
                 case "3" =>
@@ -137,6 +147,7 @@ object KantanCrossBuildPlugin extends AutoPlugin {
         .jsPlatform(
           scalaVersions = scalaVersions,
           settings = Def.settings(
+            addSrcDir(file(base).getAbsoluteFile, VirtualAxis.js),
             scalacOptions += {
               val a = (LocalRootProject / baseDirectory).value.toURI.toString
               val hash: String = sys.process.Process("git rev-parse HEAD").lineStream_!.head
@@ -153,8 +164,33 @@ object KantanCrossBuildPlugin extends AutoPlugin {
             // Disables sbt-doctests in JS mode: https://github.com/tkawachi/sbt-doctest/issues/52
             doctestGenTests := Seq.empty,
             // Disables parallel execution in JS mode: https://github.com/scala-js/scala-js/issues/1546
-            parallelExecution := false,
+            Test / parallelExecution := false,
             laws.map(x => setLaws(s"${x}JS")).toSeq
+          )
+        )
+        .nativePlatform(
+          scalaVersions = scalaVersions,
+          settings = Def.settings(
+            libraryDependencySchemes += "org.scala-native" %% "test-interface_native0.5" % VersionScheme.Always,
+            Test / parallelExecution := false,
+            Test / test := {
+              if((Test / sources).value.isEmpty) {
+                streams.value.log.info(s"${thisProject.value.id}/Test/sources is empty. skip test")
+              } else {
+                (Test / test).value
+              }
+            },
+            Test / nativeLink := {
+              if((Test / sources).value.isEmpty) {
+                streams.value.log.info(s"${thisProject.value.id}/Test/sources is empty. skip Test/nativeLink")
+                target.value / "dummy"
+              } else {
+                (Test / nativeLink).value
+              }
+            },
+            addSrcDir(file(base).getAbsoluteFile, VirtualAxis.native),
+            doctestGenTests := Seq.empty,
+            laws.map(x => setLaws(s"${x}Native")).toSeq
           )
         )
     }
@@ -177,6 +213,11 @@ object KantanCrossBuildPlugin extends AutoPlugin {
           taskAll(
             scalafixCheckAll,
             scalaV
+          ).value
+          taskAll(
+            Test / nativeLink,
+            scalaV,
+            _.autoPlugins.toSet.contains(ScalaNativePlugin)
           ).value
           taskAll(
             Test / fastLinkJS,

@@ -23,6 +23,6 @@ jobs:
           java-version: "${{matrix.java}}"
           distribution: adopt
       - uses: sbt/setup-sbt@v1
-      - run: sbt "all scalafmtCheckAll scalafmtSbtCheck scalafixConfigRuleNamesSortCheck validate${{ matrix.scala }}"
+      - run: sbt -v "all scalafmtCheckAll scalafmtSbtCheck scalafixConfigRuleNamesSortCheck validate${{ matrix.scala }}"
              "testScala${{ matrix.scala }}"
              testTimesWriteGitHubStepSummary
