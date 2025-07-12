@@ -72,14 +72,12 @@ object KantanPlugin extends AutoPlugin {
       doctestScalaTestVersion := Some("3.2.2")
     )
 
-  def javacSettings: Seq[Setting[?]] = {
-    // Compile everything to 1.8 until further notice.
-    val jvm = "1.8"
+  private val jvmOptionVersion = "11"
 
+  def javacSettings: Seq[Setting[?]] =
     Seq(
-      javacOptions := Seq("-source", jvm, "-target", jvm)
+      javacOptions ++= Seq("-source", jvmOptionVersion, "-target", jvmOptionVersion)
     )
-  }
 
   /** Sane, version dependent scalac settings. */
   def scalacSettings: Seq[Setting[?]] = {
