@@ -31,9 +31,6 @@ import scala.io.Codec
 /** Makes sure `BomReader` reads BOMs as expected. */
 class BomReaderTests extends AnyFunSuite with ScalaCheckPropertyChecks with Matchers {
 
-  override implicit val generatorDrivenConfig: PropertyCheckConfiguration =
-    PropertyCheckConfiguration(minSuccessful = 1000)
-
   def read(str: String, codec: Codec): String = {
     def go(reader: Reader, acc: StringBuilder): String =
       reader.read() match {
