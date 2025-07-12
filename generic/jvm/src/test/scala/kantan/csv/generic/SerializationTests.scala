@@ -25,8 +25,6 @@ import kantan.csv.generic.Instances.*
 import kantan.csv.laws.discipline.DisciplineSuite
 import kantan.csv.laws.discipline.SerializableTests
 
-// Shapeless' Lazy generates code with Null that we need to ignore.
-@SuppressWarnings(Array("org.wartremover.warts.Null"))
 class SerializationTests extends DisciplineSuite {
 
   checkAll("CellDecoder[Or[Int, Boolean]]", SerializableTests[CellDecoder[Int Or Boolean]].serializable)

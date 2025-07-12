@@ -16,6 +16,28 @@
 
 package kantan.codecs.shapeless.laws
 
+import org.scalacheck.Arbitrary
+import org.scalacheck.Cogen
+import org.scalacheck.Gen
+
 sealed trait Or[+A, +B] extends Product with Serializable
 final case class Left[A](a: A) extends Or[A, Nothing]
 final case class Right[B](b: B) extends Or[Nothing, B]
+
+object Or {
+  implicit def arbitrary[A: Arbitrary, B: Arbitrary]: Arbitrary[Or[A, B]] =
+    Arbitrary(
+      Gen.oneOf(
+        implicitly[Arbitrary[A]].arbitrary.map(Left.apply),
+        implicitly[Arbitrary[B]].arbitrary.map(Right.apply)
+      )
+    )
+
+  implicit def cogen[A: Cogen, B: Cogen]: Cogen[Or[A, B]] =
+    implicitly[Cogen[Either[A, B]]].contramap {
+      case Left(x) =>
+        scala.Left(x)
+      case Right(x) =>
+        scala.Right(x)
+    }
+}

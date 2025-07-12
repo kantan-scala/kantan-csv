@@ -16,15 +16,23 @@
 
 package kantan.csv.generic
 
+import kantan.codecs.Decoder
 import kantan.codecs.shapeless.laws.Or
+import kantan.csv.DecodeError
+import kantan.csv.codecs
 import kantan.csv.generic.arbitrary.*
 import kantan.csv.laws.discipline.CellCodecTests
 import kantan.csv.laws.discipline.DisciplineSuite
 
-// Shapeless' Lazy generates code with Null that we need to ignore.
-@SuppressWarnings(Array("org.wartremover.warts.Null"))
 class DerivedCellCodecTests extends DisciplineSuite {
+  private implicit val decoder: Decoder[String, Or[Int, Boolean], DecodeError, codecs.type] =
+    DerivedCellCodecTests.decoder
 
   checkAll("CellCodec[Or[Int, Boolean]]", CellCodecTests[Int Or Boolean].codec[Byte, String])
 
+}
+
+object DerivedCellCodecTests {
+  private val decoder: Decoder[String, Or[Int, Boolean], DecodeError, codecs.type] =
+    CellCodecTests[Int Or Boolean].laws.decoder
 }

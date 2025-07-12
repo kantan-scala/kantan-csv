@@ -356,9 +356,5 @@ lazy val codecsShapeless = kantanCrossProject("codecs-shapeless", "codecs/shapel
 lazy val codecsShapelessLaws = kantanCrossProject("codecs-shapeless-laws", "codecs/shapeless-laws")
   .in(file("codecs/shapeless/laws"))
   .settings(moduleName := "kantan.codecs-shapeless-laws")
-  .settings(
-    libraryDependencies +=
-      "com.github.alexarchambault" %%% "scalacheck-shapeless_1.18" % "1.3.2"
-  )
   .enablePlugins(PublishedPlugin)
   .dependsOn(codecsCore, codecsLaws, codecsShapeless)
