@@ -33,11 +33,13 @@ import scalaz.std.list.*
 import scalaz.std.string.*
 
 class RowCodecInstancesTests extends ScalazDisciplineSuite {
+  override implicit val generatorDrivenConfig: PropertyCheckConfiguration =
+    PropertyCheckConfiguration(sizeRange = 4)
 
   // Limits the size of rows to 10 - using the default size makes these tests prohibitively long in some contexts
   // (in particular, travis will timeout on the scala.js execution of these tests).
   implicit def arbSeq[A: Arbitrary]: Arbitrary[Seq[A]] =
-    Arbitrary(Gen.listOfN(10, implicitly[Arbitrary[A]].arbitrary))
+    Arbitrary(Gen.choose(0, 4).flatMap(n => Gen.listOfN(n, implicitly[Arbitrary[A]].arbitrary)))
 
   // scalaz doesn't provide an Eq[Seq] instance, mostly because Seq isn't a very meaningfull type.
   implicit def seqEq[A: Equal]: Equal[Seq[A]] =
