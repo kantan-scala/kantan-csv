@@ -164,7 +164,7 @@ object KantanCrossBuildPlugin extends AutoPlugin {
       "validate",
       Seq(
         "clean",
-        "all scalafmtCheckAll scalafmtSbtCheck scalafixCheckAll scalafixConfigRuleNamesSortCheck",
+        "all Test/fastLinkJS scalafmtCheckAll scalafmtSbtCheck scalafixCheckAll scalafixConfigRuleNamesSortCheck",
         "test",
         "doc"
       ).mkString("; ")
