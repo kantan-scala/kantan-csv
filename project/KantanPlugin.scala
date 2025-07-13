@@ -50,7 +50,7 @@ object KantanPlugin extends AutoPlugin {
           )
         case "2.13" =>
           Def.task(
-            (LocalProject(name) / Compile / fullClasspath).value
+            (LocalProject(s"${name}2_13") / Compile / fullClasspath).value
           )
       }
     }.value

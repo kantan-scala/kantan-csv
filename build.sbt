@@ -7,6 +7,7 @@ scalaVersion := Scala213
 enablePlugins(UnpublishedPlugin)
 
 lazy val docs = projectMatrix
+  .defaultAxes()
   .jvmPlatform(
     scalaVersions = Seq(Scala213)
   )
@@ -30,6 +31,7 @@ lazy val docs = projectMatrix
   )
 
 lazy val benchmark = projectMatrix
+  .defaultAxes()
   .jvmPlatform(
     scalaVersions = Seq(Scala213, Scala3)
   )
@@ -61,6 +63,7 @@ lazy val laws = kantanCrossProject("laws", "laws")
 // - external engines projects -----------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------
 lazy val jackson = projectMatrix
+  .defaultAxes()
   .jvmPlatform(
     scalaVersions = Seq(Scala213, Scala3)
   )
@@ -74,6 +77,7 @@ lazy val jackson = projectMatrix
   )
 
 lazy val commons = projectMatrix
+  .defaultAxes()
   .jvmPlatform(
     scalaVersions = Seq(Scala213, Scala3)
   )
