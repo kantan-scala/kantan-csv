@@ -13,9 +13,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os   :    [ubuntu-latest]
-        java :    [11, 21]
-    runs-on: ${{ matrix.os }}
+        java: [11, 21]
+        scala: ["2_13", "3"]
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -23,4 +23,6 @@ jobs:
           java-version: "${{matrix.java}}"
           distribution: adopt
       - uses: sbt/setup-sbt@v1
-      - run: sbt validate testTimesWriteGitHubStepSummary
+      - run: sbt "all scalafmtCheckAll scalafmtSbtCheck scalafixConfigRuleNamesSortCheck validate${{ matrix.scala }}"
+             "testScala${{ matrix.scala }}"
+             testTimesWriteGitHubStepSummary
