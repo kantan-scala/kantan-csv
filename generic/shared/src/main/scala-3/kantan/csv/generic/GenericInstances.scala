@@ -33,15 +33,35 @@ trait GenericInstances {
     productRowDecoder[A](mirror)(xs)
   }
 
-  given sumCelDecoder[A](using mirror: Mirror.SumOf[A]): CellDecoder[A] = ???
+  given singleCellDecoder[A, B: CellDecoder](using
+    mirror: Mirror.ProductOf[A] { type MirroredElemTypes = Tuple1[B] }
+  ): CellDecoder[A] =
+    CellDecoder[B].map(b => mirror.fromProductTyped(Tuple1(b)))
 
-  given sumCelEncoder[A](using mirror: Mirror.SumOf[A]): CellEncoder[A] = ???
+  given singleCellEncoder[A, B: CellEncoder](using
+    mirror: Mirror.ProductOf[A] { type MirroredElemTypes = Tuple1[B] }
+  ): CellEncoder[A] =
+    CellEncoder[B].contramap((a: A) => ???)
 
-  given sumRowDecoder[A](using mirror: Mirror.SumOf[A]): RowDecoder[A] = ???
+  given sumCellDecoder[A](using mirror: Mirror.SumOf[A]): CellDecoder[A] = ???
+
+  given sumCellEncoder[A](using mirror: Mirror.SumOf[A]): CellEncoder[A] = ???
+
+  inline given sumRowDecoder[A](using mirror: Mirror.SumOf[A]): RowDecoder[A] = {
+    val xs = summonAll[Tuple.Map[mirror.MirroredElemTypes, CellDecoder]]
+    sumRowDecoder[A](mirror)(xs)
+  }
 
   given productRowEncoder[A <: Product](using mirror: Mirror.ProductOf[A]): RowEncoder[A] = ???
 
   given sumRowEncoder[A](using mirror: Mirror.SumOf[A]): RowEncoder[A] = ???
+
+  final def sumRowDecoder[A](
+    mirror: Mirror.SumOf[A]
+  )(typeClasses: Tuple.Map[mirror.MirroredElemTypes, CellDecoder]): RowDecoder[A] =
+    RowDecoder.from[A] { (values: Seq[String]) =>
+      ???
+    }
 
   @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
   final def productRowDecoder[A <: Product](
