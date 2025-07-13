@@ -57,7 +57,7 @@ lazy val benchmark = projectMatrix
 
 // - core projects -----------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------
-lazy val core = kantanCrossProject("core", "core", "laws", true)
+lazy val core = kantanCrossProject("core", "core")
   .settings(
     moduleName := "kantan.csv",
     libraryDependencies += "com.github.xuwei-k" %%% "unapply" % "0.1.0" % Test
@@ -154,7 +154,7 @@ addCommandAlias(
 
 // - core projects -----------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------
-lazy val codecsCore = kantanCrossProject("codecs-core", "codecs/core", "codecs-laws", true)
+lazy val codecsCore = kantanCrossProject("codecs-core", "codecs/core")
   .settings(moduleName := "kantan.codecs")
   .settings(
     libraryDependencies ++= {
@@ -187,7 +187,7 @@ lazy val codecsLaws = kantanCrossProject("codecs-laws", "codecs/laws")
 
 // - cats projects -----------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------
-lazy val codecsCats = kantanCrossProject("codecs-cats", "codecs/cats/core", "codecs-cats-laws", true)
+lazy val codecsCats = kantanCrossProject("codecs-cats", "codecs/cats/core")
   .settings(moduleName := "kantan.codecs-cats")
   .enablePlugins(PublishedPlugin)
   .dependsOn(codecsCore)
@@ -207,7 +207,7 @@ lazy val codecsCatsLaws = kantanCrossProject("codecs-cats-laws", "codecs/cats/la
 
 // - java8 projects ----------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------
-lazy val codecsJava8 = kantanCrossProject("codecs-java8", "codecs/java8/core", "codecs-java8-laws", true)
+lazy val codecsJava8 = kantanCrossProject("codecs-java8", "codecs/java8/core")
   .settings(
     moduleName := "kantan.codecs-java8",
     name := "java8"
@@ -242,7 +242,7 @@ lazy val codecsJava8Laws = kantanCrossProject("codecs-java8-laws", "codecs/java8
 
 // - scalaz projects ---------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------
-lazy val codecsScalaz = kantanCrossProject("codecs-scalaz", "codecs/scalaz/core", "codecs-scalaz-laws", true)
+lazy val codecsScalaz = kantanCrossProject("codecs-scalaz", "codecs/scalaz/core")
   .settings(moduleName := "kantan.codecs-scalaz")
   .enablePlugins(PublishedPlugin)
   .dependsOn(codecsCore)
@@ -264,7 +264,7 @@ lazy val codecsScalazLaws = kantanCrossProject("codecs-scalaz-laws", "codecs/sca
 
 // - refined project ---------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------
-lazy val codecsRefined = kantanCrossProject("codecs-refined", "codecs/refined/core", "codecs-refined-laws", true)
+lazy val codecsRefined = kantanCrossProject("codecs-refined", "codecs/refined/core")
   .settings(moduleName := "kantan.codecs-refined")
   .enablePlugins(PublishedPlugin)
   .dependsOn(codecsCore)
@@ -283,7 +283,7 @@ lazy val codecsRefinedLaws = kantanCrossProject("codecs-refined-laws", "codecs/r
 // - enumeratum project ------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------
 lazy val codecsEnumeratum =
-  kantanCrossProject("codecs-enumeratum", "codecs/enumeratum/core", "codecs-enumeratum-laws", true)
+  kantanCrossProject("codecs-enumeratum", "codecs/enumeratum/core")
     .settings(moduleName := "kantan.codecs-enumeratum")
     .enablePlugins(PublishedPlugin)
     .dependsOn(codecsCore)
@@ -322,7 +322,7 @@ lazy val codecsEnumeratumLaws = kantanCrossProject("codecs-enumeratum-laws", "co
 // - shapeless projects ------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------
 lazy val codecsShapeless =
-  kantanCrossProject("codecs-shapeless", "codecs/shapeless/core", "codecs-shapeless-laws", false)
+  kantanCrossProject("codecs-shapeless", "codecs/shapeless/core", false)
     .settings(moduleName := "kantan.codecs-shapeless")
     .enablePlugins(PublishedPlugin)
     .dependsOn(codecsCore)

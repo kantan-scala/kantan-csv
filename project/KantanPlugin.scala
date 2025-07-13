@@ -33,38 +33,6 @@ import sbt.plugins.JvmPlugin
   */
 object KantanPlugin extends AutoPlugin {
 
-  /** Hack to let you work around the fact that SBT refuses scenarios like:
-    *
-    *   - project `a`
-    *   - project `tests` depends on `a` and provides useful tools, such as scalacheck Arbitrary instances
-    *   - project `a` depends on `tests` in its `Test` configuration
-    *
-    * This is perfectly legal, but not supported. You can, however, use `.laws("tests")` in project `a` to enable it.
-    */
-  def setLaws(name: String): Setting[Task[Classpath]] =
-    Test / unmanagedClasspath ++= Def.taskDyn {
-      scalaBinaryVersion.value match {
-        case "3" =>
-          Def.task(
-            (LocalProject(s"${name}3") / Compile / fullClasspath).value
-          )
-        case "2.13" =>
-          Def.task(
-            (LocalProject(s"${name}2_13") / Compile / fullClasspath).value
-          )
-      }
-    }.value
-
-  object autoImport {
-
-    implicit class KantanOperations(private val proj: Project) extends AnyVal {
-
-      def laws(name: String): Project =
-        proj.settings(setLaws(name))
-    }
-
-  }
-
   override def trigger =
     allRequirements
 

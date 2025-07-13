@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import KantanPlugin.setLaws
 import com.github.tkawachi.doctest.DoctestPlugin.autoImport.*
 import org.scalajs.sbtplugin.ScalaJSPlugin
 import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport.fastLinkJS
@@ -39,12 +38,6 @@ object KantanCrossBuildPlugin extends AutoPlugin {
     def Scala3 = "3.3.6"
 
     def Scala213 = "2.13.16"
-
-    def kantanCrossProject(id: String, base: String, enableScala3: Boolean = true): ProjectMatrix =
-      kantanCrossProjectInternal(id = id, base = base, laws = None, enableScala3 = enableScala3)
-
-    def kantanCrossProject(id: String, base: String, laws: String, enableScala3: Boolean): ProjectMatrix =
-      kantanCrossProjectInternal(id = id, base = base, laws = Option(laws), enableScala3 = enableScala3)
 
     private val crossDirectories: Map[VirtualAxis, Seq[String]] = {
       val values = Seq(VirtualAxis.jvm, VirtualAxis.js, VirtualAxis.native)
@@ -80,11 +73,10 @@ object KantanCrossBuildPlugin extends AutoPlugin {
       }
     )
 
-    private def kantanCrossProjectInternal(
+    def kantanCrossProject(
       id: String,
       base: String,
-      laws: Option[String],
-      enableScala3: Boolean
+      enableScala3: Boolean = true
     ): ProjectMatrix = {
       val scalaVersions =
         if(enableScala3) {
@@ -129,7 +121,6 @@ object KantanCrossBuildPlugin extends AutoPlugin {
         .jvmPlatform(
           scalaVersions = scalaVersions,
           settings = Def.settings(
-            laws.map(x => setLaws(s"${x}JVM")).toSeq,
             doctestTestFramework := DoctestTestFramework.ScalaTest,
             doctestScalaTestVersion := Some("3.2.19"),
             addSrcDir(file(base).getAbsoluteFile, VirtualAxis.jvm),
@@ -164,8 +155,7 @@ object KantanCrossBuildPlugin extends AutoPlugin {
             // Disables sbt-doctests in JS mode: https://github.com/sbt-doctest/sbt-doctest/issues/52
             doctestGenTests := Seq.empty,
             // Disables parallel execution in JS mode: https://github.com/scala-js/scala-js/issues/1546
-            Test / parallelExecution := false,
-            laws.map(x => setLaws(s"${x}JS")).toSeq
+            Test / parallelExecution := false
           )
         )
         .nativePlatform(
@@ -189,8 +179,7 @@ object KantanCrossBuildPlugin extends AutoPlugin {
               }
             },
             addSrcDir(file(base).getAbsoluteFile, VirtualAxis.native),
-            doctestGenTests := Seq.empty,
-            laws.map(x => setLaws(s"${x}Native")).toSeq
+            doctestGenTests := Seq.empty
           )
         )
     }
