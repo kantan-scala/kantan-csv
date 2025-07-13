@@ -87,7 +87,6 @@ object KantanKantanPlugin extends AutoPlugin {
     Seq(
       homepage := Some(url(s"https://nrinaudo.github.io/kantan.${kantanProject.value}")),
       apiURL := Some(url(s"https://nrinaudo.github.io/kantan.${kantanProject.value}/api/")),
-      git.remoteRepo := s"git@github.com:nrinaudo/kantan.${kantanProject.value}.git",
       scmInfo := Some(
         ScmInfo(
           url(s"https://github.com/nrinaudo/kantan.${kantanProject.value}"),
