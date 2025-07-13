@@ -23,6 +23,7 @@ import kantan.csv.RowDecoder
 import kantan.csv.RowEncoder
 import kantan.csv.generic.GenericInstances.SeqProduct
 import kantan.csv.generic.GenericInstances.sequenceListEither
+import kantan.csv.generic.given
 import scala.compiletime.summonAll
 import scala.deriving.Mirror
 
@@ -33,28 +34,55 @@ trait GenericInstances {
     productRowDecoder[A](mirror)(xs)
   }
 
-  given singleCellDecoder[A, B: CellDecoder](using
+  given singleCellDecoder[A <: Product, B: CellDecoder](using
     mirror: Mirror.ProductOf[A] { type MirroredElemTypes = Tuple1[B] }
   ): CellDecoder[A] =
     CellDecoder[B].map(b => mirror.fromProductTyped(Tuple1(b)))
 
-  given singleCellEncoder[A, B: CellEncoder](using
+  given singleCellEncoder[A <: Product, B: CellEncoder](using
     mirror: Mirror.ProductOf[A] { type MirroredElemTypes = Tuple1[B] }
   ): CellEncoder[A] =
-    CellEncoder[B].contramap((a: A) => ???)
+    CellEncoder[B].contramap((a: A) => Tuple.fromProductTyped(a)._1)
 
-  given sumCellDecoder[A](using mirror: Mirror.SumOf[A]): CellDecoder[A] = ???
+  inline given sumCellDecoder[A](using mirror: Mirror.SumOf[A]): CellDecoder[A] = {
+    val xs = summonAll[Tuple.Map[mirror.MirroredElemTypes, CellDecoder]].toList.map(_.asInstanceOf[CellDecoder[A]])
+    sumCellDecoderImpl[A](mirror, xs)
+  }
 
-  given sumCellEncoder[A](using mirror: Mirror.SumOf[A]): CellEncoder[A] = ???
+  final def sumCellDecoderImpl[A](mirror: Mirror.SumOf[A], typeclasses: List[CellDecoder[A]]): CellDecoder[A] = {
+    (value: String) =>
+      typeclasses.iterator
+        .map(_.decode(value))
+        .collectFirst { case x @ Right(_) => x }
+        .getOrElse(
+          typeclasses.head.decode(value)
+        )
+  }
+
+  inline given sumCellEncoder[A](using mirror: Mirror.SumOf[A]): CellEncoder[A] = {
+    val xs = summonAll[Tuple.Map[mirror.MirroredElemTypes, CellEncoder]].toList.map(_.asInstanceOf[CellEncoder[A]])
+    sumCellEncoderImpl[A](mirror, xs)
+  }
+
+  final def sumCellEncoderImpl[A](mirror: Mirror.SumOf[A], typeclasses: List[CellEncoder[A]]): CellEncoder[A] = {
+    (a: A) =>
+      typeclasses(mirror.ordinal(a)).encode(a)
+  }
 
   inline given sumRowDecoder[A](using mirror: Mirror.SumOf[A]): RowDecoder[A] = {
     val xs = summonAll[Tuple.Map[mirror.MirroredElemTypes, CellDecoder]]
     sumRowDecoder[A](mirror)(xs)
   }
 
-  given productRowEncoder[A <: Product](using mirror: Mirror.ProductOf[A]): RowEncoder[A] = ???
+  inline given productRowEncoder[A <: Product](using mirror: Mirror.ProductOf[A]): RowEncoder[A] = {
+    val xs = summonAll[Tuple.Map[mirror.MirroredElemTypes, CellEncoder]]
+    ???
+  }
 
-  given sumRowEncoder[A](using mirror: Mirror.SumOf[A]): RowEncoder[A] = ???
+  inline given sumRowEncoder[A](using mirror: Mirror.SumOf[A]): RowEncoder[A] = {
+    val xs = summonAll[Tuple.Map[mirror.MirroredElemTypes, CellEncoder]]
+    ???
+  }
 
   final def sumRowDecoder[A](
     mirror: Mirror.SumOf[A]
