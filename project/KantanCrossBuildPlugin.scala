@@ -55,6 +55,7 @@ object KantanCrossBuildPlugin extends AutoPlugin {
         }
 
       ProjectMatrix(id = id, base = file(base))
+        .defaultAxes()
         .settings(
           Seq(Compile, Test).flatMap { x =>
             Seq(
@@ -116,7 +117,7 @@ object KantanCrossBuildPlugin extends AutoPlugin {
         .jvmPlatform(
           scalaVersions = scalaVersions,
           settings = Def.settings(
-            laws.map(setLaws).toSeq,
+            laws.map(x => setLaws(s"${x}JVM")).toSeq,
             doctestTestFramework := DoctestTestFramework.ScalaTest,
             doctestScalaTestVersion := Some("3.2.19"),
             doctestGenTests := {
