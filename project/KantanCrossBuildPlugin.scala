@@ -150,7 +150,7 @@ object KantanCrossBuildPlugin extends AutoPlugin {
               s"${key}:$a->$g/"
             },
             name := s"$id-js",
-            // Disables sbt-doctests in JS mode: https://github.com/tkawachi/sbt-doctest/issues/52
+            // Disables sbt-doctests in JS mode: https://github.com/sbt-doctest/sbt-doctest/issues/52
             doctestGenTests := Seq.empty,
             // Disables parallel execution in JS mode: https://github.com/scala-js/scala-js/issues/1546
             parallelExecution := false,
