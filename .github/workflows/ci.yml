@@ -23,4 +23,4 @@ jobs:
           java-version: "${{matrix.java}}"
           distribution: adopt
       - uses: sbt/setup-sbt@v1
-      - run: sbt validate
+      - run: sbt validate testTimesWriteGitHubStepSummary
