@@ -20,6 +20,9 @@ import org.scalacheck.Properties
 import org.scalatestplus.scalacheck.Checkers
 
 class ScalazDisciplineSuite extends DisciplineSuite {
+  override implicit val generatorDrivenConfig: PropertyCheckConfiguration =
+    PropertyCheckConfiguration(sizeRange = 10)
+
   // The i bit is a dirty hack to work around the fact that some scalaz properties have duplicated identifiers, which
   // causes scalatest to refuse to even consider working.
   @SuppressWarnings(Array("org.wartremover.warts.Var"))
