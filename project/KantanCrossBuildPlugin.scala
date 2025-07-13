@@ -16,10 +16,13 @@
 
 import KantanPlugin.setLaws
 import com.github.tkawachi.doctest.DoctestPlugin.autoImport.*
+import org.scalajs.sbtplugin.ScalaJSPlugin
+import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport.fastLinkJS
 import sbt.*
 import sbt.Keys.*
 import sbt.internal.ProjectMatrix
 import sbtprojectmatrix.ProjectMatrixKeys.virtualAxes
+import scalafix_check.ScalafixCheck.autoImport.scalafixCheckAll
 import spray.boilerplate.BoilerplatePlugin.autoImport.boilerplateSource
 
 object KantanCrossBuildPlugin extends AutoPlugin {
@@ -159,15 +162,64 @@ object KantanCrossBuildPlugin extends AutoPlugin {
 
   import autoImport.*
 
-  override def globalSettings: Seq[Setting[?]] =
-    addCommandAlias(
-      "validate",
+  override def globalSettings: Seq[Setting[?]] = Def.settings(
+    Seq("2.13", "3").flatMap { scalaV =>
+      val suffix = scalaV.replace('.', '_')
+      val testCompile = TaskKey[Unit](s"testCompileScala$suffix")
       Seq(
-        "clean",
-        "all Test/fastLinkJS scalafmtCheckAll scalafmtSbtCheck scalafixCheckAll scalafixConfigRuleNamesSortCheck",
-        "test",
-        "doc"
-      ).mkString("; ")
-    )
+        TaskKey[Unit](s"validate$suffix") := {
+          testCompile.value
+          taskAll(
+            Compile / doc,
+            scalaV
+          ).value
+          taskAll(
+            scalafixCheckAll,
+            scalaV
+          ).value
+          taskAll(
+            Test / fastLinkJS,
+            scalaV,
+            _.autoPlugins.toSet.contains(ScalaJSPlugin)
+          ).value
+        },
+        testCompile := {
+          taskAll(
+            Test / compile,
+            scalaV
+          ).value
+        },
+        TaskKey[Unit](s"testScala$suffix") := taskAll(
+          Test / test,
+          scalaV
+        ).value
+      )
+    }
+  )
+
+  private def taskAll[A](
+    key: TaskKey[A],
+    scalaV: String,
+    projectFilter: ResolvedProject => Boolean = Function.const(true)
+  ): Def.Initialize[Task[Seq[A]]] = Def.taskDyn {
+    val extracted = Project.extract(state.value)
+    val projects = getProjects(state.value)
+      .withFilter(projectFilter)
+      .withFilter(p => extracted.get(LocalProject(p.id) / scalaBinaryVersion) == scalaV)
+      .map(_.id)
+      .sorted
+    streams.value.log.info(projects.mkString(s"${key.key.label} [", " ", "]"))
+    projects.map(p => LocalProject(p) / key).join
+  }
+
+  private def getProjects(s: State): Seq[ResolvedProject] = {
+    val extracted = Project.extract(s)
+    val currentBuildUri = extracted.currentRef.build
+    val buildStructure = extracted.structure
+    val buildUnitsMap = buildStructure.units
+    val currentBuildUnit = buildUnitsMap(currentBuildUri)
+    val projectsMap = currentBuildUnit.defined
+    projectsMap.values.toVector
+  }
 
 }
