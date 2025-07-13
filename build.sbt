@@ -11,8 +11,11 @@ lazy val docs = projectMatrix
     scalaVersions = Seq(Scala213)
   )
   .enablePlugins(DocumentationPlugin)
-  .settings(name := "docs")
-  .settings(libraryDependencies += "joda-time" % "joda-time" % "2.14.0")
+  .settings(
+    name := "docs",
+    git.remoteRepo := s"git@github.com:kantan-scala/kantan-csv.git",
+    libraryDependencies += "joda-time" % "joda-time" % "2.14.0"
+  )
   .dependsOn(
     core,
     java8,

@@ -117,6 +117,8 @@ object KantanCrossBuildPlugin extends AutoPlugin {
           scalaVersions = scalaVersions,
           settings = Def.settings(
             laws.map(setLaws).toSeq,
+            doctestTestFramework := DoctestTestFramework.ScalaTest,
+            doctestScalaTestVersion := Some("3.2.19"),
             doctestGenTests := {
               scalaBinaryVersion.value match {
                 case "3" =>

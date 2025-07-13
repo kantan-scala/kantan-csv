@@ -78,9 +78,7 @@ object KantanPlugin extends AutoPlugin {
   lazy val generalSettings: Seq[Setting[?]] =
     Seq(
       autoAPIMappings := true,
-      doctestMarkdownEnabled := true,
-      doctestTestFramework := DoctestTestFramework.ScalaTest,
-      doctestScalaTestVersion := Some("3.2.2")
+      doctestMarkdownEnabled := true
     )
 
   private val jvmOptionVersion = "11"
