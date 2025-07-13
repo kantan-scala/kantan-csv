@@ -27,15 +27,11 @@ import sbtrelease.ReleasePlugin.autoImport.ReleaseTransformations.*
   *
   * In order for kantan builds to behave properly, the following two lines *must* be present in the `build.sbt` files:
   * {{{
-  * ThisBuild / kantanProject := "foobar"
   * ThisBuild / startYear     := Some(1978)
   * }}}
   */
 object KantanKantanPlugin extends AutoPlugin {
-  object autoImport {
-    val kantanProject: SettingKey[String] = settingKey("Name of the kantan project")
-  }
-  import autoImport.*
+  val kantanProject = "kantan-scala/kantan-csv"
 
   override def trigger =
     allRequirements
@@ -47,8 +43,7 @@ object KantanKantanPlugin extends AutoPlugin {
 
   lazy val generalSettings: Seq[Setting[?]] =
     Seq(
-      organization := "com.nrinaudo",
-      organizationHomepage := Some(url("https://nrinaudo.github.io")),
+      organization := "io.github.kantan-scala",
       organizationName := "Nicolas Rinaudo",
       licenses := Seq("Apache-2.0" -> url("https://www.apache.org/licenses/LICENSE-2.0.html")),
       // This must be enabled for all modules, to make sure that aggregation picks up on multi-release. Typically,
@@ -66,31 +61,28 @@ object KantanKantanPlugin extends AutoPlugin {
         tagRelease,
         publishArtifacts,
         releaseStepCommand("sonaRelease"),
-        KantanRelease.runPushSite,
         setNextVersion,
         commitNextVersion,
         pushChanges
       ),
-      developers := List(
-        Developer("nrinaudo", "Nicolas Rinaudo", "nicolas@nrinaudo.com", url("https://twitter.com/nicolasrinaudo")),
-        Developer(
-          "joriscode",
-          "Joris",
-          "2750485+joriscode@users.noreply.github.com",
-          url("https://github.com/joriscode")
-        )
+      pomExtra := (
+        <developers>
+          <developer>
+            <id>xuwei-k</id>
+            <name>Kenji Yoshida</name>
+            <url>https://github.com/xuwei-k</url>
+          </developer>
+        </developers>
       )
     )
 
-  /** Remote identifiers, computed from [[autoImport.kantanProject]]. */
   lazy val remoteSettings: Seq[Setting[?]] =
     Seq(
-      homepage := Some(url(s"https://nrinaudo.github.io/kantan.${kantanProject.value}")),
-      apiURL := Some(url(s"https://nrinaudo.github.io/kantan.${kantanProject.value}/api/")),
+      homepage := Some(url("https://github.com/kantan-scala")),
       scmInfo := Some(
         ScmInfo(
-          url(s"https://github.com/nrinaudo/kantan.${kantanProject.value}"),
-          s"scm:git:git@github.com:nrinaudo/kantan.${kantanProject.value}.git"
+          url(s"https://github.com/${kantanProject}"),
+          s"scm:git:git@github.com:${kantanProject}.git"
         )
       )
     )
