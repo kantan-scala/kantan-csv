@@ -1,4 +1,3 @@
-ThisBuild / kantanProject := "csv"
 ThisBuild / startYear := Some(2015)
 
 Global / concurrentRestrictions += Tags.limit(NativeTags.Link, 1)
