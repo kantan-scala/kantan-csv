@@ -46,10 +46,6 @@ object KantanKantanPlugin extends AutoPlugin {
       organization := "io.github.kantan-scala",
       organizationName := "Nicolas Rinaudo",
       licenses := Seq("Apache-2.0" -> url("https://www.apache.org/licenses/LICENSE-2.0.html")),
-      // This must be enabled for all modules, to make sure that aggregation picks up on multi-release. Typically,
-      // root projects are unpublished, but if they do not have releaseCrossBuilder set to true, no underlying project
-      // will either.
-      releaseCrossBuild := true,
       releasePublishArtifactsAction := publishSigned.value,
       releaseProcess := Seq[ReleaseStep](
         checkSnapshotDependencies,
