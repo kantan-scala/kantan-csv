@@ -146,6 +146,25 @@ object KantanPlugin extends AutoPlugin {
     val unusedImports = Seq("-Ywarn-unused:imports", "-Ywarn-unused-import")
     Seq(
       scalacOptions ++= base(scalaVersion.value),
+      Compile / doc / scalacOptions ++= {
+        val base = (LocalRootProject / baseDirectory).value.getAbsolutePath
+        val hash = sys.process.Process("git rev-parse HEAD").lineStream_!.head
+        scalaBinaryVersion.value match {
+          case "3" =>
+            Seq(
+              s"-source-links:github://kantan-scala/kantan-csv",
+              "-revision",
+              hash
+            )
+          case _ =>
+            Seq(
+              "-sourcepath",
+              base,
+              "-doc-source-url",
+              "https://github.com/kantan-scala/kantan-csv/tree/" + hash + "€{FILE_PATH}.scala"
+            )
+        }
+      },
       Compile / console / scalacOptions --= unusedImports
     )
   }
