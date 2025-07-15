@@ -15,30 +15,6 @@ ThisBuild / scalafixDependencies += "com.github.xuwei-k" %% "scalafix-rules" % "
 scalaVersion := Scala213
 enablePlugins(UnpublishedPlugin)
 
-lazy val docs = projectMatrix
-  .defaultAxes()
-  .jvmPlatform(
-    scalaVersions = Seq(Scala213)
-  )
-  .enablePlugins(DocumentationPlugin)
-  .settings(
-    name := "docs",
-    git.remoteRepo := s"git@github.com:kantan-scala/kantan-csv.git",
-    libraryDependencies += "joda-time" % "joda-time" % "2.14.0"
-  )
-  .dependsOn(
-    core,
-    java8,
-    laws,
-    cats,
-    scalaz,
-    generic,
-    jackson,
-    commons,
-    refined,
-    enumeratum
-  )
-
 lazy val benchmark = projectMatrix
   .defaultAxes()
   .jvmPlatform(

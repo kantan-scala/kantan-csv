@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import com.github.sbt.git.SbtGit.git
 import com.jsuereth.sbtpgp.PgpKeys.publishSigned
 import sbt.*
 import sbt.Keys.*
