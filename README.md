@@ -8,7 +8,10 @@ as a simple iterator.
 
 As much as possible, kantan.csv attempts to present a purely functional and safe interface to users. I've not hesitated
 to violate these principles *internally* however, when it afforded better performances. This approach appears to be
-somewhat successful.
+[somewhat successful](https://kantan-scala.github.io/csv/benchmarks.html).
+
+Documentation and tutorials are available on the [companion site](https://kantan-scala.github.io/csv/), but for those
+looking for a few quick examples:
 
 ```scala
 import java.io.File
