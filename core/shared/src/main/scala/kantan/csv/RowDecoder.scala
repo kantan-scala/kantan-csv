@@ -17,7 +17,7 @@
 package kantan.csv
 
 import kantan.codecs.DecoderCompanion
-import kantan.codecs.collection.Factory
+import scala.collection.Factory
 
 /** Provides various instance creation and summoning methods.
   *
