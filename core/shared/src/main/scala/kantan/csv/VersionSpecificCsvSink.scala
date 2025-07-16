@@ -19,7 +19,7 @@ package kantan.csv
 import kantan.csv.engine.WriterEngine
 
 trait VersionSpecificCsvSink[-S] { self: CsvSink[S] =>
-  @deprecated("use write(S, TraversableOnce[A], CsvConfiguration) instead", "0.1.18")
+  @deprecated("use write(S, IterableOnce[A], CsvConfiguration) instead", "0.1.18")
   def write[A: HeaderEncoder](s: S, rows: IterableOnce[A], sep: Char, header: String*)(implicit
     e: WriterEngine
   ): Unit =
