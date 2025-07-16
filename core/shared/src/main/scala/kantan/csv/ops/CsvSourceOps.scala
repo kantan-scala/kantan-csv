@@ -16,7 +16,6 @@
 
 package kantan.csv.ops
 
-import kantan.codecs.collection.Factory
 import kantan.csv.CsvConfiguration
 import kantan.csv.CsvReader
 import kantan.csv.CsvSource
@@ -24,6 +23,7 @@ import kantan.csv.HeaderDecoder
 import kantan.csv.ReadResult
 import kantan.csv.engine.ReaderEngine
 import kantan.csv.rfc
+import scala.collection.Factory
 
 /** Provides useful syntax for types that have implicit instances of [[CsvSource]] in scope.
   *
