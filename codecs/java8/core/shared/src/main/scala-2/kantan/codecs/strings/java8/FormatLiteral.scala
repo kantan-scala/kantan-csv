@@ -16,6 +16,7 @@
 
 package kantan.codecs.strings.java8
 
+import scala.annotation.unused
 import scala.language.experimental.macros
 import scala.reflect.macros.blackbox.Context
 
@@ -24,13 +25,8 @@ final class FormatLiteral(val sc: StringContext) extends AnyVal {
     macro FormatLiteral.fmtImpl
 }
 
-// Relatively distatefull trick to get rid of spurious warnings.
-trait FormatLiteralMacro {
-  def fmtImpl(c: Context)(args: c.Expr[Any]*): c.Expr[Format]
-}
-
-object FormatLiteral extends FormatLiteralMacro {
-  override def fmtImpl(c: Context)(args: c.Expr[Any]*): c.Expr[Format] = {
+object FormatLiteral {
+  def fmtImpl(c: Context)(@unused args: c.Expr[Any]*): c.Expr[Format] = {
     import c.universe.*
 
     c.prefix.tree match {
