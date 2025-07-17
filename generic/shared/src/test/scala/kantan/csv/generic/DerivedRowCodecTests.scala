@@ -51,11 +51,9 @@ object Instances {
   }
 
   implicit val arbLegal: Arbitrary[LegalRow[Or[Complex, Simple]]] =
-    arbLegalValue { (o: Or[Complex, Simple]) =>
-      o match {
-        case Left(Complex(i, b, c)) => Seq(i.toString, b.toString, c.fold("")(_.toString))
-        case Right(Simple(i)) => Seq(i.toString)
-      }
+    arbLegalValue {
+      case Left(Complex(i, b, c)) => Seq(i.toString, b.toString, c.fold("")(_.toString))
+      case Right(Simple(i)) => Seq(i.toString)
     }
 }
 
