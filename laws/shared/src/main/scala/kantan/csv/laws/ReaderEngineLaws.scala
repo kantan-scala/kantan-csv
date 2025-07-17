@@ -20,6 +20,7 @@ import kantan.csv.engine.ReaderEngine
 import kantan.csv.ops.*
 import kantan.csv.rfc
 import org.scalacheck.Prop.throws
+import scala.annotation.tailrec
 
 trait ReaderEngineLaws
     extends RfcReaderLaws with SpectrumReaderLaws with KnownFormatsReaderLaws with VersionSpecificReaderEngineLaws {
@@ -65,6 +66,7 @@ trait ReaderEngineLaws
     !asReader(csv).isTraversableAgain
 
   def hasDefiniteSize(csv: List[List[Cell]]): Boolean = {
+    @tailrec
     def loop[A](data: kantan.csv.CsvReader[A]): Boolean =
       if(data.hasNext) !data.hasDefiniteSize && { data.next(); loop(data) } else data.hasDefiniteSize
 
@@ -72,6 +74,7 @@ trait ReaderEngineLaws
   }
 
   def isEmpty(csv: List[List[Cell]]): Boolean = {
+    @tailrec
     def loop[A](data: kantan.csv.CsvReader[A]): Boolean =
       if(data.hasNext) !data.isEmpty && { data.next(); loop(data) } else data.isEmpty
 
