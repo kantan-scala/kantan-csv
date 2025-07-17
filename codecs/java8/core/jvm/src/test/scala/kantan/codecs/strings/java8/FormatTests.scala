@@ -28,10 +28,10 @@ import kantan.codecs.strings.java8.laws.discipline.arbitrary.*
 
 class FormatTests extends DisciplineSuite {
 
-  checkAll("Format (from literal)", SerializableTests(SerializableLaws(fmt"yyyyMM")).serializable)
+  checkAll("Format (from literal)", SerializableTests(using SerializableLaws(using fmt"yyyyMM")).serializable)
   checkAll(
     "Format (from DateTimeFormatter)",
-    SerializableTests(SerializableLaws(Format(DateTimeFormatter.ofPattern("yyyyMM")))).serializable
+    SerializableTests(using SerializableLaws(using Format(DateTimeFormatter.ofPattern("yyyyMM")))).serializable
   )
 
   test("Format should yield the same results as the corresponding DateTimeFormatter for LocalDateTime") {

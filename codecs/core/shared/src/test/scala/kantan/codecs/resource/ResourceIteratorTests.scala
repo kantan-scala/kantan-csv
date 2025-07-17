@@ -233,7 +233,7 @@ class ResourceIteratorTests
 
   test("non-empty iterators should not have a definite size") {
     forAll { (i: Int, is: List[Int]) =>
-      ResourceIterator(i :: is: _*).hasDefiniteSize should be(false)
+      ResourceIterator((i :: is)*).hasDefiniteSize should be(false)
     }
   }
 
