@@ -19,6 +19,7 @@ package kantan.csv
 import kantan.codecs.error.Error
 import kantan.codecs.error.ErrorCompanion
 import kantan.codecs.error.IsError
+import scala.util.control.NoStackTrace
 
 /** Parent type for all errors that can occur while dealing with CSV data.
   *
@@ -60,8 +61,7 @@ sealed abstract class ParseError(msg: String) extends ReadError(msg)
 object ParseError {
 
   /** Error that occurs when attempting to read from an empty [[CsvReader]]. */
-  @SuppressWarnings(Array("org.wartremover.warts.ObjectThrowable"))
-  case object NoSuchElement extends ParseError("trying to read from an empty reader")
+  case object NoSuchElement extends ParseError("trying to read from an empty reader") with NoStackTrace
 
   /** Error that occurs while interacting with an IO resource.
     *
