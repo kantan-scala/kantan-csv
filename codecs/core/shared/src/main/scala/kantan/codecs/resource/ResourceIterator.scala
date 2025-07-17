@@ -223,6 +223,7 @@ trait ResourceIterator[+A] extends VersionSpecificResourceIterator[A] with java.
   def flatMap[B](f: A => ResourceIterator[B]): ResourceIterator[B] = {
     var cur: ResourceIterator[B] = ResourceIterator.empty
     new ResourceIterator[B] {
+      @tailrec
       override def checkNext: Boolean =
         cur.hasNext || self.hasNext && { cur = f(self.next()); checkNext }
       override def readNext(): B =
