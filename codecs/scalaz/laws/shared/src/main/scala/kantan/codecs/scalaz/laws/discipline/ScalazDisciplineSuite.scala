@@ -25,12 +25,9 @@ class ScalazDisciplineSuite extends DisciplineSuite {
 
   // The i bit is a dirty hack to work around the fact that some scalaz properties have duplicated identifiers, which
   // causes scalatest to refuse to even consider working.
-  @SuppressWarnings(Array("org.wartremover.warts.Var"))
   def checkAll(name: String, props: Properties): Unit = {
-    var i = 0
-    for((id, prop) <- props.properties) {
-      i = i + 1
-      test(s"$name[${i}].$id") {
+    props.properties.zipWithIndex.foreach { case ((id, prop), i) =>
+      test(s"$name[${i + 1}].$id") {
         Checkers.check(prop)
       }
     }
