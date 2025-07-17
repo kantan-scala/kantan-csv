@@ -19,7 +19,6 @@ package kantan.codecs.resource
 import scala.collection.Factory
 import scala.collection.mutable.Buffer
 
-@SuppressWarnings(Array("org.wartremover.warts.MutableDataStructures"))
 trait VersionSpecificResourceIterator[+A] { self: ResourceIterator[A] =>
   def to[F](factory: Factory[A, F]): F =
     foldLeft(factory.newBuilder)(_ += _).result()
