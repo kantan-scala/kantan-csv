@@ -24,7 +24,5 @@ object KantanAutomateHeaderPlugin extends AutoPlugin {
   override def requires: Plugins =
     KantanKantanPlugin && HeaderPlugin
 
-  val autoImport = AutomateHeaderPlugin.autoImport
-
   override lazy val projectSettings = AutomateHeaderPlugin.projectSettings
 }

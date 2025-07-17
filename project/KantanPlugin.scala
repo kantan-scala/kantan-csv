@@ -55,16 +55,6 @@ object KantanPlugin extends AutoPlugin {
       }
     }.value
 
-  object autoImport {
-
-    implicit class KantanOperations(private val proj: Project) extends AnyVal {
-
-      def laws(name: String): Project =
-        proj.settings(setLaws(name))
-    }
-
-  }
-
   override def trigger =
     allRequirements
 
