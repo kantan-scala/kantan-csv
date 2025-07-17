@@ -196,8 +196,6 @@ object KantanCrossBuildPlugin extends AutoPlugin {
 
   }
 
-  import autoImport.*
-
   override def globalSettings: Seq[Setting[?]] = Def.settings(
     Seq("2.13", "3").flatMap { scalaV =>
       val suffix = scalaV.replace('.', '_')
