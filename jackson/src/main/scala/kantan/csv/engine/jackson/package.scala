@@ -64,7 +64,7 @@ package object jackson {
     */
   def readerEngineFrom(f: MappingIteratorBuilder): ReaderEngine =
     ReaderEngine.from { (r, s) =>
-      ResourceIterator.fromIterator(f(r, s))
+      ResourceIterator.fromIterator(javaIterator(f(r, s)))
     }
 
   /** Default jackson.csv `ReaderEngine`.
