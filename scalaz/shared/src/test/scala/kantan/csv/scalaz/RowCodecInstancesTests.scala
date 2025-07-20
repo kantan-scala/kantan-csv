@@ -41,7 +41,7 @@ class RowCodecInstancesTests extends ScalazDisciplineSuite {
   implicit def arbSeq[A: Arbitrary]: Arbitrary[Seq[A]] =
     Arbitrary(Gen.choose(0, 4).flatMap(n => Gen.listOfN(n, implicitly[Arbitrary[A]].arbitrary)))
 
-  // scalaz doesn't provide an Eq[Seq] instance, mostly because Seq isn't a very meaningfull type.
+  // scalaz doesn't provide an Eq[Seq] instance, mostly because Seq isn't a very meaningful type.
   implicit def seqEq[A: Equal]: Equal[Seq[A]] =
     Equal[List[A]].contramap(_.toList)
 

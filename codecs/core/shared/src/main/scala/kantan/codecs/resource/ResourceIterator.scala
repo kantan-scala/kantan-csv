@@ -34,7 +34,7 @@ import scala.util.Try
   *
   * You should be able to express most common causes for not reading the entire stream through standard combinators. For
   * example, "take the first `n` elements" is `take(n)`, or "take all odd elements" is `filter(_ % 2 == 0)`. This allows
-  * you to ignore the fact that the underlying resource needs to be closed. Should you ever find youself in a situation
+  * you to ignore the fact that the underlying resource needs to be closed. Should you ever find yourself in a situation
   * when you just want to stop, however, [[ResourceIterator.close()*]] is available.
   */
 @SuppressWarnings(

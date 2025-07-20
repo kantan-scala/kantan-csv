@@ -29,7 +29,7 @@ class ErrorTests extends DisciplineSuite {
   checkAll("ReadError", EqTests[ReadError].eqv)
 
   checkAll("DecodeError", EqTests[DecodeError].eqv)
-  checkAll("DecodeError.OutOfbounds", EqTests[DecodeError.OutOfBounds].eqv)
+  checkAll("DecodeError.OutOfBounds", EqTests[DecodeError.OutOfBounds].eqv)
   checkAll("DecodeError.TypeError", EqTests[DecodeError.TypeError].eqv)
 
   checkAll("ParseError", EqTests[ParseError].eqv)

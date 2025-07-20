@@ -40,7 +40,7 @@ class RowCodecInstancesTests extends DisciplineSuite {
   implicit def arbSeq[A: Arbitrary]: Arbitrary[Seq[A]] =
     Arbitrary(Gen.choose(0, 4).flatMap(n => Gen.listOfN(n, implicitly[Arbitrary[A]].arbitrary)))
 
-  // cats doesn't provide an Eq[Seq] instance, mostly because Seq isn't a very meaningfull type.
+  // cats doesn't provide an Eq[Seq] instance, mostly because Seq isn't a very meaningful type.
   implicit def seqEq[A: Eq]: Eq[Seq[A]] =
     Eq.by(_.toList)
 

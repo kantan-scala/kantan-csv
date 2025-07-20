@@ -29,7 +29,7 @@ class ErrorTests extends ScalazDisciplineSuite {
   checkAll("ReadError", equ.laws[ReadError])
 
   checkAll("DecodeError", equ.laws[DecodeError])
-  checkAll("DecodeError.OutOfbounds", equ.laws[DecodeError.OutOfBounds])
+  checkAll("DecodeError.OutOfBounds", equ.laws[DecodeError.OutOfBounds])
   checkAll("DecodeError.TypeError", equ.laws[DecodeError.TypeError])
 
   checkAll("ParseError", equ.laws[ParseError])
