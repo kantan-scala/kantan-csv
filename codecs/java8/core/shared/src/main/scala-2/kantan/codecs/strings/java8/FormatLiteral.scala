@@ -20,7 +20,7 @@ import scala.annotation.unused
 import scala.language.experimental.macros
 import scala.reflect.macros.blackbox.Context
 
-final class FormatLiteral(val sc: StringContext) extends AnyVal {
+final class FormatLiteral(private val sc: StringContext) extends AnyVal {
   def fmt(args: Any*): Format =
     macro FormatLiteral.fmtImpl
 }
