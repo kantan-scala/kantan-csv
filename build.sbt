@@ -23,6 +23,12 @@ lazy val benchmark = projectMatrix
   .enablePlugins(UnpublishedPlugin, JmhPlugin)
   .dependsOn(core, jackson, commons, laws % Test)
   .settings(
+    TaskKey[Unit]("runBench") := (Jmh / run).toTask(" -i 10 -wi 10 -f 2 -t 1 -rf csv -rff benchmarks.csv").value,
+    TaskKey[Unit]("runProfiler") := (Jmh / run)
+      .toTask(
+        " -i 10 -wi 5 -f 1 -t 1 -o profiler.txt -prof \"stack:detailLine=true;lines=5;period=1\" kantan.csv.benchmark.*kantan.*"
+      )
+      .value,
     libraryDependencies ++= Seq(
       "com.opencsv" % "opencsv" % "5.11.2",
       "com.univocity" % "univocity-parsers" % "2.9.1",
@@ -118,14 +124,6 @@ lazy val enumeratum = kantanCrossProject("enumeratum", "enumeratum")
   .settings(moduleName := "kantan.csv-enumeratum")
   .enablePlugins(PublishedPlugin)
   .dependsOn(core, laws % Test, codecsEnumeratum, codecsEnumeratumLaws % Test)
-
-// - Command alisases --------------------------------------------------------------------------------------------------
-// ---------------------------------------------------------------------------------------------------------------------
-addCommandAlias("runBench", "benchmark/jmh:run -i 10 -wi 10 -f 2 -t 1 -rf csv -rff benchmarks.csv")
-addCommandAlias(
-  "runProfiler",
-  "benchmark/jmh:run -i 10 -wi 5 -f 1 -t 1 -o profiler.txt -prof \"stack:detailLine=true;lines=5;period=1\" kantan.csv.benchmark.*kantan.*"
-)
 
 // - core projects -----------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------
