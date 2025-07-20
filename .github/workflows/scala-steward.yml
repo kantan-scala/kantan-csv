@@ -22,3 +22,5 @@ jobs:
           github-token: ${{ steps.app-token.outputs.token }}
           author-email: "220091877+kantan-bot[bot]@users.noreply.github.com"
           author-name: "kantan-bot[bot]"
+        env:
+          JAVA_OPTS: "-Xmx8G"
