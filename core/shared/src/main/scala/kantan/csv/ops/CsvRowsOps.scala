@@ -32,7 +32,7 @@ final class CsvRowsOps[A](private val as: IterableOnce[A]) extends AnyVal {
     * scala> List(List(1, 2, 3), List(4, 5, 6)).asCsv(rfc)
     *   }}}
     */
-  def asCsv(conf: CsvConfiguration)(implicit e: WriterEngine, encocer: HeaderEncoder[A]): String = {
+  def asCsv(conf: CsvConfiguration)(implicit e: WriterEngine, encoder: HeaderEncoder[A]): String = {
     val out = new StringWriter()
     CsvWriter(out, conf).write(as).close()
     out.toString

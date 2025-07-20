@@ -20,7 +20,7 @@ import kantan.csv.engine.WriterEngine
 
 trait VersionSpecificCsvSink[-S] { self: CsvSink[S] =>
 
-  /** Writes the specified collections directly in the specifie `S`.
+  /** Writes the specified collections directly in the specific `S`.
     *
     * @param s
     *   where to write the CSV data.

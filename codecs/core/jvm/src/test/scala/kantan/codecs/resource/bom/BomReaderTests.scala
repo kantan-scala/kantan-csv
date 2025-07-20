@@ -91,7 +91,7 @@ object BomReaderTests {
   private final case class TestString(value: String)
 
   private object TestString {
-    implicit val arbtrary: Arbitrary[TestString] =
+    implicit val arbitrary: Arbitrary[TestString] =
       Arbitrary(
         implicitly[Arbitrary[String]].arbitrary.map {
           case x if x.getBytes(StandardCharsets.UTF_8).headOption.contains[Byte](0) =>
