@@ -233,10 +233,6 @@ trait ResourceIterator[+A] extends VersionSpecificResourceIterator[A] with java.
     }
   }
 
-  @deprecated("Use emap instead", "0.2.2")
-  def flatMapResult[E, S, B](f: S => Either[E, B])(implicit ev: A <:< Either[E, S]): ResourceIterator[Either[E, B]] =
-    emap(f)
-
   def emap[E, S, B](f: S => Either[E, B])(implicit ev: A <:< Either[E, S]): ResourceIterator[Either[E, B]] =
     map(_.flatMap(f))
 

@@ -46,10 +46,6 @@ trait CsvSource[-S] extends Serializable { self =>
     */
   def open(s: S): ParseResult[Reader]
 
-  @deprecated("use reader(S, CsvConfiguration) instead", "0.1.18")
-  def reader[A: HeaderDecoder](s: S, sep: Char, header: Boolean)(implicit e: ReaderEngine): CsvReader[ReadResult[A]] =
-    reader(s, rfc.withCellSeparator(sep).withHeader(header))
-
   /** Turns the specified `S` into an iterator on `ReadResult[A]`.
     *
     * This method is "safe", in that it does not throw exceptions when errors are encountered. This comes with the small
@@ -75,10 +71,6 @@ trait CsvSource[-S] extends Serializable { self =>
       .left
       .map(error => ResourceIterator(ReadResult.failure(error)))
       .merge
-
-  @deprecated("use unsafeReader(S, CsvConfiguration) instead", "0.1.18")
-  def unsafeReader[A: HeaderDecoder](s: S, sep: Char, header: Boolean)(implicit engine: ReaderEngine): CsvReader[A] =
-    unsafeReader(s, rfc.withCellSeparator(sep).withHeader(header))
 
   /** Turns the specified `S` into an iterator on `A`.
     *
@@ -107,13 +99,6 @@ trait CsvSource[-S] extends Serializable { self =>
       case OutOfBounds(index) => throw new ArrayIndexOutOfBoundsException(index)
     }.merge)
 
-  @deprecated("use read(S, CsvConfiguration) instead", "0.1.18")
-  def read[C[_], A: HeaderDecoder](s: S, sep: Char, header: Boolean)(implicit
-    e: ReaderEngine,
-    factory: Factory[ReadResult[A], C[ReadResult[A]]]
-  ): C[ReadResult[A]] =
-    read(s, rfc.withCellSeparator(sep).withHeader(header))
-
   /** Reads the entire CSV data into a collection.
     *
     * This method is "safe", in that it does not throw exceptions when errors are encountered. This comes with the small
@@ -140,13 +125,6 @@ trait CsvSource[-S] extends Serializable { self =>
     conf: CsvConfiguration
   )(implicit e: ReaderEngine, factory: Factory[ReadResult[A], C[ReadResult[A]]]): C[ReadResult[A]] =
     reader(s, conf).to(factory)
-
-  @deprecated("use unsafeRead(S, CsvConfiguration) instead", "0.1.18")
-  def unsafeRead[C[_], A: HeaderDecoder](s: S, sep: Char, header: Boolean)(implicit
-    e: ReaderEngine,
-    factory: Factory[A, C[A]]
-  ): C[A] =
-    unsafeRead(s, rfc.withCellSeparator(sep).withHeader(header))
 
   /** Reads the entire CSV data into a collection.
     *
@@ -220,9 +198,6 @@ trait CsvSource[-S] extends Serializable { self =>
   def econtramap[SS <: S, T](f: T => ParseResult[SS]): CsvSource[T] =
     CsvSource.from(t => f(t).flatMap(self.open))
 
-  @deprecated("Use econtramap instead", "0.3.2")
-  def contramapResult[SS <: S, T](f: T => ParseResult[SS]): CsvSource[T] =
-    econtramap(f)
 }
 
 /** Defines convenience methods for creating and retrieving instances of [[CsvSource]].

@@ -21,13 +21,9 @@ import kantan.csv.CsvConfiguration
 import kantan.csv.CsvWriter
 import kantan.csv.HeaderEncoder
 import kantan.csv.engine.WriterEngine
-import kantan.csv.rfc
 
 /** Provides syntax for turning collections into CSV strings. */
 final class CsvRowsOps[A](private val as: IterableOnce[A]) extends AnyVal {
-  @deprecated("use asCsv(CsvConfiguration) instead", "0.1.18")
-  def asCsv(sep: Char, header: String*)(implicit e: WriterEngine, encocer: HeaderEncoder[A]): String =
-    asCsv(rfc.withCellSeparator(sep).withHeader(header*))
 
   /** Writes collections of `A` as a CSV string.
     *

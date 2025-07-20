@@ -19,11 +19,6 @@ package kantan.csv
 import kantan.csv.engine.WriterEngine
 
 trait VersionSpecificCsvSink[-S] { self: CsvSink[S] =>
-  @deprecated("use write(S, IterableOnce[A], CsvConfiguration) instead", "0.1.18")
-  def write[A: HeaderEncoder](s: S, rows: IterableOnce[A], sep: Char, header: String*)(implicit
-    e: WriterEngine
-  ): Unit =
-    write(s, rows, rfc.withCellSeparator(sep).withHeader(header*))
 
   /** Writes the specified collections directly in the specifie `S`.
     *
