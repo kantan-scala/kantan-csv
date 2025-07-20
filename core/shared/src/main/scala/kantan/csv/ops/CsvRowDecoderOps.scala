@@ -25,7 +25,7 @@ import kantan.csv.RowDecoder
   *   - [[decodeCsv]]
   *   - [[unsafeDecodeCsv]]
   */
-final class CsvRowDecoderOps(val ss: Seq[String]) {
+final class CsvRowDecoderOps(private val ss: Seq[String]) extends AnyVal {
 
   /** Decodes a CSV row as a value of type `A`.
     *
