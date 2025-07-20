@@ -18,6 +18,8 @@ package kantan.codecs.resource
 
 import kantan.codecs.ResultCompanion
 import scala.annotation.tailrec
+import scala.collection.Factory
+import scala.collection.mutable.Buffer
 import scala.util.Try
 
 /** Offers iterator-like access to IO resources.
@@ -45,7 +47,7 @@ import scala.util.Try
     "org.wartremover.warts.Null"
   )
 )
-trait ResourceIterator[+A] extends VersionSpecificResourceIterator[A] with java.io.Closeable {
+trait ResourceIterator[+A] extends java.io.Closeable {
   self =>
   // - Abstract methods ------------------------------------------------------------------------------------------------
   // -------------------------------------------------------------------------------------------------------------------
@@ -441,6 +443,38 @@ trait ResourceIterator[+A] extends VersionSpecificResourceIterator[A] with java.
         self.hasNext
       override def release(): Unit =
         self.close()
+    }
+
+  def to[F](factory: Factory[A, F]): F =
+    foldLeft(factory.newBuilder)(_ += _).result()
+
+  def toList: List[A] =
+    to(List)
+
+  def toBuffer[AA >: A]: Buffer[AA] =
+    to(Buffer)
+
+  def toIndexedSeq: IndexedSeq[A] =
+    to(IndexedSeq)
+
+  def toIterable: Iterable[A] =
+    to(Iterable)
+
+  def toSeq: Seq[A] =
+    to(Seq)
+
+  def toSet[AA >: A]: Set[AA] =
+    to(Set)
+
+  def toVector: Vector[A] =
+    to(Vector)
+
+  def iterator: Iterator[A] =
+    new Iterator[A] {
+      override def next(): A =
+        self.next()
+      override def hasNext: Boolean =
+        self.hasNext
     }
 }
 
