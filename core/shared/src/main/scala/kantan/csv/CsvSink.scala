@@ -32,10 +32,6 @@ trait CsvSink[-S] extends VersionSpecificCsvSink[S] with Serializable { self =>
   /** Opens a `Writer` on the specified `S`. */
   def open(s: S): Writer
 
-  @deprecated("use writer(S, CsvConfiguration) instead", "0.1.18")
-  def writer[A: HeaderEncoder](s: S, sep: Char, header: String*)(implicit e: WriterEngine): CsvWriter[A] =
-    writer(s, rfc.withCellSeparator(sep).withHeader(header*))
-
   /** Opens a [[CsvWriter]] on the specified `S`.
     *
     * @param s

@@ -22,7 +22,6 @@ import kantan.csv.CsvSource
 import kantan.csv.HeaderDecoder
 import kantan.csv.ReadResult
 import kantan.csv.engine.ReaderEngine
-import kantan.csv.rfc
 import scala.collection.Factory
 
 /** Provides useful syntax for types that have implicit instances of [[CsvSource]] in scope.
@@ -44,9 +43,6 @@ import scala.collection.Factory
   * Unsafe versions of these methods are also available, even if usually advised against.
   */
 final class CsvSourceOps[A: CsvSource](val a: A) {
-  @deprecated("use asCsvReader(CsvConfiguration) instead", "0.1.18")
-  def asCsvReader[B: HeaderDecoder](sep: Char, header: Boolean)(implicit e: ReaderEngine): CsvReader[ReadResult[B]] =
-    asCsvReader(rfc.withCellSeparator(sep).withHeader(header))
 
   /** Opens a [[CsvReader]] on the underlying resource.
     *
@@ -74,10 +70,6 @@ final class CsvSourceOps[A: CsvSource](val a: A) {
   def asCsvReader[B: HeaderDecoder](conf: CsvConfiguration)(implicit e: ReaderEngine): CsvReader[ReadResult[B]] =
     CsvSource[A].reader[B](a, conf)
 
-  @deprecated("use asUnsafeCsvReader(CsvConfiguration) instead", "0.1.18")
-  def asUnsafeCsvReader[B: HeaderDecoder](sep: Char, header: Boolean)(implicit e: ReaderEngine): CsvReader[B] =
-    asUnsafeCsvReader(rfc.withCellSeparator(sep).withHeader(header))
-
   /** Opens an unsafe [[CsvReader]] on the underlying resource.
     *
     * This is a convenience method only, and strictly equivalent to:
@@ -103,13 +95,6 @@ final class CsvSourceOps[A: CsvSource](val a: A) {
     */
   def asUnsafeCsvReader[B: HeaderDecoder](conf: CsvConfiguration)(implicit e: ReaderEngine): CsvReader[B] =
     CsvSource[A].unsafeReader[B](a, conf)
-
-  @deprecated("use readCsv(CsvConfiguration) instead", "0.1.18")
-  def readCsv[C[_], B: HeaderDecoder](
-    sep: Char,
-    header: Boolean
-  )(implicit e: ReaderEngine, factory: Factory[ReadResult[B], C[ReadResult[B]]]): C[ReadResult[B]] =
-    readCsv(rfc.withCellSeparator(sep).withHeader(header))
 
   /** Reads the underlying resource as a CSV stream.
     *
@@ -140,13 +125,6 @@ final class CsvSourceOps[A: CsvSource](val a: A) {
     conf: CsvConfiguration
   )(implicit e: ReaderEngine, factory: Factory[ReadResult[B], C[ReadResult[B]]]): C[ReadResult[B]] =
     CsvSource[A].read[C, B](a, conf)
-
-  @deprecated("use unsafeReadCsv(CsvConfiguration) instead", "0.1.18")
-  def unsafeReadCsv[C[_], B: HeaderDecoder](
-    sep: Char,
-    header: Boolean
-  )(e: ReaderEngine, factory: Factory[B, C[B]]): C[B] =
-    unsafeReadCsv(rfc.withCellSeparator(sep).withHeader(header))(using HeaderDecoder[B], e, factory)
 
   /** Reads the underlying resource as a CSV stream (unsafely).
     *

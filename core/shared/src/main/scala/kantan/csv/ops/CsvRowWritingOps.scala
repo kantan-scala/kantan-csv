@@ -19,7 +19,6 @@ package kantan.csv.ops
 import kantan.csv.CsvConfiguration
 import kantan.csv.RowEncoder
 import kantan.csv.engine.WriterEngine
-import kantan.csv.rfc
 
 /** Provides syntax for encoding single CSV rows as a string.
   *
@@ -33,10 +32,6 @@ import kantan.csv.rfc
   * }}}
   */
 final class CsvRowWritingOps[A](private val a: A) extends AnyVal {
-  @deprecated("use writeCsvRow(CsvConfiguration) instead", "0.1.18")
-  def writeCsvRow(sep: Char)(implicit e: WriterEngine, encoder: RowEncoder[A]): String =
-    writeCsvRow(rfc.withCellSeparator(sep))
-
   def writeCsvRow(conf: CsvConfiguration)(implicit e: WriterEngine, encoder: RowEncoder[A]): String =
     Seq(a).asCsv(conf).trim
 }

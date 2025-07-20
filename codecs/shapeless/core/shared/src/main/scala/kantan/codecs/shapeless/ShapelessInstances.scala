@@ -28,7 +28,6 @@ import shapeless.Generic
 import shapeless.HList
 import shapeless.Inl
 import shapeless.Inr
-import shapeless.LabelledGeneric
 import shapeless.Lazy
 
 /** Provides `Codec` instances for case classes and sum types.
@@ -54,14 +53,6 @@ trait ShapelessInstances {
   ): DerivedEncoder[E, D, T] =
     DerivedEncoder.from(s => er.value.encode(gen.to(s)))
 
-  /** Similar to [[caseClassEncoder]], but working with `LabelledGeneric` rather than just `Generic`. */
-  @deprecated("will be removed")
-  def caseClassEncoderFromLabelled[E, D, T, H <: HList](implicit
-    generic: LabelledGeneric.Aux[D, H],
-    hEncoder: Lazy[Encoder[E, H, T]]
-  ): DerivedEncoder[E, D, T] =
-    DerivedEncoder.from(value => hEncoder.value.encode(generic.to(value)))
-
   /** Provides a `Decoder` instance for case classes.
     *
     * Given a case class `D`, this expects n `Decoder` instance for the `HList` type corresponding to `D`. It will then
@@ -72,14 +63,6 @@ trait ShapelessInstances {
     dr: Lazy[Decoder[E, H, F, T]]
   ): DerivedDecoder[E, D, F, T] =
     DerivedDecoder.from(s => dr.value.decode(s).map(gen.from))
-
-  /** Similar to [[caseClassDecoder]], but working with `LabelledGeneric` rather than just `Generic`. */
-  @deprecated("will be removed")
-  def caseClassDecoderFromLabelled[E, D, F, T, H <: HList](implicit
-    generic: LabelledGeneric.Aux[D, H],
-    hDecoder: Lazy[Decoder[E, H, F, T]]
-  ): DerivedDecoder[E, D, F, T] =
-    DerivedDecoder.from(value => hDecoder.value.decode(value).map(generic.from))
 
   // - Sum types -------------------------------------------------------------------------------------------------------
   // -------------------------------------------------------------------------------------------------------------------

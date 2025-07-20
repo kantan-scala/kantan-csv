@@ -54,9 +54,6 @@ trait CsvWriter[A] extends VersionSpecificCsvWriter[A] with Closeable { self =>
 
 /** Provides useful instance creation methods. */
 object CsvWriter {
-  @deprecated("use apply(writer, CsvConfiguration) instead", "0.1.18")
-  def apply[A: HeaderEncoder](writer: Writer, sep: Char, header: String*)(implicit engine: WriterEngine): CsvWriter[A] =
-    CsvWriter(writer, rfc.withCellSeparator(sep).withHeader(header*))
 
   /** Creates a new [[CsvWriter]] instance that will send encoded data to the specified `Writer`.
     *

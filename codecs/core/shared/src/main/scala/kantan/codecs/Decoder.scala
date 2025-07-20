@@ -98,10 +98,6 @@ trait Decoder[E, D, F, T] extends Serializable {
   def map[DD](f: D => DD): Decoder[E, DD, F, T] =
     andThen(_.map(f))
 
-  @deprecated("Use emap instead", "0.2.0")
-  def mapResult[DD](f: D => Either[F, DD]): Decoder[E, DD, F, T] =
-    emap(f)
-
   /** Creates a new [[Decoder]] instance by transforming successful results with the specified function.
     *
     * This differs from [[map]] in that it allows the transformation function to fail.
@@ -127,10 +123,6 @@ trait Decoder[E, D, F, T] extends Serializable {
     collect {
       case d if f(d) => d
     }
-
-  @deprecated("Use leftMap instead", "0.2.0")
-  def mapError[FF](f: F => FF): Decoder[E, D, FF, T] =
-    leftMap(f)
 
   /** Creates a new [[Decoder]] instance by transforming errors with the specified function. */
   def leftMap[FF](f: F => FF): Decoder[E, D, FF, T] =

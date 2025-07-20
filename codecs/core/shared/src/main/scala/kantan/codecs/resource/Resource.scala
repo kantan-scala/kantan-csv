@@ -57,19 +57,11 @@ trait Resource[I, R] { self =>
   def contramap[II](f: II => I): Resource[II, R] =
     Resource.from(f.andThen(self.open))
 
-  @deprecated("Use econtramap instead", "0.3.1")
-  def contramapResult[II](f: II => OpenResult[I]): Resource[II, R] =
-    econtramap(f)
-
   def econtramap[II](f: II => OpenResult[I]): Resource[II, R] =
     Resource.from(aa => f(aa).flatMap(self.open))
 
   def map[RR](f: R => RR): Resource[I, RR] =
     Resource.from(a => open(a).map(f))
-
-  @deprecated("Use emap instead", "0.3.1")
-  def mapResult[RR](f: R => OpenResult[RR]): Resource[I, RR] =
-    emap(f)
 
   def emap[RR](f: R => OpenResult[RR]): Resource[I, RR] =
     Resource.from(a => open(a).flatMap(f))

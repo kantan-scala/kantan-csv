@@ -32,10 +32,6 @@ trait Codec[E, D, F, T] extends Decoder[E, D, F, T] with Encoder[E, D, T] {
   override def leftMap[FF](f: F => FF): Codec[E, D, FF, T] =
     Codec.from(super.leftMap(f), this)
 
-  @deprecated("Use leftMap instead", "0.2.1")
-  override def mapError[FF](f: F => FF): Codec[E, D, FF, T] =
-    leftMap(f)
-
   def imap[DD](f: D => DD)(g: DD => D): Codec[E, DD, F, T] =
     Codec.from((e: E) => decode(e).map(f))(g.andThen(encode))
   def imapEncoded[EE](f: E => EE)(g: EE => E): Codec[EE, D, F, T] =
