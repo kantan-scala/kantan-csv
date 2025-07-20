@@ -17,9 +17,9 @@
 package kantan.codecs.shapeless
 
 import kantan.codecs.Decoder
+import kantan.codecs.DerivedDecoder
+import kantan.codecs.DerivedEncoder
 import kantan.codecs.Encoder
-import kantan.codecs.`export`.DerivedDecoder
-import kantan.codecs.`export`.DerivedEncoder
 import kantan.codecs.error.IsError
 import shapeless.:+:
 import shapeless.CNil

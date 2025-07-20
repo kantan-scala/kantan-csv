@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package kantan.codecs
+package kantan
 
 /** Provides a simple mechanism to insert derived type class instances in the implicit resolution mechanism.
   *
@@ -22,11 +22,11 @@ package kantan.codecs
   * shapeless instance derivation: bespoke instances for `Option` or `Either`, for example, find themselves shadowed by
   * the generically derived ones.
   *
-  * If such instances are of type [[kantan.codecs.export.DerivedDecoder]] / [[kantan.codecs.export.DerivedEncoder]]
-  * rather than [[Decoder]] / [[Encoder]], however, they'll find themselves with a lower precedence and only be used if
-  * no other, more specific instance is found.
+  * If such instances are of type [[kantan.codecs.DerivedDecoder]] / [[kantan.codecs.DerivedEncoder]] rather than
+  * [[Decoder]] / [[Encoder]], however, they'll find themselves with a lower precedence and only be used if no other,
+  * more specific instance is found.
   */
-package object `export` {
+package object codecs {
 
   /** [[Decoder]] instance that should only be used when no specific one is found. */
   type DerivedDecoder[E, D, F, T] = Exported[Decoder[E, D, F, T]]

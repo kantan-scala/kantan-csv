@@ -14,12 +14,7 @@
  * limitations under the License.
  */
 
-package kantan.codecs.`export`
+package kantan.codecs
 
-import kantan.codecs.Encoder
-
-/** Provides construction methods for [[kantan.codecs.export.DerivedEncoder]]. */
-object DerivedEncoder {
-  def from[E, D, T](f: D => E): DerivedEncoder[E, D, T] =
-    Exported(Encoder.from(f))
-}
+/** Wraps derived type class instances. */
+final case class Exported[A](value: A) extends AnyVal

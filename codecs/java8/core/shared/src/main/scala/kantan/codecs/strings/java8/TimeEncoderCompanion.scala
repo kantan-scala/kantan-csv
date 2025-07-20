@@ -28,8 +28,8 @@ import kantan.codecs.strings.StringEncoder
 
 /** Provides useful methods for a java8 time encoder companions.
   *
-  * Usage note: when declaring default implicit instances, be sure to wrap them in an [[export.Exported]]. Otherwise,
-  * custom instances and default ones are very likely to conflict.
+  * Usage note: when declaring default implicit instances, be sure to wrap them in an [[kantan.codecs.Exported]].
+  * Otherwise, custom instances and default ones are very likely to conflict.
   */
 trait TimeEncoderCompanion[E, T] {
 

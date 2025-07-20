@@ -14,12 +14,10 @@
  * limitations under the License.
  */
 
-package kantan.codecs.`export`
+package kantan.codecs
 
-import kantan.codecs.Decoder
-
-/** Provides construction methods for [[kantan.codecs.export.DerivedDecoder]]. */
-object DerivedDecoder {
-  def from[E, D, F, T](f: E => Either[F, D]): DerivedDecoder[E, D, F, T] =
-    Exported(Decoder.from(f))
+/** Provides construction methods for [[kantan.codecs.DerivedEncoder]]. */
+object DerivedEncoder {
+  def from[E, D, T](f: D => E): DerivedEncoder[E, D, T] =
+    Exported(Encoder.from(f))
 }
