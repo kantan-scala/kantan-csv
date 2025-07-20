@@ -27,7 +27,7 @@ trait HeaderDecoderOps0 extends HeaderDecoderOps1 {
 }
 
 object HeaderDecoderOps0 {
-  class EnrichedHeaderDecoder0[A](val decoder: HeaderDecoder[Option[A]]) extends AnyVal {
+  class EnrichedHeaderDecoder0[A](private val decoder: HeaderDecoder[Option[A]]) extends AnyVal {
     def optional: HeaderDecoder[Option[A]] =
       new HeaderDecoder[Option[A]] {
         override def fromHeader(header: Seq[String]): DecodeResult[RowDecoder[Option[A]]] =
@@ -53,7 +53,7 @@ trait HeaderDecoderOps1 {
 }
 
 object HeaderDecoderOps1 {
-  class EnrichedHeaderDecoder1[A](val decoder: HeaderDecoder[A]) extends AnyVal {
+  class EnrichedHeaderDecoder1[A](private val decoder: HeaderDecoder[A]) extends AnyVal {
     def optional: HeaderDecoder[Option[A]] =
       new HeaderDecoder[Option[A]] {
         override def fromHeader(header: Seq[String]): DecodeResult[RowDecoder[Option[A]]] =
