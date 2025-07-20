@@ -25,7 +25,7 @@ import kantan.csv.DecodeResult
   *   - [[decodeCsv]]
   *   - [[unsafeDecodeCsv]]
   */
-final class CsvCellDecoderOps(val s: String) {
+final class CsvCellDecoderOps(private val s: String) extends AnyVal {
 
   /** Decodes a CSV cell as a value of type `A`.
     *

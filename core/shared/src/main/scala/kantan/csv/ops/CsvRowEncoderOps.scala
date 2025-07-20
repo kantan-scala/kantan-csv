@@ -17,14 +17,13 @@
 package kantan.csv.ops
 
 import kantan.csv.HeaderEncoder
-import kantan.csv.RowEncoder
 
 /** Provides syntax for encoding values as CSV rows.
   *
   * Importing `kantan.csv.ops._` will add [[asCsvRow]] to any type `A` such that there exists an implicit
   * `RowEncoder[A]` in scope.
   */
-final class CsvRowEncoderOps[A: RowEncoder](val a: A) {
+final class CsvRowEncoderOps[A](private val a: A) extends AnyVal {
 
   /** Encodes a value as a CSV row.
     *
@@ -34,13 +33,13 @@ final class CsvRowEncoderOps[A: RowEncoder](val a: A) {
     * res0: Seq[String] = List(1, 2, 3)
     *   }}}
     */
-  def asCsvRow: Seq[String] =
-    RowEncoder[A].encode(a)
+  def asCsvRow(implicit encoder: HeaderEncoder[A]): Seq[String] =
+    encoder.rowEncoder.encode(a)
 }
 
 trait ToCsvRowEncoderOps {
-  implicit def toCsvRowEncoderOps[A: HeaderEncoder](a: A): CsvRowEncoderOps[A] =
-    new CsvRowEncoderOps(a)(using HeaderEncoder[A].rowEncoder)
+  implicit def toCsvRowEncoderOps[A](a: A): CsvRowEncoderOps[A] =
+    new CsvRowEncoderOps(a)
 }
 
 object rowEncoder extends ToCsvRowEncoderOps

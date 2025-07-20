@@ -23,7 +23,7 @@ import kantan.csv.CellEncoder
   * Importing `kantan.csv.ops._` will add [[asCsvCell]] to any type `A` such that there exists an implicit
   * `CellDecoder[A]` in scope.
   */
-final class CsvCellEncoderOps[A: CellEncoder](val a: A) {
+final class CsvCellEncoderOps[A](private val a: A) extends AnyVal {
 
   /** Encodes a value as a CSV cell.
     *
@@ -33,12 +33,12 @@ final class CsvCellEncoderOps[A: CellEncoder](val a: A) {
     * res0: String = 1
     *   }}}
     */
-  def asCsvCell: String =
-    CellEncoder[A].encode(a)
+  def asCsvCell(implicit encoder: CellEncoder[A]): String =
+    encoder.encode(a)
 }
 
 trait ToCsvCellEncoderOps {
-  implicit def toCsvCellEncoderOps[A: CellEncoder](a: A): CsvCellEncoderOps[A] =
+  implicit def toCsvCellEncoderOps[A](a: A): CsvCellEncoderOps[A] =
     new CsvCellEncoderOps(a)
 }
 

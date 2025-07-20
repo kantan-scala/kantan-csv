@@ -24,7 +24,7 @@ import kantan.csv.RowDecoder
 import kantan.csv.engine.ReaderEngine
 
 /** Provides syntax for decoding a string as a CSV row. */
-final class CsvRowReadingOps[A: CsvSource](a: A) {
+final class CsvRowReadingOps[A](private val a: A) extends AnyVal {
 
   /** Parses a string as a single CSV row.
     *
@@ -36,7 +36,7 @@ final class CsvRowReadingOps[A: CsvSource](a: A) {
     * res0: ReadResult[(Int, Int, Int)] = Right((1,2,3))
     *   }}}
     */
-  def readCsvRow[B: RowDecoder](conf: CsvConfiguration)(implicit e: ReaderEngine): ReadResult[B] = {
+  def readCsvRow[B: RowDecoder](conf: CsvConfiguration)(implicit e: ReaderEngine, src: CsvSource[A]): ReadResult[B] = {
     val reader = a.asCsvReader[B](conf)
 
     reader.next().flatMap { res =>
@@ -59,7 +59,7 @@ final class CsvRowReadingOps[A: CsvSource](a: A) {
     * Note that this method is unsafe and will throw an exception if the string value is not a valid `A`. Prefer
     * [[readCsvRow]] whenever possible.
     */
-  def unsafeReadCsvRow[B: RowDecoder](conf: CsvConfiguration)(implicit e: ReaderEngine): B =
+  def unsafeReadCsvRow[B: RowDecoder](conf: CsvConfiguration)(implicit e: ReaderEngine, src: CsvSource[A]): B =
     readCsvRow[B](conf).fold(
       error => sys.error(s"Failed to decode value $a: $error"),
       w => w
@@ -67,6 +67,6 @@ final class CsvRowReadingOps[A: CsvSource](a: A) {
 }
 
 trait ToCsvRowReadingOps {
-  implicit def toCsvRowReadingOps[A: CsvSource](a: A): CsvRowReadingOps[A] =
+  implicit def toCsvRowReadingOps[A](a: A): CsvRowReadingOps[A] =
     new CsvRowReadingOps(a)
 }

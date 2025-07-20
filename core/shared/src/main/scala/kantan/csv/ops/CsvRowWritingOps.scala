@@ -32,16 +32,16 @@ import kantan.csv.rfc
   * res0: String = 1,2,3
   * }}}
   */
-final class CsvRowWritingOps[A: RowEncoder](a: A) {
+final class CsvRowWritingOps[A](private val a: A) extends AnyVal {
   @deprecated("use writeCsvRow(CsvConfiguration) instead", "0.1.18")
-  def writeCsvRow(sep: Char)(implicit e: WriterEngine): String =
+  def writeCsvRow(sep: Char)(implicit e: WriterEngine, encoder: RowEncoder[A]): String =
     writeCsvRow(rfc.withCellSeparator(sep))
 
-  def writeCsvRow(conf: CsvConfiguration)(implicit e: WriterEngine): String =
+  def writeCsvRow(conf: CsvConfiguration)(implicit e: WriterEngine, encoder: RowEncoder[A]): String =
     Seq(a).asCsv(conf).trim
 }
 
 trait ToCsvRowWritingOps {
-  implicit def toCsvRowWritingOps[A: RowEncoder](a: A): CsvRowWritingOps[A] =
+  implicit def toCsvRowWritingOps[A](a: A): CsvRowWritingOps[A] =
     new CsvRowWritingOps(a)
 }
