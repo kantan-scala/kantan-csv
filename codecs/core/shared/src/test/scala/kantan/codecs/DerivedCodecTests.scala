@@ -14,14 +14,11 @@
  * limitations under the License.
  */
 
-package kantan.codecs.`export`
+package kantan.codecs
 
-import kantan.codecs.Decoder
-import kantan.codecs.Encoder
-import kantan.codecs.`export`.DerivedCodecTests.Just
-import kantan.codecs.`export`.DerivedCodecTests.Maybe
-import kantan.codecs.`export`.DerivedCodecTests.None
-import kantan.codecs.strings
+import kantan.codecs.DerivedCodecTests.Just
+import kantan.codecs.DerivedCodecTests.Maybe
+import kantan.codecs.DerivedCodecTests.None
 import kantan.codecs.strings.DecodeError
 import kantan.codecs.strings.StringDecoder
 import kantan.codecs.strings.StringEncoder

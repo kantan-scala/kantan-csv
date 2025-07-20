@@ -14,7 +14,10 @@
  * limitations under the License.
  */
 
-package kantan.codecs.`export`
+package kantan.codecs
 
-/** Wraps derived type class instances. */
-final case class Exported[A](value: A) extends AnyVal
+/** Provides construction methods for [[kantan.codecs.DerivedDecoder]]. */
+object DerivedDecoder {
+  def from[E, D, F, T](f: E => Either[F, D]): DerivedDecoder[E, D, F, T] =
+    Exported(Decoder.from(f))
+}

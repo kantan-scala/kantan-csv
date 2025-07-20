@@ -23,7 +23,7 @@ import java.time.LocalTime
 import java.time.OffsetDateTime
 import java.time.ZonedDateTime
 import kantan.codecs.Encoder
-import kantan.codecs.`export`.Exported
+import kantan.codecs.Exported
 import kantan.codecs.laws.discipline.DisciplineSuite
 import kantan.codecs.laws.discipline.EncoderTests
 import kantan.codecs.strings.StringEncoder
