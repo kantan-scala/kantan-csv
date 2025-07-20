@@ -46,10 +46,7 @@ object WriterEngine {
 
   /** Creates a new instance of [[WriterEngine]] that wraps the specified function. */
   def from(f: (Writer, CsvConfiguration) => CsvWriter[Seq[String]]): WriterEngine =
-    new WriterEngine {
-      override def writerFor(writer: Writer, conf: CsvConfiguration): CsvWriter[Seq[String]] =
-        f(writer, conf)
-    }
+    (writer: Writer, conf: CsvConfiguration) => f(writer, conf)
 
   /** Default engine, returns an instance of the internal [[CsvWriter]].
     *

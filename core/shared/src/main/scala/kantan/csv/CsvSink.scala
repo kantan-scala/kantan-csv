@@ -76,10 +76,7 @@ object CsvSink {
     * from scratch.
     */
   def from[A](f: A => Writer): CsvSink[A] =
-    new CsvSink[A] {
-      override def open(s: A): Writer =
-        f(s)
-    }
+    (s: A) => f(s)
 
   // TODO: unsafe, unacceptable, what was I thinking.
   implicit def fromResource[A: WriterResource]: CsvSink[A] =
