@@ -36,15 +36,21 @@ import kantan.csv.engine.WriterEngine
   *   f.writeCsv[List[Int]](List(List(1, 2, 3), List(4, 5, 6)), ',', true)
   * }}}
   */
-final class CsvSinkOps[A: CsvSink](val a: A) extends VersionSpecificCsvSinkOps[A] {
+final class CsvSinkOps[A](private val a: A) extends AnyVal {
 
   /** Shorthand for [[CsvSink.writer[A](s:S,conf:kantan\.csv\.CsvConfiguration* CsvSink.writer]]. */
-  def asCsvWriter[B: HeaderEncoder](conf: CsvConfiguration)(implicit e: WriterEngine): CsvWriter[B] =
+  def asCsvWriter[B: HeaderEncoder](conf: CsvConfiguration)(implicit e: WriterEngine, sink: CsvSink[A]): CsvWriter[B] =
     CsvSink[A].writer(a, conf)
+
+  def writeCsv[B: HeaderEncoder](
+    rows: IterableOnce[B],
+    conf: CsvConfiguration
+  )(implicit e: WriterEngine, sa: CsvSink[A]): Unit =
+    CsvSink[A].write(a, rows, conf)
 }
 
 trait ToCsvSinkOps {
-  implicit def toCsvOutputOps[A: CsvSink](a: A): CsvSinkOps[A] =
+  implicit def toCsvOutputOps[A](a: A): CsvSinkOps[A] =
     new CsvSinkOps(a)
 }
 
