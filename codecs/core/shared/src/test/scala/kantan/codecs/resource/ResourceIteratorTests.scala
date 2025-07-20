@@ -24,8 +24,7 @@ import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 
 @SuppressWarnings(Array("org.wartremover.warts.Var", "org.wartremover.warts.While"))
-class ResourceIteratorTests
-    extends AnyFunSuite with ScalaCheckPropertyChecks with Matchers with VersionSpecificResourceIteratorTests {
+class ResourceIteratorTests extends AnyFunSuite with ScalaCheckPropertyChecks with Matchers {
   // - Tools -----------------------------------------------------------------------------------------------------------
   // -------------------------------------------------------------------------------------------------------------------
   case class FailingIterator[A](it: Iterator[A], index: Int) {
@@ -345,5 +344,40 @@ class ResourceIteratorTests
     forAll { (is: List[Int]) =>
       ResourceIterator(is*).toVector should be(is.toVector)
     }
+  }
+
+  test("to(List) should behave as expected") {
+    forAll { (is: List[Int]) =>
+      ResourceIterator(is*).to(List) should be(is)
+    }
+  }
+
+  test("iterator should behave as expected") {
+    forAll { (is: List[Int]) =>
+      ResourceIterator(is*).iterator.sameElements(is.iterator) should be(true)
+    }
+  }
+
+  test("zipWithIndex should behave as expected") {
+    forAll { (is: List[Int]) =>
+      ResourceIterator(is*).zipWithIndex.toList should be(is.zipWithIndex)
+    }
+  }
+
+  test("scanLeft should behave as expected") {
+    forAll { (is: List[String], z: Int, f: (Int, String) => Int) =>
+      ResourceIterator(is*).scanLeft(z)(f).toList should be(is.scanLeft(z)(f))
+    }
+  }
+
+  test("slice should behave as expected") {
+    forAll { (is: List[Int], from: Int, to: Int) =>
+      ResourceIterator(is*).slice(from, to).toList should be(is.slice(from, to))
+    }
+  }
+
+  // Regression test for a rare (?!) random property failure.
+  test("slice should behave properly when until is MinValue") {
+    ResourceIterator(1, 2, 3).slice(1, Int.MinValue).hasNext should be(false)
   }
 }
