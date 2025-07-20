@@ -16,7 +16,6 @@
 
 package kantan.csv.cats
 
-import cats.instances.list.*
 import kantan.csv.RowEncoder
 import kantan.csv.cats.arbitrary.*
 import kantan.csv.laws.discipline.DisciplineSuite
