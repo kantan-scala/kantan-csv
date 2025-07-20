@@ -23,7 +23,7 @@ object KantanPublishedPlugin extends AutoPlugin {
     allRequirements
 
   override def requires: Plugins =
-    KantanKantanPlugin && PublishedPlugin && KantanReleasePlugin
+    KantanKantanPlugin && PublishedPlugin
 
   override lazy val projectSettings: Seq[Setting[?]] = Seq(
     publishTo := (
