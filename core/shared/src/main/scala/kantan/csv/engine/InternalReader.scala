@@ -29,7 +29,7 @@ private[engine] class InternalReader private (
   val characters: Array[Char],
   var length: Int
 ) extends CsvReader[Seq[String]] {
-  private val cell = new StringBuilder
+  private val cell = new java.lang.StringBuilder
   private val row = ArrayBuffer[String]()
 
   private var leftover: Char = _
@@ -39,18 +39,18 @@ private[engine] class InternalReader private (
   private var index: Int = 0
 
   @inline private def dumpCell(): Unit = {
-    if(index != mark) cell.appendAll(characters, mark, index - mark - 1)
+    if(index != mark) cell.append(characters, mark, index - mark - 1)
     ()
   }
 
   private def endCell(): Unit = {
-    if(cell.isEmpty) {
+    if(cell.length() == 0) {
       if(index != mark) row += new String(characters, mark, index - mark - 1)
       else row += ""
     } else {
       dumpCell()
       row += cell.toString()
-      cell.clear()
+      cell.setLength(0)
     }
     mark = index
   }
@@ -65,7 +65,7 @@ private[engine] class InternalReader private (
     if(length < 0) false
     else if(index < length) true
     else {
-      if(index != mark) cell.appendAll(characters, mark, index - mark)
+      if(index != mark) cell.append(characters, mark, index - mark)
       length = data.read(characters)
       mark = 0
       index = 0
