@@ -18,7 +18,6 @@ package kantan.csv.cats
 
 import cats.Eq
 import cats.data.EitherT
-import cats.instances.all.*
 import cats.laws.discipline.ContravariantTests
 import cats.laws.discipline.MonadErrorTests
 import cats.laws.discipline.SemigroupKTests
