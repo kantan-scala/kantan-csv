@@ -42,7 +42,7 @@ import scala.collection.Factory
   *
   * Unsafe versions of these methods are also available, even if usually advised against.
   */
-final class CsvSourceOps[A: CsvSource](val a: A) {
+final class CsvSourceOps[A](private val a: A) extends AnyVal {
 
   /** Opens a [[CsvReader]] on the underlying resource.
     *
@@ -67,7 +67,9 @@ final class CsvSourceOps[A: CsvSource](val a: A) {
     * @tparam B
     *   type each row will be decoded as.
     */
-  def asCsvReader[B: HeaderDecoder](conf: CsvConfiguration)(implicit e: ReaderEngine): CsvReader[ReadResult[B]] =
+  def asCsvReader[B: HeaderDecoder](
+    conf: CsvConfiguration
+  )(implicit e: ReaderEngine, src: CsvSource[A]): CsvReader[ReadResult[B]] =
     CsvSource[A].reader[B](a, conf)
 
   /** Opens an unsafe [[CsvReader]] on the underlying resource.
@@ -93,7 +95,9 @@ final class CsvSourceOps[A: CsvSource](val a: A) {
     * @tparam B
     *   type each row will be decoded as.
     */
-  def asUnsafeCsvReader[B: HeaderDecoder](conf: CsvConfiguration)(implicit e: ReaderEngine): CsvReader[B] =
+  def asUnsafeCsvReader[B: HeaderDecoder](
+    conf: CsvConfiguration
+  )(implicit e: ReaderEngine, src: CsvSource[A]): CsvReader[B] =
     CsvSource[A].unsafeReader[B](a, conf)
 
   /** Reads the underlying resource as a CSV stream.
@@ -123,7 +127,7 @@ final class CsvSourceOps[A: CsvSource](val a: A) {
     */
   def readCsv[C[_], B: HeaderDecoder](
     conf: CsvConfiguration
-  )(implicit e: ReaderEngine, factory: Factory[ReadResult[B], C[ReadResult[B]]]): C[ReadResult[B]] =
+  )(implicit e: ReaderEngine, factory: Factory[ReadResult[B], C[ReadResult[B]]], src: CsvSource[A]): C[ReadResult[B]] =
     CsvSource[A].read[C, B](a, conf)
 
   /** Reads the underlying resource as a CSV stream (unsafely).
@@ -153,12 +157,12 @@ final class CsvSourceOps[A: CsvSource](val a: A) {
     */
   def unsafeReadCsv[C[_], B: HeaderDecoder](
     conf: CsvConfiguration
-  )(implicit e: ReaderEngine, factory: Factory[B, C[B]]): C[B] =
+  )(implicit e: ReaderEngine, factory: Factory[B, C[B]], src: CsvSource[A]): C[B] =
     CsvSource[A].unsafeRead[C, B](a, conf)
 }
 
 trait ToCsvSourceOps {
-  implicit def toCsvInputOps[A: CsvSource](a: A): CsvSourceOps[A] =
+  implicit def toCsvInputOps[A](a: A): CsvSourceOps[A] =
     new CsvSourceOps(a)
 }
 
