@@ -27,10 +27,22 @@ import kantan.csv.engine.WriterEngine
   *
   * See the [[CsvSink companion object]] for default implementations and construction methods.
   */
-trait CsvSink[-S] extends VersionSpecificCsvSink[S] with Serializable { self =>
+trait CsvSink[-S] extends Serializable { self =>
 
   /** Opens a `Writer` on the specified `S`. */
   def open(s: S): Writer
+
+  /** Writes the specified collections directly in the specific `S`.
+    *
+    * @param s
+    *   where to write the CSV data.
+    * @param rows
+    *   CSV data to encode and serialize.
+    * @param conf
+    *   CSV writing behaviour.
+    */
+  def write[A: HeaderEncoder](s: S, rows: IterableOnce[A], conf: CsvConfiguration)(implicit e: WriterEngine): Unit =
+    writer(s, conf).write(rows).close()
 
   /** Opens a [[CsvWriter]] on the specified `S`.
     *
