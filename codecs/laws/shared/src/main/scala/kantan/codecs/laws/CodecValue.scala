@@ -34,7 +34,7 @@ object CodecValue {
       LegalValue(encoded, f(decoded))
     override def mapEncoded[EE](f: E => EE): LegalValue[EE, D, T] =
       LegalValue(f(encoded), decoded)
-    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    @SuppressWarnings(Array("scalafix:DisableSyntax.asInstanceOf"))
     override def tag[TT]: LegalValue[E, D, TT] =
       this.asInstanceOf[LegalValue[E, D, TT]]
     override val isLegal = true
@@ -45,7 +45,7 @@ object CodecValue {
       IllegalValue(encoded)
     override def mapEncoded[EE](f: E => EE): IllegalValue[EE, D, T] =
       IllegalValue(f(encoded))
-    @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+    @SuppressWarnings(Array("scalafix:DisableSyntax.asInstanceOf"))
     override def tag[TT]: IllegalValue[E, D, TT] =
       this.asInstanceOf[IllegalValue[E, D, TT]]
     override val isLegal = false

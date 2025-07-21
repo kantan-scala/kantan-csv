@@ -21,7 +21,7 @@ import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 
-@SuppressWarnings(Array("org.wartremover.warts.Throw"))
+@SuppressWarnings(Array("scalafix:DisableSyntax.throw"))
 class DecodeResultTests extends AnyFunSuite with ScalaCheckPropertyChecks with Matchers {
   test("DecodeResult.success should return a Right") {
     forAll { (i: Int) =>

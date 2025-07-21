@@ -55,7 +55,7 @@ trait DecoderInstances {
       final def handleErrorWith[D](fd: Decoder[E, D, F, T])(f: F => Decoder[E, D, F, T]): Decoder[E, D, F, T] =
         fd.handleErrorWith(f)
 
-      @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+      @SuppressWarnings(Array("scalafix:DisableSyntax.asInstanceOf"))
       final def tailRecM[A, B](a: A)(f: A => Decoder[E, Either[A, B], F, T]): Decoder[E, B, F, T] =
         Decoder.from {
 

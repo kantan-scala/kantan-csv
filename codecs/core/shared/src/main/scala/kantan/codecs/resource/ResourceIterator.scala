@@ -41,10 +41,9 @@ import scala.util.Try
   */
 @SuppressWarnings(
   Array(
-    "org.wartremover.warts.Var",
-    "org.wartremover.warts.Throw",
-    "org.wartremover.warts.While",
-    "org.wartremover.warts.Null"
+    "scalafix:DisableSyntax.var",
+    "scalafix:DisableSyntax.throw",
+    "scalafix:DisableSyntax.while"
   )
 )
 trait ResourceIterator[+A] extends java.io.Closeable {
@@ -482,7 +481,7 @@ object ResourceIterator {
   val empty: ResourceIterator[Nothing] = new ResourceIterator[Nothing] {
     override def checkNext =
       false
-    @SuppressWarnings(Array("org.wartremover.warts.Throw"))
+    @SuppressWarnings(Array("scalafix:DisableSyntax.throw"))
     override def readNext(): Nothing =
       throw new NoSuchElementException("next on empty resource iterator")
     override def release() =
