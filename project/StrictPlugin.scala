@@ -52,6 +52,7 @@ object StrictPlugin extends AutoPlugin {
             Wart.CaseClassPrivateApply,
             Wart.EitherProjectionPartial,
             Wart.Equals,
+            Wart.ExplicitImplicitTypes,
             Wart.ImplicitConversion,
             Wart.ImplicitParameter,
             Wart.IsInstanceOf,
