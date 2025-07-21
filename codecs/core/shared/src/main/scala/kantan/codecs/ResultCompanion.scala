@@ -17,6 +17,8 @@
 package kantan.codecs
 
 import kantan.codecs.error.IsError
+import scala.collection.BuildFrom
+import scala.collection.mutable
 import scala.util.Failure
 import scala.util.Success
 import scala.util.Try
@@ -38,7 +40,20 @@ object ResultCompanion {
     * If your specialised result type has a sane default (such as `TypeError` for `DecodeResult` in kantan.csv), use
     * [[WithDefault]] instead.
     */
-  trait Simple[F] extends VersionSpecificResultCompanion.Simple[F] {
+  trait Simple[F] {
+
+    /** Turns a collection of results into a result of a collection. */
+    @inline def sequence[S, M[X] <: IterableOnce[X]](rs: M[Either[F, S]])(implicit
+      bf: BuildFrom[M[Either[F, S]], S, M[S]]
+    ): Either[F, M[S]] =
+      rs.iterator
+        .foldLeft(Right(bf.newBuilder(rs)): Either[F, mutable.Builder[S, M[S]]]) { (builder, res) =>
+          for {
+            b <- builder
+            r <- res
+          } yield b += r
+        }
+        .map(_.result())
 
     /** Turns the specified value into a success. */
     @inline def success[S](s: S): Either[F, S] =
