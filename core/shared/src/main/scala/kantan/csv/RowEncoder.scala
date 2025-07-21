@@ -36,7 +36,18 @@ import kantan.codecs.EncoderCompanion
 object RowEncoder extends GeneratedRowEncoders with EncoderCompanion[Seq[String], codecs.type]
 
 /** Provides reasonable default [[RowEncoder]] instances for various types. */
-trait RowEncoderInstances extends VersionSpecificRowEncoderInstances {
+trait RowEncoderInstances {
+
+  /** Provides a [[RowEncoder]] instance for all traversable collections.
+    *
+    * `List`, for example:
+    * {{{
+    * scala> RowEncoder[List[Int]].encode(List(123, 456, 789))
+    * res1: Seq[String] = List(123, 456, 789)
+    * }}}
+    */
+  implicit def iterable[A: CellEncoder, M[X] <: IterableOnce[X]]: RowEncoder[M[A]] =
+    RowEncoder.from(_.iterator.foldLeft(Seq.newBuilder[String])((acc, a) => acc += CellEncoder[A].encode(a)).result())
 
   /** Turns a [[CellEncoder]] into a [[RowEncoder]], for rows that contain a single value.
     *
