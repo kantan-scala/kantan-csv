@@ -16,17 +16,16 @@
 
 package kantan.codecs.strings.java8
 
-import scala.annotation.unused
 import scala.language.experimental.macros
 import scala.reflect.macros.blackbox.Context
 
 final class FormatLiteral(private val sc: StringContext) extends AnyVal {
-  def fmt(args: Any*): Format =
+  def fmt(): Format =
     macro FormatLiteral.fmtImpl
 }
 
 object FormatLiteral {
-  def fmtImpl(c: Context)(@unused args: c.Expr[Any]*): c.Expr[Format] = {
+  def fmtImpl(c: Context)(): c.Expr[Format] = {
     import c.universe.*
 
     c.prefix.tree match {
