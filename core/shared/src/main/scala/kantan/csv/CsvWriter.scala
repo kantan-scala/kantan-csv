@@ -28,10 +28,16 @@ import kantan.csv.engine.WriterEngine
   * @tparam A
   *   type of values that will be encoded as CSV.
   */
-trait CsvWriter[A] extends VersionSpecificCsvWriter[A] with Closeable { self =>
+trait CsvWriter[A] extends Closeable { self =>
 
   /** Encodes and writes a single `A`. */
   def write(a: A): CsvWriter[A]
+
+  /** Encodes and writes a collection of `A`s. */
+  def write(as: IterableOnce[A]): CsvWriter[A] = {
+    as.iterator.foreach(write)
+    this
+  }
 
   /** Releases the underlying resource.
     *
