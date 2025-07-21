@@ -21,8 +21,7 @@ import kantan.csv.laws.ReaderEngineLaws
 import org.scalacheck.Prop
 import org.scalacheck.Prop.forAll
 
-trait ReaderEngineTests
-    extends RfcReaderTests with SpectrumReaderTests with KnownFormatsReaderTests with VersionSpecificReaderEngineTests {
+trait ReaderEngineTests extends RfcReaderTests with SpectrumReaderTests with KnownFormatsReaderTests {
   def laws: ReaderEngineLaws
 
   def readerEngine: RuleSet =
@@ -35,6 +34,8 @@ trait ReaderEngineTests
         Seq(rfc4180, csvSpectrum, knownFormats)
       def props: Seq[(String, Prop)] =
         Seq(
+          "toLazyList" -> forAll(laws.toLazyList),
+          "iterator" -> forAll(laws.iterator),
           "drop" -> forAll(laws.drop),
           "dropWhile" -> forAll(laws.dropWhile),
           "take" -> forAll(laws.take),
