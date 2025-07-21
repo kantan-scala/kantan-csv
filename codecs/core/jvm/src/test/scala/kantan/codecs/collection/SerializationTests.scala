@@ -16,11 +16,12 @@
 
 package kantan.codecs.collection
 
+import kantan.codecs.laws.discipline.DisciplineSuite
 import kantan.codecs.laws.discipline.SerializableTests
 import scala.collection.immutable.Queue
 import scala.collection.immutable.TreeSet
 
-class SerializationTests extends VersionSpecificSerializationTests {
+class SerializationTests extends DisciplineSuite {
   checkAll("Factory[TreeSet]", SerializableTests[Factory[Int, TreeSet[Int]]].serializable)
   checkAll("Factory[QueueFactoryTests]", SerializableTests[Factory[Int, Queue[Int]]].serializable)
   checkAll("Factory[ListFactoryTests]", SerializableTests[Factory[Int, List[Int]]].serializable)
@@ -29,5 +30,7 @@ class SerializationTests extends VersionSpecificSerializationTests {
   checkAll("Factory[SeqFactoryTests]", SerializableTests[Factory[Int, Seq[Int]]].serializable)
   checkAll("Factory[SetFactoryTests]", SerializableTests[Factory[Int, Set[Int]]].serializable)
   checkAll("Factory[ArrayFactoryTests]", SerializableTests[Factory[Int, Array[Int]]].serializable)
+  checkAll("Factory[LazyListFactoryTests]", SerializableTests[Factory[Int, LazyList[Int]]].serializable)
+  checkAll("Factory[IterableFactoryTests]", SerializableTests[Factory[Int, Iterable[Int]]].serializable)
 
 }
