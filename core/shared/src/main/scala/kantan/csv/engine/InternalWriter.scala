@@ -21,7 +21,7 @@ import kantan.csv.CsvConfiguration
 import kantan.csv.CsvWriter
 import scala.annotation.tailrec
 
-private[csv] class InternalWriter(private val out: Writer, val conf: CsvConfiguration) extends CsvWriter[Seq[String]] {
+private[csv] class InternalWriter(out: Writer, val conf: CsvConfiguration) extends CsvWriter[Seq[String]] {
 
   private def safeWrite(str: String): Unit = {
     @tailrec
