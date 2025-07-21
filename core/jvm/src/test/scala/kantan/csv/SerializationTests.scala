@@ -28,7 +28,7 @@ import kantan.csv.laws.discipline.DisciplineSuite
 import kantan.csv.laws.discipline.SerializableTests
 import scala.reflect.ClassTag
 
-class SerializationTests extends DisciplineSuite with VersionSpecificSerializationTests {
+class SerializationTests extends DisciplineSuite {
 
   // - Helper methods --------------------------------------------------------------------------------------------------
   // -------------------------------------------------------------------------------------------------------------------
@@ -89,5 +89,6 @@ class SerializationTests extends DisciplineSuite with VersionSpecificSerializati
   checkRowCodec[List[Int]]
   checkRowCodec[Seq[Int]]
   checkRowCodec[Vector[Int]]
+  checkRowCodec[LazyList[Int]]
 
 }
