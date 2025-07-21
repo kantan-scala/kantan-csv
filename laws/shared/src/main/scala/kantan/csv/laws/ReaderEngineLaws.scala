@@ -22,8 +22,7 @@ import kantan.csv.rfc
 import org.scalacheck.Prop.throws
 import scala.annotation.tailrec
 
-trait ReaderEngineLaws
-    extends RfcReaderLaws with SpectrumReaderLaws with KnownFormatsReaderLaws with VersionSpecificReaderEngineLaws {
+trait ReaderEngineLaws extends RfcReaderLaws with SpectrumReaderLaws with KnownFormatsReaderLaws {
   protected def asReader(csv: List[List[Cell]]): kantan.csv.CsvReader[List[Cell]] =
     csv.asCsv(rfc).asUnsafeCsvReader[List[Cell]](rfc)
 
@@ -86,6 +85,12 @@ trait ReaderEngineLaws
 
   def flatMap(csv: List[List[Cell]], f: List[Cell] => List[List[Cell]]): Boolean =
     asReader(csv).flatMap(r => asReader(f(r))).toList == csv.flatMap(f)
+
+  def toLazyList(csv: List[List[Cell]]): Boolean =
+    asReader(csv).to(LazyList) == csv.to(LazyList)
+
+  def iterator(csv: List[List[Cell]]): Boolean =
+    asReader(csv).iterator.sameElements(csv.iterator)
 }
 
 object ReaderEngineLaws {
