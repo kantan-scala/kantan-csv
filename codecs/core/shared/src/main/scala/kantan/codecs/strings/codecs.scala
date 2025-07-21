@@ -39,7 +39,7 @@ object codecs extends PlatformSpecificInstances {
     * res2: String = READ
     *   }}}
     */
-  @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+  @SuppressWarnings(Array("scalafix:DisableSyntax.asInstanceOf"))
   implicit def javaEnumStringCodec[T <: Enum[T]](implicit tag: ClassTag[T]): StringCodec[T] =
     StringCodec.from(StringDecoder.makeSafe("Enum") { s =>
       val enumClass = tag.runtimeClass.asInstanceOf[Class[T]]

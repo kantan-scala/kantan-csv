@@ -22,7 +22,7 @@ import kantan.csv.CsvReader
 import scala.annotation.tailrec
 import scala.collection.mutable.ArrayBuffer
 
-@SuppressWarnings(Array("org.wartremover.warts.Var"))
+@SuppressWarnings(Array("scalafix:DisableSyntax.var"))
 private[engine] class InternalReader private (
   val data: Reader,
   val conf: CsvConfiguration,
@@ -222,7 +222,7 @@ private[engine] class InternalReader private (
   override def checkNext: Boolean =
     hasNextChar || hasLeftover
 
-  @SuppressWarnings(Array("org.wartremover.warts.Throw"))
+  @SuppressWarnings(Array("scalafix:DisableSyntax.throw"))
   override def readNext(): Seq[String] = {
     row.clear()
     if(hasLeftover) nextRow(leftover)

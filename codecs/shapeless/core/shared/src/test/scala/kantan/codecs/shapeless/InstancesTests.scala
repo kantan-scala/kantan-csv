@@ -34,6 +34,7 @@ object InstancesTests {
     StringDecoderTests[Int Or Boolean].laws.decoder
 }
 
+@SuppressWarnings(Array("scalafix:DisableSyntax.null"))
 class InstancesTests extends DisciplineSuite {
 
   private implicit val decoder: Decoder[String, Or[Int, Boolean], DecodeError, codecs.type] =

@@ -90,7 +90,7 @@ trait CsvSource[-S] extends Serializable { self =>
     * @tparam A
     *   type to parse each row as. This must have a corresponding implicit [[HeaderDecoder]] instance in scope.
     */
-  @SuppressWarnings(Array("org.wartremover.warts.Throw"))
+  @SuppressWarnings(Array("scalafix:DisableSyntax.throw"))
   def unsafeReader[A: HeaderDecoder](s: S, conf: CsvConfiguration)(implicit engine: ReaderEngine): CsvReader[A] =
     reader[A](s, conf).map(_.left.map {
       case e @ TypeError(msg) => throw Option(e.getCause).getOrElse(new IllegalArgumentException(msg))

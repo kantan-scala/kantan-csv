@@ -136,11 +136,11 @@ trait Decoder[E, D, F, T] extends Serializable {
     * This makes it possible to share similar decoders across various libraries. Extracting values from strings, for
     * example, is a common task for which the default implementation can be shared rather than copy / pasted.
     */
-  @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+  @SuppressWarnings(Array("scalafix:DisableSyntax.asInstanceOf"))
   def tag[TT]: Decoder[E, D, F, TT] =
     this.asInstanceOf[Decoder[E, D, F, TT]]
 
-  @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+  @SuppressWarnings(Array("scalafix:DisableSyntax.asInstanceOf"))
   def flatMap[DD](f: D => Decoder[E, DD, F, T]): Decoder[E, DD, F, T] =
     Decoder.from { s =>
       decode(s) match {

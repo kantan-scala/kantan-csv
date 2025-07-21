@@ -64,7 +64,7 @@ private[csv] class InternalWriter(out: Writer, val conf: CsvConfiguration) exten
     }
   }
 
-  @SuppressWarnings(Array("org.wartremover.warts.Var"))
+  @SuppressWarnings(Array("scalafix:DisableSyntax.var"))
   override def write(ss: Seq[String]): CsvWriter[Seq[String]] = {
     var first = true
     for(s <- ss) {

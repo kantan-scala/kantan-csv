@@ -48,20 +48,27 @@ object StrictPlugin extends AutoPlugin {
         Compile / compile / WartRemover.autoImport.wartremoverErrors ++= {
           val exclude = Seq(
             Wart.Any,
+            Wart.AsInstanceOf,
             Wart.CaseClassPrivateApply,
             Wart.EitherProjectionPartial,
             Wart.Equals,
             Wart.ImplicitConversion,
             Wart.ImplicitParameter,
+            Wart.IsInstanceOf,
             Wart.JavaNetURLConstructors,
             Wart.MutableDataStructures,
             Wart.NonUnitStatements,
             Wart.Nothing,
+            Wart.Null,
             Wart.Overloading,
             Wart.PublicInference, // Disabled because https://github.com/wartremover/wartremover/issues/337
             Wart.Recursion,
+            Wart.Return,
             Wart.StringPlusAny,
-            Wart.ToString
+            Wart.Throw,
+            Wart.ToString,
+            Wart.Var,
+            Wart.While
           )
           assert(exclude.sortBy(_.clazz) == exclude)
           Warts.allBut(exclude*)

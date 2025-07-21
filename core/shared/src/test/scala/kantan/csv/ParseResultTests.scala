@@ -21,7 +21,7 @@ import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 
 // Shapeless' Lazy macros generate code that contain null.
-@SuppressWarnings(Array("org.wartremover.warts.Throw"))
+@SuppressWarnings(Array("scalafix:DisableSyntax.throw"))
 class ParseResultTests extends AnyFunSuite with ScalaCheckPropertyChecks with Matchers {
   test("ParseResult.success should return a Right") {
     forAll { (i: Int) =>

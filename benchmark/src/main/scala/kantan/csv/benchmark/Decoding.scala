@@ -70,9 +70,10 @@ class Decoding {
 object Decoding {
   // - Helpers ---------------------------------------------------------------------------------------------------------
   // -------------------------------------------------------------------------------------------------------------------
-  @SuppressWarnings(Array("org.wartremover.warts.Var"))
+  @SuppressWarnings(Array("scalafix:DisableSyntax.var"))
   class CsvIterator[A](iterator: A)(f: A => Array[String]) extends Iterator[CsvEntry] {
     private var n = f(iterator)
+    @SuppressWarnings(Array("scalafix:DisableSyntax.null"))
     override def hasNext: Boolean =
       n != null
     override def next(): CsvEntry = {
@@ -105,7 +106,7 @@ object Decoding {
     }.toList
   }
 
-  @SuppressWarnings(Array("org.wartremover.warts.Null"))
+  @SuppressWarnings(Array("scalafix:DisableSyntax.null"))
   def jackson(str: String): List[CsvEntry] =
     new CsvIterator(defaultMappingIteratorBuilder(new StringReader(str), rfc))({ it =>
       if(it.hasNext) it.next()

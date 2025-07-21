@@ -23,7 +23,7 @@ import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 
-@SuppressWarnings(Array("org.wartremover.warts.Var", "org.wartremover.warts.While"))
+@SuppressWarnings(Array("scalafix:DisableSyntax.var", "scalafix:DisableSyntax.while"))
 class ResourceIteratorTests extends AnyFunSuite with ScalaCheckPropertyChecks with Matchers {
   // - Tools -----------------------------------------------------------------------------------------------------------
   // -------------------------------------------------------------------------------------------------------------------

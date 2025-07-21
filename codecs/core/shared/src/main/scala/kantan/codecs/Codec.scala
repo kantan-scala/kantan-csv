@@ -25,7 +25,7 @@ package kantan.codecs
   * fulfill.
   */
 trait Codec[E, D, F, T] extends Decoder[E, D, F, T] with Encoder[E, D, T] {
-  @SuppressWarnings(Array("org.wartremover.warts.AsInstanceOf"))
+  @SuppressWarnings(Array("scalafix:DisableSyntax.asInstanceOf"))
   override def tag[TT]: Codec[E, D, F, TT] =
     this.asInstanceOf[Codec[E, D, F, TT]]
 
