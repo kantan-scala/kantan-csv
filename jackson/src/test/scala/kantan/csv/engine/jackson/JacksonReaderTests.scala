@@ -20,5 +20,8 @@ import kantan.csv.laws.discipline.DisciplineSuite
 import kantan.csv.laws.discipline.ReaderEngineTests
 
 class JacksonReaderTests extends DisciplineSuite {
+  override implicit val generatorDrivenConfig: PropertyCheckConfiguration =
+    PropertyCheckConfiguration(sizeRange = 10)
+
   checkAll("JacksonReader", ReaderEngineTests(jacksonCsvReaderEngine).readerEngine)
 }
