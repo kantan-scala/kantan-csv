@@ -81,6 +81,23 @@ lazy val commons = projectMatrix
     )
   )
 
+lazy val semiauto = kantanCrossProject("semiauto", "semiauto")
+  .settings(moduleName := "kantan.csv-semiauto")
+  .enablePlugins(PublishedPlugin)
+  .settings(
+    libraryDependencies ++= {
+      scalaBinaryVersion.value match {
+        case "3" =>
+          Nil
+        case _ =>
+          Seq(
+            "com.chuusai" %%% "shapeless" % "2.3.13"
+          )
+      }
+    }
+  )
+  .dependsOn(core, laws % Test)
+
 // - shapeless projects ------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------
 lazy val generic = kantanCrossProject("generic", "generic", false)
