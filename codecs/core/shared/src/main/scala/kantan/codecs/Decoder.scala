@@ -81,8 +81,7 @@ trait Decoder[E, D, F, T] extends Serializable {
   /** Creates a new [[Decoder]] instance by transforming some failures with the specified function. */
   def recoverWith[DD >: D, FF >: F](pf: PartialFunction[F, Either[FF, DD]]): Decoder[E, DD, FF, T] =
     andThen(_.left.flatMap { f =>
-      if(pf.isDefinedAt(f)) pf(f)
-      else Left(f)
+      pf.applyOrElse(f, (_: F) => Left(f))
     })
 
   def handleErrorWith(f: F => Decoder[E, D, F, T]): Decoder[E, D, F, T] =
@@ -186,8 +185,7 @@ trait DecoderCompanion[E, F, T] extends Serializable {
 
   def fromPartial[D](f: PartialFunction[E, Either[F, D]])(implicit t: IsError[F]): Decoder[E, D, F, T] =
     Decoder.from { e =>
-      if(f.isDefinedAt(e)) f(e)
-      else Left(t.fromMessage(s"Not acceptable: '$e'"))
+      f.applyOrElse(e, (_: E) => Left(t.fromMessage(s"Not acceptable: '$e'")))
     }
 
   /** Creates a new [[Decoder]] instance from the specified alternatives.
