@@ -67,6 +67,7 @@ object KantanPlugin extends AutoPlugin {
   /** General settings. */
   lazy val generalSettings: Seq[Setting[?]] =
     Seq(
+      Test / testOptions += Tests.Argument("-oTD"),
       autoAPIMappings := true,
       doctestMarkdownEnabled := true
     )
