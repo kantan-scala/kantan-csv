@@ -1,0 +1,9 @@
+package kantan.csv
+
+trait ZippableOps2 extends ZippableOps3 {
+  [2..21#implicit def zippable1[[#A1#], Z]: Zippable.Out[([#A1#]), Z, ([#A1#], Z)] =
+    (left: ([#A1#]), right: Z) =>
+      ([#left._1#], right)
+#
+  ]
+}
