@@ -234,10 +234,7 @@ object CsvSource {
     *   [[CsvSource.econtramap]]
     */
   def from[A](f: A => ParseResult[Reader]): CsvSource[A] =
-    new CsvSource[A] {
-      override def open(a: A): ParseResult[Reader] =
-        f(a)
-    }
+    (a: A) => f(a)
 
   implicit def fromResource[A: ReaderResource]: CsvSource[A] =
     CsvSource.from(a => ReaderResource[A].open(a).left.map(e => ParseError.IOError(e.getMessage, e.getCause)))
