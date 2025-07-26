@@ -31,8 +31,6 @@ import kantan.csv.laws.discipline.DisciplineSuite
 
 class CellCodecInstancesTests extends DisciplineSuite {
 
-  implicitly[Eq[Int]]
-
   // For some reason, these are not derived automatically. I *think* it's to do with the various codecs being type
   // aliases for types with many holes, but this is slightly beyond me.
   implicit val eqCellEitherT: Eq[EitherT[CellDecoder, DecodeError, Int]] = EitherT.catsDataEqForEitherT
