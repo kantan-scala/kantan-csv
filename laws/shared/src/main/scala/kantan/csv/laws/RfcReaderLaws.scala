@@ -71,7 +71,7 @@ trait RfcReaderLaws {
 
   def unescapedDoubleQuotes(csv: List[List[Cell.NonEscaped]]): Boolean =
     csv match {
-      case List(List(Cell.NonEscaped("" | " "))) =>
+      case _ if csv.exists(_.exists(_.value.trim.isEmpty)) =>
         // TODO fail
         true
       case _ =>
