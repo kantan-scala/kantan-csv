@@ -30,7 +30,7 @@ lazy val benchmark = projectMatrix
       )
       .value,
     libraryDependencies ++= Seq(
-      "com.opencsv" % "opencsv" % "5.11.2",
+      "com.opencsv" % "opencsv" % "5.12.0",
       "com.univocity" % "univocity-parsers" % "2.9.1",
       "com.github.tototoshi" %% "scala-csv" % "2.0.0"
     )
