@@ -50,7 +50,7 @@ trait EncoderInstances {
   // - it has a major impact for `ValueEnum`
   // - I haven't been able to decide whether it was useful here or not, but it certainly can't hurt to reduce the
   //   implicit search space.
-  @nowarn
+  @nowarn("msg=is never used")
   implicit def enumeratumEncoder[E, D <: EnumEntry: Enum, T](implicit
     encoder: Encoder[E, String, T]
   ): Encoder[E, D, T] =
