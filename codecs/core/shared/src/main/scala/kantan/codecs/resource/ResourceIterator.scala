@@ -17,6 +17,7 @@
 package kantan.codecs.resource
 
 import kantan.codecs.ResultCompanion
+import kantan.codecs.resource.ResourceIterator.State
 import scala.annotation.tailrec
 import scala.collection.Factory
 import scala.collection.mutable.Buffer
@@ -167,8 +168,7 @@ trait ResourceIterator[+A] extends java.io.Closeable {
     if(isEmpty) this
     else
       new ResourceIterator[A] {
-        private var state =
-          0 // Current state. 0: not initialised. 1: `n` contains an interesting value. 2: back to normal.
+        private var state: Int = State.NotInitialised
         private var n: A = _ // Where to store the first A that verifies p.
 
         def init(): Unit =
@@ -178,27 +178,27 @@ trait ResourceIterator[+A] extends java.io.Closeable {
             while(self.hasNext && p(n)) n = self.next()
 
             // If we've not found anything interesting, move to the final state.
-            if(p(n)) state = 2
+            if(p(n)) state = State.BackToNormal
 
             // Otherwise, move to the 'return `n`' state.
-            else state = 1
+            else state = State.InterestingValue
           } else
-            state = 2
+            state = State.BackToNormal
 
         // We have no choice here but to perform all IO-bound operations in `checkNext` - we can't know if there are more
         // elements to be had unless we read all of them until one that doesn't match `p` is found.
         override def checkNext: Boolean = {
-          if(state == 0) init()
+          if(state == State.NotInitialised) init()
 
-          if(state == 1) true
+          if(state == State.InterestingValue) true
           else self.hasNext
         }
 
         override def readNext(): A = {
-          if(state == 0) init()
+          if(state == State.NotInitialised) init()
 
-          if(state == 1) {
-            state = 2
+          if(state == State.InterestingValue) {
+            state = State.BackToNormal
             n
           } else self.next()
         }
@@ -478,6 +478,13 @@ trait ResourceIterator[+A] extends java.io.Closeable {
 }
 
 object ResourceIterator {
+  @SuppressWarnings(Array("org.wartremover.warts.FinalVal"))
+  private object State {
+    final val NotInitialised = 0
+    final val InterestingValue = 1
+    final val BackToNormal = 2
+  }
+
   val empty: ResourceIterator[Nothing] = new ResourceIterator[Nothing] {
     override def checkNext =
       false
