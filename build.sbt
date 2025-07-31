@@ -77,7 +77,7 @@ lazy val commons = projectMatrix
   .dependsOn(core, laws % Test)
   .settings(
     libraryDependencies ++= Seq(
-      "org.apache.commons" % "commons-csv" % "1.14.0"
+      "org.apache.commons" % "commons-csv" % "1.14.1"
     )
   )
 
