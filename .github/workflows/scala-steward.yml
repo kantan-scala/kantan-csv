@@ -8,7 +8,7 @@ jobs:
     timeout-minutes: 30
     if: ${{ github.repository_owner == 'kantan-scala' }}
     steps:
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
           java-version: 11
