@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-import de.heikoseeberger.sbtheader.FileType
-import de.heikoseeberger.sbtheader.HeaderPlugin
-import de.heikoseeberger.sbtheader.HeaderPlugin.autoImport.*
 import sbt.*
 import sbt.Keys.*
+import sbtheader.FileType
+import sbtheader.HeaderPlugin
+import sbtheader.HeaderPlugin.autoImport.*
 import spray.boilerplate.BoilerplatePlugin
 
 /** Add support for headers in sbt-boilerplate.
