@@ -15,10 +15,10 @@
  */
 
 import com.github.tkawachi.doctest.DoctestPlugin.autoImport.*
-import de.heikoseeberger.sbtheader.HeaderPlugin
 import sbt.*
 import sbt.Keys.*
 import sbt.plugins.JvmPlugin
+import sbtheader.HeaderPlugin
 
 /** Settings common to all projects.
   *

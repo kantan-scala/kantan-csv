@@ -4,7 +4,7 @@ addSbtPlugin("pl.project13.scala" % "sbt-jmh" % "0.4.7")
 
 addSbtPlugin("org.wartremover" % "sbt-wartremover" % "3.4.1")
 
-addSbtPlugin("de.heikoseeberger" % "sbt-header" % "5.10.0")
+addSbtPlugin("com.github.sbt" % "sbt-header" % "5.11.0")
 
 addSbtPlugin("io.github.sbt-doctest" % "sbt-doctest" % "0.11.3")
 

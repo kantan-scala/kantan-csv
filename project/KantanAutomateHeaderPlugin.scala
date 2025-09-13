@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import de.heikoseeberger.sbtheader.AutomateHeaderPlugin
-import de.heikoseeberger.sbtheader.HeaderPlugin
 import sbt.*
+import sbtheader.AutomateHeaderPlugin
+import sbtheader.HeaderPlugin
 
 object KantanAutomateHeaderPlugin extends AutoPlugin {
   override def trigger =
