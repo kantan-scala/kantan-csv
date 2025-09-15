@@ -189,7 +189,7 @@ lazy val codecsJava8 = kantanCrossProject("codecs-java8", "codecs/java8/core", "
   .dependsOn(codecsCore)
   .settings(
     libraryDependencies ++= {
-      if(virtualAxes.value.toSet.contains(VirtualAxis.js)) {
+      if(virtualAxes.value.toSet.contains(VirtualAxis.js) || virtualAxes.value.toSet.contains(VirtualAxis.native)) {
         Seq("io.github.cquiroz" %%% "scala-java-time" % "2.6.0")
       } else {
         Nil
