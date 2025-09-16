@@ -18,33 +18,10 @@ package kantan.codecs.strings
 
 import java.util.UUID
 import java.util.regex.Pattern
-import scala.reflect.ClassTag
 import scala.util.matching.Regex
 
 /** Defines default instances for [[StringEncoder]] and [[StringDecoder]]. */
 object codecs extends PlatformSpecificInstances {
-
-  /** Defines a [[StringCodec]] instance for Java enumerations.
-    *
-    * @example
-    *   {{{
-    * scala> import java.nio.file.AccessMode
-    *
-    * // Decoding example
-    * scala> StringDecoder[AccessMode].decode("READ")
-    * res1: StringResult[AccessMode] = Right(READ)
-    *
-    * // Encoding example
-    * scala> StringEncoder[AccessMode].encode(AccessMode.READ)
-    * res2: String = READ
-    *   }}}
-    */
-  @SuppressWarnings(Array("scalafix:DisableSyntax.asInstanceOf"))
-  implicit def javaEnumStringCodec[T <: Enum[T]](implicit tag: ClassTag[T]): StringCodec[T] =
-    StringCodec.from(StringDecoder.makeSafe("Enum") { s =>
-      val enumClass = tag.runtimeClass.asInstanceOf[Class[T]]
-      Enum.valueOf(enumClass, s)
-    })(_.name())
 
   /** Defines a [[StringCodec]] instance for `Pattern`.
     *

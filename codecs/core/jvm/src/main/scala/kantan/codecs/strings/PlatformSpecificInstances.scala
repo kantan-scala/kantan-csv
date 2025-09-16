@@ -23,9 +23,32 @@ import java.nio.file.Path
 import java.nio.file.Paths
 import java.text.DateFormat
 import java.util.Date
+import scala.reflect.ClassTag
 
 /** JVM-specific codec instances. */
 trait PlatformSpecificInstances {
+
+  /** Defines a [[StringCodec]] instance for Java enumerations.
+    *
+    * @example
+    *   {{{
+    * scala> import java.nio.file.AccessMode
+    *
+    * // Decoding example
+    * scala> StringDecoder[AccessMode].decode("READ")
+    * res1: StringResult[AccessMode] = Right(READ)
+    *
+    * // Encoding example
+    * scala> StringEncoder[AccessMode].encode(AccessMode.READ)
+    * res2: String = READ
+    *   }}}
+    */
+  @SuppressWarnings(Array("scalafix:DisableSyntax.asInstanceOf"))
+  implicit def javaEnumStringCodec[T <: Enum[T]](implicit tag: ClassTag[T]): StringCodec[T] =
+    StringCodec.from(StringDecoder.makeSafe("Enum") { s =>
+      val enumClass = tag.runtimeClass.asInstanceOf[Class[T]]
+      Enum.valueOf(enumClass, s)
+    })(_.name())
 
   /** Defines a [[StringCodec]] instance for `java.net.URL`.
     *
