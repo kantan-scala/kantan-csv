@@ -80,6 +80,16 @@ object KantanCrossBuildPlugin extends AutoPlugin {
       }
     )
 
+    private val skipTests = {
+      Test / testOptions += Tests.Exclude(
+        Set(
+          "kantan.codecs.strings.codecsDoctest",
+          "kantan.codecs.strings.java8.TimeCodecCompanionDoctest",
+          "kantan.codecs.strings.java8.TimeDecoderCompanionDoctest"
+        )
+      )
+    }
+
     private def kantanCrossProjectInternal(
       id: String,
       base: String,
@@ -124,28 +134,29 @@ object KantanCrossBuildPlugin extends AutoPlugin {
                 )
               }
             )
+          },
+          doctestTestFramework := DoctestTestFramework.ScalaTest,
+          doctestScalaTestVersion := Some("3.2.19"),
+          doctestGenTests := {
+            scalaBinaryVersion.value match {
+              case "3" =>
+                doctestGenTests.value
+              case _ =>
+                Seq.empty
+            }
           }
         )
         .jvmPlatform(
           scalaVersions = scalaVersions,
           settings = Def.settings(
             laws.map(x => setLaws(s"${x}JVM")).toSeq,
-            doctestTestFramework := DoctestTestFramework.ScalaTest,
-            doctestScalaTestVersion := Some("3.2.19"),
-            addSrcDir(file(base).getAbsoluteFile, VirtualAxis.jvm),
-            doctestGenTests := {
-              scalaBinaryVersion.value match {
-                case "3" =>
-                  doctestGenTests.value
-                case _ =>
-                  Seq.empty
-              }
-            }
+            addSrcDir(file(base).getAbsoluteFile, VirtualAxis.jvm)
           )
         )
         .jsPlatform(
           scalaVersions = scalaVersions,
           settings = Def.settings(
+            skipTests,
             addSrcDir(file(base).getAbsoluteFile, VirtualAxis.js),
             scalacOptions += {
               val a = (LocalRootProject / baseDirectory).value.toURI.toString
@@ -160,8 +171,6 @@ object KantanCrossBuildPlugin extends AutoPlugin {
               s"${key}:$a->$g/"
             },
             name := s"$id-js",
-            // Disables sbt-doctests in JS mode: https://github.com/sbt-doctest/sbt-doctest/issues/52
-            doctestGenTests := Seq.empty,
             // Disables parallel execution in JS mode: https://github.com/scala-js/scala-js/issues/1546
             Test / parallelExecution := false,
             laws.map(x => setLaws(s"${x}JS")).toSeq
@@ -170,6 +179,7 @@ object KantanCrossBuildPlugin extends AutoPlugin {
         .nativePlatform(
           scalaVersions = scalaVersions,
           settings = Def.settings(
+            skipTests,
             libraryDependencySchemes += "org.scala-native" %% "test-interface_native0.5" % VersionScheme.Always,
             Test / parallelExecution := false,
             Test / test := {
@@ -188,7 +198,6 @@ object KantanCrossBuildPlugin extends AutoPlugin {
               }
             },
             addSrcDir(file(base).getAbsoluteFile, VirtualAxis.native),
-            doctestGenTests := Seq.empty,
             laws.map(x => setLaws(s"${x}Native")).toSeq
           )
         )
