@@ -80,15 +80,6 @@ object KantanCrossBuildPlugin extends AutoPlugin {
       }
     )
 
-    private val skipTests = {
-      Test / testOptions += Tests.Exclude(
-        Set(
-          "kantan.codecs.strings.java8.TimeCodecCompanionDoctest",
-          "kantan.codecs.strings.java8.TimeDecoderCompanionDoctest"
-        )
-      )
-    }
-
     private def kantanCrossProjectInternal(
       id: String,
       base: String,
@@ -155,7 +146,6 @@ object KantanCrossBuildPlugin extends AutoPlugin {
         .jsPlatform(
           scalaVersions = scalaVersions,
           settings = Def.settings(
-            skipTests,
             addSrcDir(file(base).getAbsoluteFile, VirtualAxis.js),
             scalacOptions += {
               val a = (LocalRootProject / baseDirectory).value.toURI.toString
@@ -178,7 +168,6 @@ object KantanCrossBuildPlugin extends AutoPlugin {
         .nativePlatform(
           scalaVersions = scalaVersions,
           settings = Def.settings(
-            skipTests,
             libraryDependencySchemes += "org.scala-native" %% "test-interface_native0.5" % VersionScheme.Always,
             Test / parallelExecution := false,
             Test / test := {

@@ -308,7 +308,7 @@ trait TimeDecoderCompanion[E, F, T] {
     *      |   override def decoderFrom[D](d: StringDecoder[D]) = d
     *      | }
     *
-    * scala> Foo.zonedDateTimeDecoder(fmt"yyyy-MM-dd'T'HH:mm:ss.SSSzz")
+    * scala> Foo.zonedDateTimeDecoder(fmt"yyyy-MM-dd'T'HH:mm:ss.SSSVV")
     *      |   .decode("2000-01-01T12:00:00.000Z")
     * res1: StringResult[ZonedDateTime] = Right(2000-01-01T12:00Z)
     *   }}}
