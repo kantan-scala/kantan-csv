@@ -128,7 +128,7 @@ trait TimeDecoderCompanion[E, F, T] {
     *      |   override def decoderFrom[D](d: StringDecoder[D]) = d
     *      | }
     *
-    * scala> Foo.localDateDecoder(fmt"yyyy-MM-DD")
+    * scala> Foo.localDateDecoder(fmt"yyyy-MM-dd")
     *      |   .decode("2000-01-01")
     * res1: StringResult[LocalDate] = Right(2000-01-01)
     *   }}}
@@ -188,7 +188,7 @@ trait TimeDecoderCompanion[E, F, T] {
     *      |   override def decoderFrom[D](d: StringDecoder[D]) = d
     *      | }
     *
-    * scala> Foo.localDateTimeDecoder(fmt"yyyy-MM-DD'T'HH:mm:ss.SSS")
+    * scala> Foo.localDateTimeDecoder(fmt"yyyy-MM-dd'T'HH:mm:ss.SSS")
     *      |   .decode("2000-01-01T12:00:00.000")
     * res1: StringResult[LocalDateTime] = Right(2000-01-01T12:00)
     *   }}}
@@ -248,7 +248,7 @@ trait TimeDecoderCompanion[E, F, T] {
     *      |   override def decoderFrom[D](d: StringDecoder[D]) = d
     *      | }
     *
-    * scala> Foo.offsetDateTimeDecoder(fmt"yyyy-MM-DD'T'HH:mm:ss.SSSXX")
+    * scala> Foo.offsetDateTimeDecoder(fmt"yyyy-MM-dd'T'HH:mm:ss.SSSXX")
     *      |   .decode("2000-01-01T12:00:00.000Z")
     * res1: StringResult[OffsetDateTime] = Right(2000-01-01T12:00Z)
     *   }}}
@@ -308,7 +308,7 @@ trait TimeDecoderCompanion[E, F, T] {
     *      |   override def decoderFrom[D](d: StringDecoder[D]) = d
     *      | }
     *
-    * scala> Foo.zonedDateTimeDecoder(fmt"yyyy-MM-DD'T'HH:mm:ss.SSSzz")
+    * scala> Foo.zonedDateTimeDecoder(fmt"yyyy-MM-dd'T'HH:mm:ss.SSSzz")
     *      |   .decode("2000-01-01T12:00:00.000Z")
     * res1: StringResult[ZonedDateTime] = Right(2000-01-01T12:00Z)
     *   }}}
