@@ -308,7 +308,7 @@ trait TimeEncoderCompanion[E, T] {
     *      |   override def encoderFrom[D](e: StringEncoder[D]) = e
     *      | }
     *
-    * scala> Foo.zonedDateTimeEncoder(fmt"yyyy-MM-dd'T'HH:mm:ss.SSSzz")
+    * scala> Foo.zonedDateTimeEncoder(fmt"yyyy-MM-dd'T'HH:mm:ss.SSSVV")
     *      |   .encode(ZonedDateTime.of(2000, 1, 1, 12, 0, 0, 0, ZoneOffset.UTC))
     * res1: String = 2000-01-01T12:00:00.000Z
     *   }}}

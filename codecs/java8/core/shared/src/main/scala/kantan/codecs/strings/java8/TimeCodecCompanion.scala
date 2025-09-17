@@ -275,7 +275,7 @@ trait TimeCodecCompanion[E, F, T] extends TimeDecoderCompanion[E, F, T] with Tim
     *      |   override def decoderFrom[D](d: StringDecoder[D]) = d
     *      | }
     *
-    * scala> val codec = Foo.zonedDateTimeCodec(fmt"yyyy-MM-dd'T'HH:mm:ss.SSSzz")
+    * scala> val codec = Foo.zonedDateTimeCodec(fmt"yyyy-MM-dd'T'HH:mm:ss.SSSVV")
     *
     * scala> val encoded = codec.encode(ZonedDateTime.of(2000, 1, 1, 12, 0, 0, 0, ZoneOffset.UTC))
     * res1: String = 2000-01-01T12:00:00.000Z
