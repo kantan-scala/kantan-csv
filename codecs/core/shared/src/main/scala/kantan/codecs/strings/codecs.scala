@@ -64,12 +64,12 @@ object codecs extends PlatformSpecificInstances {
     * @example
     *   {{{
     * // Decoding example
-    * scala> StringDecoder[BigDecimal].decode("2")
-    * res1: StringResult[BigDecimal] = Right(2)
+    * scala> StringDecoder[BigDecimal].decode("2.5")
+    * res1: StringResult[BigDecimal] = Right(2.5)
     *
     * // Encoding example
-    * scala> StringEncoder[BigDecimal].encode(BigDecimal(2D))
-    * res2: String = 2.0
+    * scala> StringEncoder[BigDecimal].encode(BigDecimal(1.25D))
+    * res2: String = 1.25
     *   }}}
     */
   implicit val bigDecimalStringCodec: StringCodec[BigDecimal] =
@@ -134,12 +134,12 @@ object codecs extends PlatformSpecificInstances {
     * @example
     *   {{{
     * // Decoding example
-    * scala> StringDecoder[Double].decode("2")
-    * res1: StringResult[Double] = Right(2.0)
+    * scala> StringDecoder[Double].decode("2.5")
+    * res1: StringResult[Double] = Right(2.5)
     *
     * // Encoding example
-    * scala> StringEncoder[Double].encode(2D)
-    * res2: String = 2.0
+    * scala> StringEncoder[Double].encode(1.25D)
+    * res2: String = 1.25
     *   }}}
     */
   implicit val doubleStringCodec: StringCodec[Double] =
@@ -166,12 +166,12 @@ object codecs extends PlatformSpecificInstances {
     * @example
     *   {{{
     * // Decoding example
-    * scala> StringDecoder[Float].decode("2")
-    * res1: StringResult[Float] = Right(2.0)
+    * scala> StringDecoder[Float].decode("2.5")
+    * res1: StringResult[Float] = Right(2.5)
     *
     * // Encoding example
-    * scala> StringEncoder[Float].encode(2F)
-    * res2: String = 2.0
+    * scala> StringEncoder[Float].encode(3.5F)
+    * res2: String = 3.5
     *   }}}
     */
   implicit val floatStringCodec: StringCodec[Float] =
