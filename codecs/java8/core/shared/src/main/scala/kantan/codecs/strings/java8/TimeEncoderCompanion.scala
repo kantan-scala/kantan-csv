@@ -128,7 +128,7 @@ trait TimeEncoderCompanion[E, T] {
     *      |   override def encoderFrom[D](e: StringEncoder[D]) = e
     *      | }
     *
-    * scala> Foo.localDateEncoder(fmt"yyyy-MM-DD")
+    * scala> Foo.localDateEncoder(fmt"yyyy-MM-dd")
     *      |   .encode(LocalDate.of(2000, 1, 1))
     * res1: String = 2000-01-01
     *   }}}
@@ -188,7 +188,7 @@ trait TimeEncoderCompanion[E, T] {
     *      |   override def encoderFrom[D](e: StringEncoder[D]) = e
     *      | }
     *
-    * scala> Foo.localDateTimeEncoder(fmt"yyyy-MM-DD'T'HH:mm:ss.SSS")
+    * scala> Foo.localDateTimeEncoder(fmt"yyyy-MM-dd'T'HH:mm:ss.SSS")
     *      |   .encode(LocalDateTime.of(2000, 1, 1, 12, 0, 0, 0))
     * res1: String = 2000-01-01T12:00:00.000
     *   }}}
@@ -248,7 +248,7 @@ trait TimeEncoderCompanion[E, T] {
     *      |   override def encoderFrom[D](e: StringEncoder[D]) = e
     *      | }
     *
-    * scala> Foo.offsetDateTimeEncoder(fmt"yyyy-MM-DD'T'HH:mm:ss.SSSXX")
+    * scala> Foo.offsetDateTimeEncoder(fmt"yyyy-MM-dd'T'HH:mm:ss.SSSXX")
     *      |   .encode(OffsetDateTime.of(2000, 1, 1, 12, 0, 0, 0, ZoneOffset.UTC))
     * res1: String = 2000-01-01T12:00:00.000Z
     *   }}}
@@ -308,7 +308,7 @@ trait TimeEncoderCompanion[E, T] {
     *      |   override def encoderFrom[D](e: StringEncoder[D]) = e
     *      | }
     *
-    * scala> Foo.zonedDateTimeEncoder(fmt"yyyy-MM-DD'T'HH:mm:ss.SSSzz")
+    * scala> Foo.zonedDateTimeEncoder(fmt"yyyy-MM-dd'T'HH:mm:ss.SSSzz")
     *      |   .encode(ZonedDateTime.of(2000, 1, 1, 12, 0, 0, 0, ZoneOffset.UTC))
     * res1: String = 2000-01-01T12:00:00.000Z
     *   }}}
