@@ -83,7 +83,6 @@ object KantanCrossBuildPlugin extends AutoPlugin {
     private val skipTests = {
       Test / testOptions += Tests.Exclude(
         Set(
-          "kantan.codecs.strings.codecsDoctest",
           "kantan.codecs.strings.java8.TimeCodecCompanionDoctest",
           "kantan.codecs.strings.java8.TimeDecoderCompanionDoctest"
         )
