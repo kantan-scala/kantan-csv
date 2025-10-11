@@ -23,7 +23,9 @@ jobs:
           java-version: "${{matrix.java}}"
           distribution: zulu
       - uses: sbt/setup-sbt@v1
-      - run: sbt -v -J-Xss8m 
+      - run: sbt -v -J-Xss8m
+             -Dsbt.traces=true
              "all scalafmtCheckAll scalafmtSbtCheck scalafixConfigRuleNamesSortCheck validate${{ matrix.scala }}"
              "testScala${{ matrix.scala }}"
              testTimesWriteGitHubStepSummary
+      - uses: xuwei-k/sbt-trace-action@v1
