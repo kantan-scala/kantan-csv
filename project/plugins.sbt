@@ -24,4 +24,4 @@ addSbtPlugin("com.github.sbt" % "sbt-pgp" % "2.3.1")
 
 addSbtPlugin("com.github.xuwei-k" % "scalafix-check" % "0.1.0")
 
-addSbtPlugin("org.scala-native" % "sbt-scala-native" % "0.5.8")
+addSbtPlugin("org.scala-native" % "sbt-scala-native" % "0.5.9")
