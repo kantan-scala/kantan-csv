@@ -36,7 +36,7 @@ object KantanCrossBuildPlugin extends AutoPlugin {
     KantanPlugin
 
   object autoImport {
-    def Scala3 = "3.3.6"
+    def Scala3 = "3.3.7"
 
     def Scala213 = "2.13.17"
 
