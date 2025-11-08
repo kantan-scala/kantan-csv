@@ -132,7 +132,7 @@ lazy val codecsCore = kantanCrossProject("codecs-core", "codecs/core", "codecs-l
   .settings(
     libraryDependencies ++= {
       if(virtualAxes.value.toSet.contains(VirtualAxis.jvm))
-        Seq("commons-io" % "commons-io" % "2.20.0" % Test)
+        Seq("commons-io" % "commons-io" % "2.21.0" % Test)
       else
         Nil
     }
