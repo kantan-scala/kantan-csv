@@ -93,36 +93,36 @@ trait EncoderInstances {
   implicit def intEnumeratumEncoder[E, D <: IntEnumEntry: IntEnum, T](implicit
     encoder: Encoder[E, Int, T]
   ): Encoder[E, D, T] =
-    enumeratumEncoder(encoder)
+    enumeratumEncoder(using encoder)
 
   @nowarn("msg=is never used")
   implicit def longEnumeratumEncoder[E, D <: LongEnumEntry: LongEnum, T](implicit
     encoder: Encoder[E, Long, T]
   ): Encoder[E, D, T] =
-    enumeratumEncoder(encoder)
+    enumeratumEncoder(using encoder)
 
   @nowarn("msg=is never used")
   implicit def shortEnumeratumEncoder[E, D <: ShortEnumEntry: ShortEnum, T](implicit
     encoder: Encoder[E, Short, T]
   ): Encoder[E, D, T] =
-    enumeratumEncoder(encoder)
+    enumeratumEncoder(using encoder)
 
   @nowarn("msg=is never used")
   implicit def stringEnumeratumEncoder[E, D <: StringEnumEntry: StringEnum, T](implicit
     encoder: Encoder[E, String, T]
   ): Encoder[E, D, T] =
-    enumeratumEncoder(encoder)
+    enumeratumEncoder(using encoder)
 
   @nowarn("msg=is never used")
   implicit def byteEnumeratumEncoder[E, D <: ByteEnumEntry: ByteEnum, T](implicit
     encoder: Encoder[E, Byte, T]
   ): Encoder[E, D, T] =
-    enumeratumEncoder(encoder)
+    enumeratumEncoder(using encoder)
 
   @nowarn("msg=is never used")
   implicit def charEnumeratumEncoder[E, D <: CharEnumEntry: CharEnum, T](implicit
     encoder: Encoder[E, Char, T]
   ): Encoder[E, D, T] =
-    enumeratumEncoder(encoder)
+    enumeratumEncoder(using encoder)
 
 }
