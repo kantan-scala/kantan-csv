@@ -37,9 +37,9 @@ import kantan.codecs.strings.java8.ToFormatLiteral
   */
 package object java8 extends TimeCodecCompanion[String, DecodeError, codecs.type] with ToFormatLiteral {
   override def decoderFrom[D](d: StringDecoder[D]): CellDecoder[D] =
-    codecs.fromStringDecoder(d)
+    codecs.fromStringDecoder(using d)
   override def encoderFrom[D](e: StringEncoder[D]): CellEncoder[D] =
-    codecs.fromStringEncoder(e)
+    codecs.fromStringEncoder(using e)
 
   implicit val defaultInstantCellDecoder: Exported[CellDecoder[Instant]] =
     Exported(defaultInstantDecoder)
