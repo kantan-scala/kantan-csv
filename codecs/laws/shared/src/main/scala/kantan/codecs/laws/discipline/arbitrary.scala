@@ -129,12 +129,13 @@ trait CommonArbitraryInstances extends ArbitraryArities {
       mc <- mcGen
       limit <- Gen.const(math.max(x.abs.toString.length - mc.getPrecision, 0))
       scale <- Gen.choose(Int.MinValue + limit, Int.MaxValue)
-    } yield try
-      BigDecimal(x, scale, mc)
-    catch {
-      // Handle the case where scale/precision conflict
-      case _: java.lang.ArithmeticException => BigDecimal(x, scale, UNLIMITED)
-    }
+    } yield
+      try
+        BigDecimal(x, scale, mc)
+      catch {
+        // Handle the case where scale/precision conflict
+        case _: java.lang.ArithmeticException => BigDecimal(x, scale, UNLIMITED)
+      }
     Arbitrary(bdGen)
   }
 
