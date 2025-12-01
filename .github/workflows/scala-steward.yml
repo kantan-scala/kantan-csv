@@ -17,7 +17,7 @@ jobs:
         with:
           app-id: 1565841
           private-key: ${{ secrets.KANTAN_BOT_KEY }}
-      - uses: scala-steward-org/scala-steward-action@53d486a68877f4a6d1e110e8058fe21e593db356 # v2.77.0
+      - uses: scala-steward-org/scala-steward-action@f60ccd18bc9d8083e6809d9dc3db4a69a71d856c # v2.78.0
         with:
           github-token: ${{ steps.app-token.outputs.token }}
           author-email: "220091877+kantan-bot[bot]@users.noreply.github.com"
