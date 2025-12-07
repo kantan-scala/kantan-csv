@@ -395,6 +395,7 @@ trait ResourceIterator[+A] extends java.io.Closeable {
           n.isDefined
         }
 
+        @SuppressWarnings(Array("org.wartremover.warts.PartialFunctionApply"))
         override def readNext(): B = {
           if(first) init()
 

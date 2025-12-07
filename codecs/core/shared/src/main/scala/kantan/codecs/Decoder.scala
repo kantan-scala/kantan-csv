@@ -72,6 +72,7 @@ trait Decoder[E, D, F, T] extends Serializable {
     Decoder.from(e => f(decode(e)))
 
   /** Creates a new [[Decoder]] instance by transforming some failures into successes with the specified function. */
+  @SuppressWarnings(Array("org.wartremover.warts.PartialFunctionApply"))
   def recover[DD >: D](pf: PartialFunction[F, DD]): Decoder[E, DD, F, T] =
     andThen(_.left.flatMap { f =>
       if(pf.isDefinedAt(f)) Right(pf(f))
@@ -107,6 +108,7 @@ trait Decoder[E, D, F, T] extends Serializable {
     *
     * You can think as [[collect]] as a bit like a [[filter]] and a [[map]] merged into one.
     */
+  @SuppressWarnings(Array("org.wartremover.warts.PartialFunctionApply"))
   def collect[DD](f: PartialFunction[D, DD])(implicit t: IsError[F]): Decoder[E, DD, F, T] =
     emap { d =>
       if(f.isDefinedAt(d)) Right(f(d))
