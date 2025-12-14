@@ -18,7 +18,7 @@ addSbtPlugin("com.eed3si9n" % "sbt-projectmatrix" % "0.11.0")
 
 addSbtPlugin("org.scala-js" % "sbt-scalajs" % "1.20.1")
 
-addSbtPlugin("com.github.sbt" % "sbt-boilerplate" % "0.7.0")
+addSbtPlugin("com.github.sbt" % "sbt-boilerplate" % "0.8.0")
 
 addSbtPlugin("com.github.sbt" % "sbt-pgp" % "2.3.1")
 
