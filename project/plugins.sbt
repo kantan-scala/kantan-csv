@@ -6,7 +6,7 @@ addSbtPlugin("org.wartremover" % "sbt-wartremover" % "3.5.0")
 
 addSbtPlugin("com.github.sbt" % "sbt-header" % "5.11.0")
 
-addSbtPlugin("io.github.sbt-doctest" % "sbt-doctest" % "0.12.2")
+addSbtPlugin("io.github.sbt-doctest" % "sbt-doctest" % "0.12.3")
 
 addSbtPlugin("com.github.sbt" % "sbt-release" % "1.4.0")
 
