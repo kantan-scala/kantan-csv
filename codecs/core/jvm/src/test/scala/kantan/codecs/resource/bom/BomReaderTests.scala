@@ -26,6 +26,7 @@ import org.scalacheck.Gen
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
+import scala.annotation.tailrec
 import scala.io.Codec
 
 /** Makes sure `BomReader` reads BOMs as expected. */
@@ -35,6 +36,7 @@ class BomReaderTests extends AnyFunSuite with ScalaCheckPropertyChecks with Matc
     PropertyCheckConfiguration(minSuccessful = 1000)
 
   def read(str: String, codec: Codec): String = {
+    @tailrec
     def go(reader: Reader, acc: StringBuilder): String =
       reader.read() match {
         case -1 => acc.toString()
