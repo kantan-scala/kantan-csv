@@ -24,6 +24,7 @@ import kantan.csv.rfc
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
+import scala.annotation.tailrec
 import scala.util.Try
 
 class CsvSourceOpsTests extends AnyFunSuite with ScalaCheckPropertyChecks with Matchers {
@@ -61,6 +62,7 @@ class CsvSourceOpsTests extends AnyFunSuite with ScalaCheckPropertyChecks with M
   }
 
   def compareUnsafe[A](csv: => List[A], data: List[RowValue[A]]): Unit = {
+    @tailrec
     def cmp(csv: List[A], data: List[RowValue[A]]): Unit =
       (csv, data) match {
         case (Nil, Nil) => ()
