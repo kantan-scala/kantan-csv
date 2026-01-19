@@ -63,7 +63,7 @@ lazy val jackson = projectMatrix
   .dependsOn(core, laws % Test)
   .settings(
     libraryDependencies ++= Seq(
-      "com.fasterxml.jackson.dataformat" % "jackson-dataformat-csv" % "2.20.1"
+      "com.fasterxml.jackson.dataformat" % "jackson-dataformat-csv" % "2.21.0"
     )
   )
 
