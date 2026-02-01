@@ -271,13 +271,13 @@ lazy val codecsEnumeratum =
         }
       },
       libraryDependencies ++= Seq(
-        "com.beachape" %%% "enumeratum" % "1.9.2"
+        "com.beachape" %%% "enumeratum" % "1.9.3"
       )
     )
 
 lazy val codecsEnumeratumLaws = kantanCrossProject("codecs-enumeratum-laws", "codecs/enumeratum/laws")
   .settings(moduleName := "kantan.codecs-enumeratum-laws")
-  .settings(libraryDependencies += "com.beachape" %%% "enumeratum-scalacheck" % "1.9.2")
+  .settings(libraryDependencies += "com.beachape" %%% "enumeratum-scalacheck" % "1.9.3")
   .settings(
     scalacOptions ++= {
       scalaBinaryVersion.value match {
