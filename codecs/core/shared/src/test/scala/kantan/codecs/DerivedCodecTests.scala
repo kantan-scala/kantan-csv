@@ -32,7 +32,7 @@ class DerivedCodecTests extends AnyFunSuite with ScalaCheckPropertyChecks with M
     if(s.trim.isEmpty) Right(None)
     else StringResult(Just(s.toInt))
 
-  val encode: Maybe[Int] => String = _ match {
+  val encode: Maybe[Int] => String = {
     case Just(i) => i.toString
     case None => ""
   }
