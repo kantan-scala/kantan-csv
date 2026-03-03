@@ -10,7 +10,7 @@ ThisBuild / concurrentRestrictions := List(
   Tags.exclusiveGroup(Tags.Clean)
 )
 
-ThisBuild / scalafixDependencies += "com.github.xuwei-k" %% "scalafix-rules" % "0.6.23"
+ThisBuild / scalafixDependencies += "com.github.xuwei-k" %% "scalafix-rules" % "0.6.24"
 
 scalaVersion := Scala213
 enablePlugins(UnpublishedPlugin)
