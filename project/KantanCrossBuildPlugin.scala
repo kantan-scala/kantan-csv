@@ -126,7 +126,7 @@ object KantanCrossBuildPlugin extends AutoPlugin {
             )
           },
           doctestTestFramework := DoctestTestFramework.ScalaTest,
-          doctestScalaTestVersion := Some("3.2.19"),
+          doctestScalaTestVersion := Some("3.2.20"),
           doctestGenTests := {
             scalaBinaryVersion.value match {
               case "3" =>
