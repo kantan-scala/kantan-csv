@@ -18,7 +18,22 @@ package kantan.csv.engine
 
 import kantan.csv.laws.discipline.DisciplineSuite
 import kantan.csv.laws.discipline.WriterEngineTests
+import kantan.csv.ops.*
+import kantan.csv.rfc
 
 class InternalWriterTests extends DisciplineSuite {
   checkAll("InternalWriter", WriterEngineTests(WriterEngine.internalCsvWriterEngine).writerEngine)
+
+  test("cells containing the quote char must be escaped under QuotePolicy.Always") {
+    List(List("a\"b")).asCsv(rfc.quoteAll) should be("\"a\"\"b\"\r\n")
+  }
+
+  test("cells containing multiple quote chars must be escaped under QuotePolicy.Always") {
+    List(List("\"hello\"")).asCsv(rfc.quoteAll) should be("\"\"\"hello\"\"\"\r\n")
+  }
+
+  test("cells containing the quote char round-trip under QuotePolicy.Always") {
+    val rows = List(List("a\"b", "plain", "c\"\"d"))
+    rows.asCsv(rfc.quoteAll).unsafeReadCsv[List, List[String]](rfc) should be(rows)
+  }
 }
