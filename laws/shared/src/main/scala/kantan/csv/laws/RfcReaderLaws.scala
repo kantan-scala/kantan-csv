@@ -61,8 +61,12 @@ trait RfcReaderLaws {
   }
 
   @SuppressWarnings(Array("org.wartremover.warts.ListAppend"))
-  def trailingComma(csv: List[List[Cell]]): Boolean =
-    equals(cellsToCsv(csv, ",", ",\r\n"), csv.map(_ :+ Cell.Empty))
+  def trailingComma(csv: List[List[Cell]]): Boolean = {
+    // Every row is terminated by a trailing comma followed by CRLF, so every row is expected to gain a trailing empty
+    // cell. `mkString(sep)` only interleaves the separator, so we append it explicitly to every row.
+    val encoded = csv.map(_.map(_.encoded).mkString(",") + ",\r\n").mkString
+    equals(encoded, csv.map(_ :+ Cell.Empty))
+  }
 
   // - RFC 4180: 2.5 ---------------------------------------------------------------------------------------------------
   // -------------------------------------------------------------------------------------------------------------------

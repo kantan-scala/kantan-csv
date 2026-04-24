@@ -34,7 +34,7 @@ trait RfcReaderTests extends Laws {
       "empty ending" -> forAll(laws.emptyEnding),
       "leading whitespace" -> forAll(laws.leadingWhitespace),
       "trailing whitespace" -> forAll(laws.trailingWhitespace),
-      "trailing comma" -> forAll(laws.trailingWhitespace),
+      "trailing comma" -> forAll(laws.trailingComma),
       "unnecessary double quotes" -> forAll(laws.unnecessaryDoubleQuotes),
       "unescaped double quotes" -> forAll(laws.unescapedDoubleQuotes),
       "escaped content" -> forAll(laws.escapedCells)
