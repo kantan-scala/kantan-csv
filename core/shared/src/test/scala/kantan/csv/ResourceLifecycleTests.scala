@@ -67,6 +67,15 @@ class ResourceLifecycleTests extends AnyFunSuite with Matchers {
     r.closed.get should be(true)
   }
 
+  test("CsvSink.write closes the writer on the success path") {
+    implicit val sink: CsvSink[TrackingWriter] =
+      CsvSink.from(identity)
+
+    val w = new TrackingWriter
+    CsvSink[TrackingWriter].write(w, List(1, 2, 3), rfc)
+    w.closed.get should be(true)
+  }
+
   test("CsvSink.write closes the writer when a row encoder throws") {
     final case class Explode(x: Int)
     implicit val explode: RowEncoder[Explode] =
@@ -81,6 +90,16 @@ class ResourceLifecycleTests extends AnyFunSuite with Matchers {
       CsvSink[TrackingWriter].write(w, List(Explode(1)), rfc)
     }
     w.closed.get should be(true)
+  }
+
+  test("CsvReader.apply closes the Reader when the returned iterator is closed on the success path") {
+    final case class Row(a: Int, b: Int)
+    implicit val hd: HeaderDecoder[Row] = HeaderDecoder.decoder("a", "b")(Row.apply)
+
+    val r = new TrackingReader("a,b\n1,2\n3,4\n")
+    val reader = CsvReader[Row](r, rfc.withHeader)
+    reader.close()
+    r.closed.get should be(true)
   }
 
   test("CsvReader.apply closes the Reader when header decoding fails") {
