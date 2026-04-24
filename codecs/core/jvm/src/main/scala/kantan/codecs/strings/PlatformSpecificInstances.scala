@@ -47,7 +47,7 @@ trait PlatformSpecificInstances {
   implicit def javaEnumStringCodec[T <: Enum[T]](implicit tag: ClassTag[T]): StringCodec[T] =
     StringCodec.from(StringDecoder.makeSafe("Enum") { s =>
       val enumClass = tag.runtimeClass.asInstanceOf[Class[T]]
-      Enum.valueOf(enumClass, s)
+      Enum.valueOf(enumClass, s.trim)
     })(_.name())
 
   /** Defines a [[StringCodec]] instance for `java.net.URL`.

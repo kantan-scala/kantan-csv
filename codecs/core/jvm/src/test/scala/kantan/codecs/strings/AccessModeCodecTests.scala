@@ -37,4 +37,9 @@ class AccessModeCodecTests extends DisciplineSuite {
   )
   checkAll("TaggedEncoder[AccessMode]", EncoderTests[String, AccessMode, tagged.type].encoder[Int, Int])
 
+  test("StringDecoder[Enum] should trim leading and trailing whitespace like every other codec") {
+    StringDecoder[AccessMode].decode(" READ\t") should be(Right(AccessMode.READ))
+    StringDecoder[AccessMode].decode("\nWRITE ") should be(Right(AccessMode.WRITE))
+  }
+
 }
