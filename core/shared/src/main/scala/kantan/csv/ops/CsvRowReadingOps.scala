@@ -39,11 +39,13 @@ final class CsvRowReadingOps[A](private val a: A) extends AnyVal {
   def readCsvRow[B: RowDecoder](conf: CsvConfiguration)(implicit e: ReaderEngine, src: CsvSource[A]): ReadResult[B] = {
     val reader = a.asCsvReader[B](conf)
 
-    reader.next().flatMap { res =>
-      // Slight abuse of `no such element` to mean that we're not working with a single row.
-      if(reader.hasNext) ParseResult.noSuchElement
-      else ReadResult.success(res)
-    }
+    try
+      reader.next().flatMap { res =>
+        // Slight abuse of `no such element` to mean that we're not working with a single row.
+        if(reader.hasNext) ParseResult.noSuchElement
+        else ReadResult.success(res)
+      }
+    finally reader.close()
   }
 
   /** Parses a string as a single CSV row.

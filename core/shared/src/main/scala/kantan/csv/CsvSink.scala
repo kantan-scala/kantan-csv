@@ -41,8 +41,13 @@ trait CsvSink[-S] extends Serializable { self =>
     * @param conf
     *   CSV writing behaviour.
     */
-  def write[A: HeaderEncoder](s: S, rows: IterableOnce[A], conf: CsvConfiguration)(implicit e: WriterEngine): Unit =
-    writer(s, conf).write(rows).close()
+  def write[A: HeaderEncoder](s: S, rows: IterableOnce[A], conf: CsvConfiguration)(implicit e: WriterEngine): Unit = {
+    val w = writer(s, conf)
+    try {
+      w.write(rows)
+      ()
+    } finally w.close()
+  }
 
   /** Opens a [[CsvWriter]] on the specified `S`.
     *

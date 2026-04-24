@@ -37,7 +37,12 @@ object CsvReader {
     decoder
       .map(d => data.map(_.flatMap(d.decode)))
       .left
-      .map(error => ResourceIterator(ReadResult.failure(error)))
+      .map { error =>
+        // Header decoding failed, so the returned iterator will not reference `data`. Release it eagerly so the
+        // underlying Reader doesn't leak.
+        data.close()
+        ResourceIterator(ReadResult.failure(error))
+      }
       .merge
   }
 }
