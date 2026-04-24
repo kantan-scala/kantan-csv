@@ -49,6 +49,12 @@ class ResourceLifecycleTests extends AnyFunSuite with Matchers {
     }
   }
 
+  private final class ThrowingOnCloseWriter extends Writer {
+    override def write(cbuf: Array[Char], off: Int, len: Int): Unit = ()
+    override def flush(): Unit = ()
+    override def close(): Unit = throw new RuntimeException("close-failure")
+  }
+
   test("readCsvRow closes the underlying Reader on success") {
     val r = new TrackingReader("1,2,3")
     val _ = r.readCsvRow[(Int, Int, Int)](rfc)
@@ -90,6 +96,22 @@ class ResourceLifecycleTests extends AnyFunSuite with Matchers {
       CsvSink[TrackingWriter].write(w, List(Explode(1)), rfc)
     }
     w.closed.get should be(true)
+  }
+
+  test("CsvSink.write preserves the primary exception when close also throws") {
+    final case class Explode(x: Int)
+    implicit val explode: RowEncoder[Explode] =
+      RowEncoder.from(_ => throw new RuntimeException("write-failure"))
+
+    implicit val sink: CsvSink[ThrowingOnCloseWriter] =
+      CsvSink.from(identity)
+
+    val thrown = intercept[RuntimeException] {
+      CsvSink[ThrowingOnCloseWriter].write(new ThrowingOnCloseWriter, List(Explode(1)), rfc)
+    }
+
+    thrown.getMessage should be("write-failure")
+    thrown.getSuppressed.toList.map(_.getMessage) should contain("close-failure")
   }
 
   test("CsvReader.apply closes the Reader when the returned iterator is closed on the success path") {

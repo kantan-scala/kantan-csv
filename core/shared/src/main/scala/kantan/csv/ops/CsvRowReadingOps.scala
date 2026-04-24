@@ -22,6 +22,7 @@ import kantan.csv.ParseResult
 import kantan.csv.ReadResult
 import kantan.csv.RowDecoder
 import kantan.csv.engine.ReaderEngine
+import scala.util.Using
 
 /** Provides syntax for decoding a string as a CSV row. */
 final class CsvRowReadingOps[A](private val a: A) extends AnyVal {
@@ -36,17 +37,14 @@ final class CsvRowReadingOps[A](private val a: A) extends AnyVal {
     * res0: ReadResult[(Int, Int, Int)] = Right((1,2,3))
     *   }}}
     */
-  def readCsvRow[B: RowDecoder](conf: CsvConfiguration)(implicit e: ReaderEngine, src: CsvSource[A]): ReadResult[B] = {
-    val reader = a.asCsvReader[B](conf)
-
-    try
+  def readCsvRow[B: RowDecoder](conf: CsvConfiguration)(implicit e: ReaderEngine, src: CsvSource[A]): ReadResult[B] =
+    Using.resource(a.asCsvReader[B](conf)) { reader =>
       reader.next().flatMap { res =>
         // Slight abuse of `no such element` to mean that we're not working with a single row.
         if(reader.hasNext) ParseResult.noSuchElement
         else ReadResult.success(res)
       }
-    finally reader.close()
-  }
+    }
 
   /** Parses a string as a single CSV row.
     *

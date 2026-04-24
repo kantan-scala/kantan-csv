@@ -19,6 +19,7 @@ package kantan.csv
 import java.io.Writer
 import kantan.codecs.resource.WriterResource
 import kantan.csv.engine.WriterEngine
+import scala.util.Using
 
 /** Type class for all types that can be turned into [[CsvWriter]] instances.
   *
@@ -41,13 +42,11 @@ trait CsvSink[-S] extends Serializable { self =>
     * @param conf
     *   CSV writing behaviour.
     */
-  def write[A: HeaderEncoder](s: S, rows: IterableOnce[A], conf: CsvConfiguration)(implicit e: WriterEngine): Unit = {
-    val w = writer(s, conf)
-    try {
+  def write[A: HeaderEncoder](s: S, rows: IterableOnce[A], conf: CsvConfiguration)(implicit e: WriterEngine): Unit =
+    Using.resource(writer(s, conf)) { w =>
       w.write(rows)
       ()
-    } finally w.close()
-  }
+    }
 
   /** Opens a [[CsvWriter]] on the specified `S`.
     *
