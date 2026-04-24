@@ -43,7 +43,8 @@ private[csv] class InternalWriter(out: Writer, val conf: CsvConfiguration) exten
         else escapeIndex(index + 1)
       }
 
-    // If we're configured to always quote, do so. Embedded quote characters must still be doubled per RFC 4180 §2.7.
+    // If we're configured to always quote, do so. Embedded quote characters must still be doubled per RFC 4180 §2
+    // rule 7 — see https://datatracker.ietf.org/doc/html/rfc4180#section-2.
     if(conf.quotePolicy == CsvConfiguration.QuotePolicy.Always) {
       out.write(conf.quote.toInt)
       escape(0, 0)
