@@ -27,22 +27,20 @@ object CsvReader {
   def apply[A: HeaderDecoder](reader: Reader, conf: CsvConfiguration)(implicit
     e: ReaderEngine
   ): CsvReader[ReadResult[A]] = {
-    val data: CsvReader[ReadResult[Seq[String]]] = e.readerFor(reader, conf)
+    val rows: CsvReader[ReadResult[Seq[String]]] = e.readerFor(reader, conf)
 
     val decoder =
-      if(conf.hasHeader && data.hasNext)
-        data.next().flatMap(header => HeaderDecoder[A].fromHeader(header.map(_.trim())))
+      if(conf.hasHeader && rows.hasNext)
+        rows.next().flatMap(header => HeaderDecoder[A].fromHeader(header.map(_.trim())))
       else Right(HeaderDecoder[A].noHeader)
 
-    decoder
-      .map(d => data.map(_.flatMap(d.decode)))
-      .left
-      .map { error =>
-        // Header decoding failed, so the returned iterator will not reference `data`. Release it eagerly so the
+    decoder match {
+      case Right(d) => rows.map(_.flatMap(d.decode))
+      case Left(error) =>
+        // Header decoding failed, so the returned iterator will not reference `rows`. Release it eagerly so the
         // underlying Reader doesn't leak.
-        data.close()
+        rows.close()
         ResourceIterator(ReadResult.failure(error))
-      }
-      .merge
+    }
   }
 }
