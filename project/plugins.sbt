@@ -1,4 +1,4 @@
-addSbtPlugin("com.github.xuwei-k" % "test-times-plugin" % "0.1.1")
+addSbtPlugin("com.github.xuwei-k" % "test-times-plugin" % "0.1.2")
 
 addSbtPlugin("pl.project13.scala" % "sbt-jmh" % "0.4.8")
 
