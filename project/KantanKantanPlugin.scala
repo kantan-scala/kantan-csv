@@ -35,9 +35,6 @@ object KantanKantanPlugin extends AutoPlugin {
   override def trigger =
     allRequirements
 
-  override def requires: Plugins =
-    KantanScalafixPlugin
-
   override lazy val projectSettings: Seq[Setting[?]] = generalSettings ++ remoteSettings
 
   lazy val generalSettings: Seq[Setting[?]] =
