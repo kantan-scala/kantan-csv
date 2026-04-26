@@ -44,7 +44,7 @@ object KantanKantanPlugin extends AutoPlugin {
     Seq(
       organization := "io.github.kantan-scala",
       organizationName := "Nicolas Rinaudo",
-      licenses := Seq("Apache-2.0" -> url("https://www.apache.org/licenses/LICENSE-2.0.html")),
+      licenses := Seq(License.Apache2),
       releasePublishArtifactsAction := publishSigned.value,
       releaseProcess := Seq[ReleaseStep](
         checkSnapshotDependencies,
