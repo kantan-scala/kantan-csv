@@ -30,7 +30,6 @@ object UnpublishedPlugin extends AutoPlugin {
     Seq(
       // List of settings grabbed from https://github.com/scala/scala-parallel-collections/pull/14.
       publish / skip := true,
-      makePom := file(""),
       deliver := file(""),
       deliverLocal := file(""),
       publish := {},
