@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java: [11, 25]
+        java: [17, 25]
         scala: ["2_13", "3"]
     runs-on: ubuntu-latest
     steps:
@@ -24,6 +24,7 @@ jobs:
           distribution: zulu
       - uses: sbt/setup-sbt@v1
       - run: sbt -v -J-Xss8m
+             --server
              -Dsbt.traces=true
              "all scalafmtCheckAll scalafmtSbtCheck scalafixConfigRuleNamesSortCheck validate${{ matrix.scala }}"
              "testScala${{ matrix.scala }}"
