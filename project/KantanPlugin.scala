@@ -84,7 +84,6 @@ object KantanPlugin extends AutoPlugin {
     def base(version: String): Seq[String] =
       Seq(
         Seq(
-          s"--release:${jvmOptionVersion}",
           "-encoding",
           "utf-8",
           "-language:implicitConversions",

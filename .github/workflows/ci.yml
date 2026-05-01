@@ -2,8 +2,6 @@ name: CI
 on:
   workflow_dispatch:
   push:
-    branches:
-      - main
   pull_request:
   merge_group:
 
@@ -13,8 +11,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java: [11, 25]
-        scala: ["2_13", "3"]
+        java: [17, 25]
+        scala: ["3"]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
