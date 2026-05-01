@@ -166,7 +166,7 @@ object KantanCrossBuildPlugin extends AutoPlugin {
           )
         )
         .nativePlatform(
-          scalaVersions = scalaVersions,
+          scalaVersions = Nil,
           settings = Def.settings(
             libraryDependencySchemes += "org.scala-native" %% "test-interface_native0.5" % VersionScheme.Always,
             Test / parallelExecution := false,
