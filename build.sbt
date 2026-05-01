@@ -1,5 +1,7 @@
 ThisBuild / startYear := Some(2015)
 
+ThisBuild / wartremoverCrossVersion := CrossVersion.binary
+
 Global / concurrentRestrictions += Tags.limit(NativeTags.Link, 1)
 
 ThisBuild / concurrentRestrictions := List(
