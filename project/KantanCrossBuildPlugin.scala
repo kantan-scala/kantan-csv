@@ -140,6 +140,14 @@ object KantanCrossBuildPlugin extends AutoPlugin {
           scalaVersions = scalaVersions,
           settings = Def.settings(
             laws.map(x => setLaws(s"${x}JVM")).toSeq,
+            scalacOptions ++= {
+              scalaBinaryVersion.value match {
+                case "3" =>
+                  Seq("-Yfuture-lazy-vals")
+                case _ =>
+                  Nil
+              }
+            },
             addSrcDir(file(base).getAbsoluteFile, VirtualAxis.jvm)
           )
         )
