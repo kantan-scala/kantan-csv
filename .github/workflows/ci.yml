@@ -26,6 +26,8 @@ jobs:
       - run: sbt -v -J-Xss8m
              -Dsbt.traces=true
              "all scalafmtCheckAll scalafmtSbtCheck scalafixConfigRuleNamesSortCheck validate${{ matrix.scala }}"
+      - run: sbt -v -J-Xss8m
+             -Dsbt.traces=true
              "testScala${{ matrix.scala }}"
              testTimesWriteGitHubStepSummary
       - uses: xuwei-k/sbt-trace-action@v1
