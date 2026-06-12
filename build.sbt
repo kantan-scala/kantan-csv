@@ -41,7 +41,7 @@ lazy val benchmark = projectMatrix
 lazy val core = kantanCrossProject("core", "core", "laws", true)
   .settings(
     moduleName := "kantan.csv",
-    libraryDependencies += "com.github.xuwei-k" %%% "unapply" % "0.1.0" % Test
+    libraryDependencies += "com.github.xuwei-k" %%% "unapply" % "0.2.0" % Test
   )
   .enablePlugins(PublishedPlugin, BoilerplatePlugin)
   .dependsOn(codecsCore)
