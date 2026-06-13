@@ -221,7 +221,7 @@ lazy val codecsScalaz = kantanCrossProject("codecs-scalaz", "codecs/scalaz/core"
   .dependsOn(codecsCore)
   .settings(
     libraryDependencies ++= Seq(
-      "org.scalaz" %%% "scalaz-core" % "7.3.8"
+      "org.scalaz" %%% "scalaz-core" % "7.3.9"
     )
   )
 
@@ -231,7 +231,7 @@ lazy val codecsScalazLaws = kantanCrossProject("codecs-scalaz-laws", "codecs/sca
   .dependsOn(codecsCore, codecsLaws, codecsScalaz)
   .settings(
     libraryDependencies ++= Seq(
-      "org.scalaz" %%% "scalaz-scalacheck-binding" % "7.3.8"
+      "org.scalaz" %%% "scalaz-scalacheck-binding" % "7.3.9"
     )
   )
 
