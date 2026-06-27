@@ -24,9 +24,11 @@ jobs:
           distribution: zulu
       - uses: sbt/setup-sbt@v1
       - run: sbt -v -J-Xss8m
+             --server
              -Dsbt.traces=true
              "all scalafmtCheckAll scalafmtSbtCheck scalafixConfigRuleNamesSortCheck validate${{ matrix.scala }}"
       - run: sbt -v -J-Xss8m
+             --server
              -Dsbt.traces=true
              "testScala${{ matrix.scala }}"
              testTimesWriteGitHubStepSummary
