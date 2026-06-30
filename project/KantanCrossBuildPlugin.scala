@@ -20,8 +20,6 @@ import org.scalajs.sbtplugin.ScalaJSPlugin
 import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport.fastLinkJS
 import sbt.*
 import sbt.Keys.*
-import sbt.internal.ProjectMatrix
-import sbtprojectmatrix.ProjectMatrixKeys.virtualAxes
 import scala.scalanative.sbtplugin.ScalaNativePlugin
 import scala.scalanative.sbtplugin.ScalaNativePlugin.autoImport.*
 import scalafix_check.ScalafixCheck.autoImport.scalafixCheckAll
@@ -93,7 +91,7 @@ object KantanCrossBuildPlugin extends AutoPlugin {
           Seq(Scala213)
         }
 
-      ProjectMatrix(id = id, base = file(base))
+      ProjectMatrix(id = id, base = file(base), pluginClassLoader = this.getClass.getClassLoader)
         .defaultAxes()
         .settings(
           Seq(Compile, Test).flatMap { x =>
@@ -127,7 +125,7 @@ object KantanCrossBuildPlugin extends AutoPlugin {
           },
           doctestTestFramework := DoctestTestFramework.ScalaTest,
           doctestScalaTestVersion := Some("3.2.20"),
-          doctestGenTests := {
+          doctestGenTests := Def.uncached {
             scalaBinaryVersion.value match {
               case "3" =>
                 doctestGenTests.value
@@ -157,7 +155,7 @@ object KantanCrossBuildPlugin extends AutoPlugin {
             addSrcDir(file(base).getAbsoluteFile, VirtualAxis.js),
             scalacOptions += {
               val a = (LocalRootProject / baseDirectory).value.toURI.toString
-              val hash: String = sys.process.Process("git rev-parse HEAD").lineStream_!.head
+              val hash: String = sys.process.Process("git rev-parse HEAD").lazyLines_!.head
               val g = s"https://raw.githubusercontent.com/kantan-scala/kantan-csv/${hash}"
               val key = scalaBinaryVersion.value match {
                 case "3" =>
@@ -178,17 +176,18 @@ object KantanCrossBuildPlugin extends AutoPlugin {
           settings = Def.settings(
             libraryDependencySchemes += "org.scala-native" %% "test-interface_native0.5" % VersionScheme.Always,
             Test / parallelExecution := false,
-            Test / test := {
+            Test / testFull := {
               if((Test / sources).value.isEmpty) {
                 streams.value.log.info(s"${thisProject.value.id}/Test/sources is empty. skip test")
+                TestResult.Passed
               } else {
-                (Test / test).value
+                (Test / testFull).value
               }
             },
             Test / nativeLink := {
               if((Test / sources).value.isEmpty) {
                 streams.value.log.info(s"${thisProject.value.id}/Test/sources is empty. skip Test/nativeLink")
-                target.value / "dummy"
+                fileConverter.value.toVirtualFile((target.value / "dummy").toPath)
               } else {
                 (Test / nativeLink).value
               }
@@ -206,7 +205,7 @@ object KantanCrossBuildPlugin extends AutoPlugin {
       val suffix = scalaV.replace('.', '_')
       val testCompile = TaskKey[Unit](s"testCompileScala$suffix")
       Seq(
-        TaskKey[Unit](s"validate$suffix") := {
+        TaskKey[Unit](s"validate$suffix") := Def.uncached {
           testCompile.value
           taskAll(
             Compile / doc,
@@ -227,16 +226,18 @@ object KantanCrossBuildPlugin extends AutoPlugin {
             _.autoPlugins.toSet.contains(ScalaJSPlugin)
           ).value
         },
-        testCompile := {
+        testCompile := Def.uncached {
           taskAll(
             Test / compile,
             scalaV
           ).value
         },
-        TaskKey[Unit](s"testScala$suffix") := taskAll(
-          Test / test,
-          scalaV
-        ).value
+        TaskKey[Unit](s"testScala$suffix") := Def.uncached(
+          taskAll(
+            Test / testFull,
+            scalaV
+          ).value
+        )
       )
     }
   )
