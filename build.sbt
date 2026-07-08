@@ -66,7 +66,7 @@ lazy val jackson = projectMatrix
   .dependsOn(core, laws % Test)
   .settings(
     libraryDependencies ++= Seq(
-      "com.fasterxml.jackson.dataformat" % "jackson-dataformat-csv" % "2.22.0"
+      "com.fasterxml.jackson.dataformat" % "jackson-dataformat-csv" % "2.22.1"
     )
   )
 
@@ -246,13 +246,13 @@ lazy val codecsRefined = kantanCrossProject("codecs-refined", "codecs/refined/co
   .dependsOn(codecsCore)
   .settings(
     libraryDependencies ++= Seq(
-      "eu.timepit" %% "refined" % "0.11.3"
+      "eu.timepit" %% "refined" % "0.11.4"
     )
   )
 
 lazy val codecsRefinedLaws = kantanCrossProject("codecs-refined-laws", "codecs/refined/laws")
   .settings(moduleName := "kantan.codecs-refined-laws")
-  .settings(libraryDependencies += "eu.timepit" %% "refined-scalacheck" % "0.11.3")
+  .settings(libraryDependencies += "eu.timepit" %% "refined-scalacheck" % "0.11.4")
   .enablePlugins(PublishedPlugin)
   .dependsOn(codecsCore, codecsLaws, codecsRefined)
 

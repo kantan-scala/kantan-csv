@@ -2,7 +2,7 @@ addSbtPlugin("com.github.xuwei-k" % "test-times-plugin" % "0.1.2")
 
 addSbtPlugin("pl.project13.scala" % "sbt-jmh" % "0.4.8")
 
-addSbtPlugin("org.wartremover" % "sbt-wartremover" % "3.6.0")
+addSbtPlugin("org.wartremover" % "sbt-wartremover" % "3.6.1")
 
 addSbtPlugin("com.github.sbt" % "sbt-header" % "5.11.0")
 
@@ -16,7 +16,7 @@ addSbtPlugin("ch.epfl.scala" % "sbt-scalafix" % "0.14.7")
 
 addSbtPlugin("org.scala-js" % "sbt-scalajs" % "1.22.0")
 
-addSbtPlugin("com.github.sbt" % "sbt-boilerplate" % "0.8.0")
+addSbtPlugin("com.github.sbt" % "sbt-boilerplate" % "0.8.1")
 
 addSbtPlugin("com.github.sbt" % "sbt-pgp" % "2.3.1")
 
