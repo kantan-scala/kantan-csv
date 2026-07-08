@@ -42,7 +42,7 @@ object KantanPlugin extends AutoPlugin {
     * This is perfectly legal, but not supported. You can, however, use `.laws("tests")` in project `a` to enable it.
     */
   def setLaws(name: String): Setting[Task[Classpath]] =
-    Test / unmanagedClasspath ++= Def.taskDyn {
+    Test / unmanagedClasspath ++= Def.uncached(Def.taskDyn {
       scalaBinaryVersion.value match {
         case "3" =>
           Def.task(
@@ -53,7 +53,7 @@ object KantanPlugin extends AutoPlugin {
             (LocalProject(s"${name}2_13") / Compile / fullClasspath).value
           )
       }
-    }.value
+    }.value)
 
   override def trigger =
     allRequirements
@@ -139,7 +139,7 @@ object KantanPlugin extends AutoPlugin {
       scalacOptions ++= base(scalaVersion.value),
       Compile / doc / scalacOptions ++= {
         val base = (LocalRootProject / baseDirectory).value.getAbsolutePath
-        val hash = sys.process.Process("git rev-parse HEAD").lineStream_!.head
+        val hash = sys.process.Process("git rev-parse HEAD").lazyLines_!.head
         scalaBinaryVersion.value match {
           case "3" =>
             Seq(
