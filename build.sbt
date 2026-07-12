@@ -10,7 +10,7 @@ lazy val kantanCsvRoot = rootProject.autoAggregate
       Tags.limit(Tags.ForkedTestGroup, 1),
       Tags.exclusiveGroup(Tags.Clean)
     ),
-    ThisBuild / scalafixDependencies += "com.github.xuwei-k" %% "scalafix-rules" % "0.6.28"
+    ThisBuild / scalafixDependencies += "com.github.xuwei-k" %% "scalafix-rules" % "0.6.29"
   )
   .enablePlugins(UnpublishedPlugin)
 
