@@ -73,10 +73,10 @@ object KantanKantanPlugin extends AutoPlugin {
 
   lazy val remoteSettings: Seq[Setting[?]] =
     Seq(
-      homepage := Some(url("https://github.com/kantan-scala")),
+      homepage := Some(uri("https://github.com/kantan-scala")),
       scmInfo := Some(
         ScmInfo(
-          url(s"https://github.com/${kantanProject}"),
+          uri(s"https://github.com/${kantanProject}"),
           s"scm:git:git@github.com:${kantanProject}.git"
         )
       )
