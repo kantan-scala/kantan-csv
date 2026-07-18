@@ -10,7 +10,7 @@ addSbtPlugin("io.github.sbt-doctest" % "sbt-doctest" % "0.13.1")
 
 addSbtPlugin("com.github.sbt" % "sbt-release" % "1.5.0")
 
-addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.6.1")
+addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.6.2")
 
 addSbtPlugin("ch.epfl.scala" % "sbt-scalafix" % "0.14.7")
 
