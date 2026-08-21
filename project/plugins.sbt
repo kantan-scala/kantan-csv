@@ -18,7 +18,7 @@ addSbtPlugin("org.scala-js" % "sbt-scalajs" % "1.22.0")
 
 addSbtPlugin("com.github.sbt" % "sbt-boilerplate" % "0.8.1")
 
-addSbtPlugin("com.github.sbt" % "sbt-pgp" % "2.3.1")
+addSbtPlugin("com.github.sbt" % "sbt-pgp" % "2.3.2")
 
 addSbtPlugin("com.github.xuwei-k" % "scalafix-check" % "0.1.0")
 
