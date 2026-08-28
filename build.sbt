@@ -147,7 +147,7 @@ lazy val codecsLaws = kantanCrossProject("codecs-laws", "codecs/laws")
   .dependsOn(codecsCore)
   .settings(
     libraryDependencies ++= Seq(
-      "org.scalacheck" %% "scalacheck" % "1.19.0",
+      "org.scalacheck" %% "scalacheck" % "1.20.0",
       "org.scalatest" %% "scalatest-shouldmatchers" % "3.2.20",
       "org.scalatest" %% "scalatest-funspec" % "3.2.20",
       "org.scalatest" %% "scalatest-flatspec" % "3.2.20",
