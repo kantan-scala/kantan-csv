@@ -36,7 +36,7 @@ object KantanCrossBuildPlugin extends AutoPlugin {
   object autoImport {
     def Scala3 = "3.3.8"
 
-    def Scala213 = "2.13.18"
+    def Scala213 = "3.9.0"
 
     def kantanCrossProject(id: String, base: String, enableScala3: Boolean = true): ProjectMatrix =
       kantanCrossProjectInternal(id = id, base = base, laws = None, enableScala3 = enableScala3)
