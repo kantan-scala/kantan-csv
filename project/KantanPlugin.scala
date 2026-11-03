@@ -137,7 +137,7 @@ object KantanPlugin extends AutoPlugin {
     val unusedImports = Seq("-Ywarn-unused:imports", "-Ywarn-unused-import")
     Seq(
       scalacOptions ++= base(scalaVersion.value),
-      Compile / doc / scalacOptions ++= {
+      Compile / doc / scalacOptions ++= Def.uncached {
         val base = (LocalRootProject / baseDirectory).value.getAbsolutePath
         val hash = sys.process.Process("git rev-parse HEAD").lazyLines_!.head
         scalaBinaryVersion.value match {
