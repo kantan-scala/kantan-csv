@@ -153,7 +153,7 @@ object KantanCrossBuildPlugin extends AutoPlugin {
           scalaVersions = scalaVersions,
           settings = Def.settings(
             addSrcDir(file(base).getAbsoluteFile, VirtualAxis.js),
-            scalacOptions += {
+            scalacOptions += Def.uncached {
               val a = (LocalRootProject / baseDirectory).value.toURI.toString
               val hash: String = sys.process.Process("git rev-parse HEAD").lazyLines_!.head
               val g = s"https://raw.githubusercontent.com/kantan-scala/kantan-csv/${hash}"
