@@ -17,12 +17,17 @@ jobs:
         scala: ["2_13", "3"]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-java@v6
+      - uses: actions/checkout@v7.0.1
+      - run: |
+          gh extension install github/gh-actions-lock
+          gh actions-lock --verify
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - uses: actions/setup-java@v6.3.0
         with:
           java-version: "${{matrix.java}}"
           distribution: zulu
-      - uses: sbt/setup-sbt@v1
+      - uses: sbt/setup-sbt@v1.5.15
       - run: sbt -v -J-Xss8m
              --server
              -Dsbt.traces=true
@@ -32,4 +37,4 @@ jobs:
              -Dsbt.traces=true
              "testScala${{ matrix.scala }}"
              testTimesWriteGitHubStepSummary
-      - uses: xuwei-k/sbt-trace-action@v1
+      - uses: xuwei-k/sbt-trace-action@v1.0.0
