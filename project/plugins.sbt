@@ -14,7 +14,7 @@ addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.6.2")
 
 addSbtPlugin("ch.epfl.scala" % "sbt-scalafix" % "0.14.10")
 
-addSbtPlugin("org.scala-js" % "sbt-scalajs" % "1.22.0")
+addSbtPlugin("org.scala-js" % "sbt-scalajs" % "1.23.0")
 
 addSbtPlugin("com.github.sbt" % "sbt-boilerplate" % "0.8.1")
 
