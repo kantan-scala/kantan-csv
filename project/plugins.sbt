@@ -1,6 +1,6 @@
 addSbtPlugin("com.github.xuwei-k" % "test-times-plugin" % "0.1.2")
 
-addSbtPlugin("pl.project13.scala" % "sbt-jmh" % "0.4.8")
+addSbtPlugin("com.github.sbt" % "sbt-jmh" % "0.4.9")
 
 addSbtPlugin("org.wartremover" % "sbt-wartremover" % "3.6.3")
 
